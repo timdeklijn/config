@@ -9,6 +9,8 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-airline/vim-airline'
 Plug 'sheerun/vim-polyglot'
+Plug 'lifepillar/vim-solarized8'
+Plug 'joshdick/onedark.vim'
 
 " Handy
 Plug 'jiangmiao/auto-pairs'
@@ -62,8 +64,8 @@ endif
 set t_Co=256
 set cursorline
 set background=dark
-colorscheme nord
-let g:airline_theme='nord'
+colorscheme onedark
+let g:airline_theme='onedark'
 
 " =============================================================================
 " FZF
@@ -100,20 +102,20 @@ set updatetime=30
 set shortmess+=c
 
 if has("patch-8.1.1563")
-	set signcolumn=number
+  set signcolumn=number
 else
-	set signcolumn=yes
+  set signcolumn=yes
 endif
 
 inoremap <silent><expr> <TAB>
-	\ pumvisible() ? "\<C-n>" :
-	\ <SID>check_back_space() ? "\<TAB>" :
-	\ coc#refresh()
+  \ pumvisible() ? "\<C-n>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1]  =~# '\s'
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Use <c-space> to trigger completion.
