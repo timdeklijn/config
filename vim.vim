@@ -4,12 +4,9 @@
 
 call plug#begin('~/.vim/plugged')
 " Looks
-Plug 'nanotech/jellybeans.vim'
-Plug 'arcticicestudio/nord-vim'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-airline/vim-airline'
 Plug 'sheerun/vim-polyglot'
-Plug 'lifepillar/vim-solarized8'
 Plug 'joshdick/onedark.vim'
 
 " Handy
@@ -56,7 +53,7 @@ map <C-n> :NERDTreeToggle<CR>
 " Set Looks
 " =============================================================================
 
-" Needed for nord
+" Needed for colorscheme
 if (has("termguicolors"))
   set termguicolors
 endif
@@ -74,6 +71,9 @@ let g:airline_theme='onedark'
 nnoremap <silent> <leader>q :GFiles<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>Q :Windows<CR>
+nnoremap <silent> <leader>l :BLines<CR>
+
+let g:fzf_preview_window = 'right:60%'
 
 " =============================================================================
 " File specific settings
