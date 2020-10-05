@@ -13,6 +13,7 @@ Plug 'morhetz/gruvbox'
 " Handy
 Plug 'jiangmiao/auto-pairs'
 Plug 'preservim/nerdtree'
+Plug 'preservim/nerdcommenter'
 Plug 'machakann/vim-highlightedyank'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-surround'
