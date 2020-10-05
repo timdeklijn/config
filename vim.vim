@@ -8,6 +8,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-airline/vim-airline'
 Plug 'sheerun/vim-polyglot'
 Plug 'joshdick/onedark.vim'
+Plug 'morhetz/gruvbox'
 
 " Handy
 Plug 'jiangmiao/auto-pairs'
@@ -62,8 +63,8 @@ endif
 set t_Co=256
 set cursorline
 set background=dark
-colorscheme onedark
-let g:airline_theme='onedark'
+colorscheme gruvbox
+let g:airline_theme='gruvbox'
 
 " =============================================================================
 " FZF
