@@ -11,7 +11,6 @@ Plug 'joshdick/onedark.vim'
 Plug 'morhetz/gruvbox'
 
 " Handy
-Plug 'jiangmiao/auto-pairs'
 Plug 'preservim/nerdtree'
 Plug 'preservim/nerdcommenter'
 Plug 'machakann/vim-highlightedyank'
