@@ -7,8 +7,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-airline/vim-airline'
 Plug 'sheerun/vim-polyglot'
-Plug 'joshdick/onedark.vim'
-Plug 'morhetz/gruvbox'
+Plug 'nanotech/jellybeans.vim'
 
 " Handy
 Plug 'preservim/nerdtree'
@@ -63,8 +62,8 @@ endif
 set t_Co=256
 set cursorline
 set background=dark
-colorscheme gruvbox
-let g:airline_theme='gruvbox'
+colorscheme jellybeans
+let g:airline_theme='jellybeans'
 
 " =============================================================================
 " FZF
