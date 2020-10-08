@@ -26,8 +26,6 @@ Plug 'junegunn/fzf.vim'
 " Language specific plugins
 Plug 'vim-python/python-syntax'
 
-" VimWiki
-Plug 'vimwiki/vimwiki'
 call plug#end()
 
 " =============================================================================
@@ -69,10 +67,11 @@ let g:airline_theme='jellybeans'
 " FZF
 " =============================================================================
 
-nnoremap <silent> <leader>q :GFiles<CR>
-nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader>Q :Windows<CR>
-nnoremap <silent> <leader>l :BLines<CR>
+nnoremap <silent> <leader>ff :GFiles<CR>
+nnoremap <silent> <leader>fb :Buffers<CR>
+nnoremap <silent> <leader>fw :Windows<CR>
+nnoremap <silent> <leader>fl :BLines<CR>
+nnoremap <silent> <leader>fg :Ag<CR>
 
 let g:fzf_preview_window = 'right:60%'
 
@@ -84,12 +83,6 @@ autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
 autocmd FileType markdown setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 autocmd FileType vimwiki setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 autocmd FileType vim setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
-
-" =============================================================================
-" VimWiki
-" =============================================================================
-
-let g:vimwiki_list = [{'path': '~/vimwiki/'}]
 
 " =============================================================================
 " Language server settings
@@ -158,8 +151,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <leader>rn <Plug>(coc-rename)
 
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+xmap <leader>F  <Plug>(coc-format-selected)
+nmap <leader>F  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
