@@ -8,6 +8,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-airline/vim-airline'
 Plug 'sheerun/vim-polyglot'
 Plug 'nanotech/jellybeans.vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 " Handy
 Plug 'preservim/nerdtree'
@@ -60,8 +61,8 @@ endif
 set t_Co=256
 set cursorline
 set background=dark
-colorscheme jellybeans
-let g:airline_theme='jellybeans'
+colorscheme dracula
+let g:airline_theme='dracula'
 
 " =============================================================================
 " FZF
