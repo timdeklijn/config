@@ -81,9 +81,20 @@ let g:fzf_preview_window = 'right:60%'
 " File specific settings
 " =============================================================================
 
+" markdown --------------------------------------------------------------------
+let g:markdown_folding=1 " switch on markdown folding
+" Other markdown settings
+autocmd FileType markdown
+  \ setlocal tabstop=2
+    \ shiftwidth=2
+    \ softtabstop=2
+    \ expandtab
+    " set foldlevel in markdown files
+    \ foldlevel=1
+
+" python ----------------------------------------------------------------------
 autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
-autocmd FileType markdown setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
-autocmd FileType vimwiki setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+" vim -------------------------------------------------------------------------
 autocmd FileType vim setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 
 " =============================================================================
