@@ -16,6 +16,7 @@ Plug 'preservim/nerdcommenter'
 Plug 'machakann/vim-highlightedyank'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-markdown'
 
 " LSP
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
