@@ -7,8 +7,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-airline/vim-airline'
 Plug 'sheerun/vim-polyglot'
-Plug 'nanotech/jellybeans.vim'
-Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'junegunn/seoul256.vim'
 
 " Handy
 Plug 'preservim/nerdtree'
@@ -61,9 +60,10 @@ endif
 
 set t_Co=256
 set cursorline
+let g:seoul256_background = 233
 set background=dark
-colorscheme dracula
-let g:airline_theme='dracula'
+colorscheme seoul256
+let g:airline_theme='seoul256'
 
 " =============================================================================
 " FZF
