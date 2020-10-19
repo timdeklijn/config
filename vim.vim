@@ -45,6 +45,12 @@ set hidden
 set nobackup
 set nowritebackup
 
+" Faster timings
+set timeout
+set ttimeout
+set timeoutlen=3000
+set ttimeoutlen=50
+
 " Some handy keybindings
 nnoremap <silent> <leader><space> :b#<CR>
 map <C-n> :NERDTreeToggle<CR>
