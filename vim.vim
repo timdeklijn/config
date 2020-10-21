@@ -9,6 +9,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'sheerun/vim-polyglot'
 Plug 'junegunn/seoul256.vim'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'joshdick/onedark.vim'
 
 " Handy
 Plug 'preservim/nerdtree'
@@ -69,8 +70,8 @@ set t_Co=256
 set cursorline
 let g:seoul256_background = 233
 set background=dark
-colorscheme PaperColor
-let g:airline_theme='PaperColor'
+colorscheme onedark
+let g:airline_theme='onedark'
 
 " =============================================================================
 " FZF
