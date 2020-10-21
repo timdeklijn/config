@@ -8,6 +8,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-airline/vim-airline'
 Plug 'sheerun/vim-polyglot'
 Plug 'junegunn/seoul256.vim'
+Plug 'NLKNguyen/papercolor-theme'
 
 " Handy
 Plug 'preservim/nerdtree'
@@ -68,8 +69,8 @@ set t_Co=256
 set cursorline
 let g:seoul256_background = 233
 set background=dark
-colorscheme seoul256
-let g:airline_theme='seoul256'
+colorscheme PaperColor
+let g:airline_theme='PaperColor'
 
 " =============================================================================
 " FZF
@@ -104,6 +105,8 @@ autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
 autocmd FileType vim setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 " html ------------------------------------------------------------------------
 autocmd FileType html setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType javasript setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 
 " =============================================================================
 " Language server settings
