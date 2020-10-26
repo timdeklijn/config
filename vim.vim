@@ -4,12 +4,10 @@
 
 call plug#begin('~/.vim/plugged')
 " Looks
-Plug 'vim-airline/vim-airline-themes'
-Plug 'vim-airline/vim-airline'
 Plug 'sheerun/vim-polyglot'
-Plug 'junegunn/seoul256.vim'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'joshdick/onedark.vim'
+" Plug 'file://'.expand('~/projects/tim-color')
+Plug 'patstockwell/vim-monokai-tasty'
+Plug 'itchyny/lightline.vim'
 
 " Handy
 Plug 'preservim/nerdtree'
@@ -18,6 +16,8 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-markdown'
+Plug 'itchyny/vim-gitbranch' " For lightline
+Plug 'jmcantrell/vim-virtualenv' " For Lightline
 
 " LSP
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -61,6 +61,11 @@ map <C-n> :NERDTreeToggle<CR>
 " Set Looks
 " =============================================================================
 
+" Show syntax group under cursor
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
 " Needed for colorscheme
 if (has("termguicolors"))
   set termguicolors
@@ -68,10 +73,24 @@ endif
 
 set t_Co=256
 set cursorline
-let g:seoul256_background = 233
 set background=dark
-colorscheme onedark
-let g:airline_theme='onedark'
+" colorscheme timcolor
+colorscheme vim-monokai-tasty
+
+" =============================================================================
+" Lightline
+" =============================================================================
+
+let g:lightline = {
+  \ 'colorscheme' : 'wombat',
+  \ 'active' : {
+  \   'left': [ [ 'mode', 'paste'],
+  \             [ 'gitbranch', 'readonly', 'filename', 'modified', ] ]
+  \ },
+  \ 'component_function': {
+  \   'gitbranch': 'gitbranch#name'
+  \ },
+  \ }
 
 " =============================================================================
 " FZF
