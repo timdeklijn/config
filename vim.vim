@@ -17,6 +17,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-markdown'
 Plug 'itchyny/vim-gitbranch' " For lightline
+Plug 'junegunn/vim-easy-align'
 
 " LSP
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -84,6 +85,12 @@ let g:lightline = {
   \   'gitbranch': 'gitbranch#name'
   \ },
   \ }
+
+" =============================================================================
+" Easy Align markdown tables
+" =============================================================================
+
+au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>
 
 " =============================================================================
 " FZF
