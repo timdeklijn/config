@@ -6,7 +6,7 @@ call plug#begin('~/.vim/plugged')
 " Looks
 Plug 'sheerun/vim-polyglot'
 " Plug 'file://'.expand('~/projects/tim-color')
-Plug 'patstockwell/vim-monokai-tasty'
+Plug 'joshdick/onedark.vim'
 Plug 'itchyny/lightline.vim'
 
 " Handy
@@ -61,11 +61,6 @@ map <C-n> :NERDTreeToggle<CR>
 " Set Looks
 " =============================================================================
 
-" Show syntax group under cursor
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
 " Needed for colorscheme
 if (has("termguicolors"))
   set termguicolors
@@ -74,15 +69,14 @@ endif
 set t_Co=256
 set cursorline
 set background=dark
-" colorscheme timcolor
-colorscheme vim-monokai-tasty
+colorscheme onedark
 
 " =============================================================================
 " Lightline
 " =============================================================================
 
 let g:lightline = {
-  \ 'colorscheme' : 'wombat',
+  \ 'colorscheme' : 'onedark',
   \ 'active' : {
   \   'left': [ [ 'mode', 'paste'],
   \             [ 'gitbranch', 'readonly', 'filename', 'modified', ] ]
