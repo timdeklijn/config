@@ -78,7 +78,7 @@ let g:lightline = {
   \ 'colorscheme' : 'onedark',
   \ 'active' : {
   \   'left': [ [ 'mode', 'paste'],
-  \             [ 'gitbranch', 'readonly', 'filename', 'modified', ] ]
+  \             [ 'filename', 'modified', 'gitbranch', 'readonly' ] ]
   \ },
   \ 'component_function': {
   \   'gitbranch': 'gitbranch#name'
