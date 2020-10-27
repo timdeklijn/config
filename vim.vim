@@ -17,7 +17,6 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-markdown'
 Plug 'itchyny/vim-gitbranch' " For lightline
-Plug 'jmcantrell/vim-virtualenv' " For Lightline
 
 " LSP
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
