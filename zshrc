@@ -102,39 +102,39 @@ fi
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
+# START USING DIRENV ==========================================================
+
+eval "$(direnv hook zsh)"
+
+setopt PROMPT_SUBST
+
+show_virtual_env() {
+  if [[ -n "$VIRTUAL_ENV" && -n "$DIRENV_DIR" ]]; then
+    echo "($(basename $VIRTUAL_ENV))"
+  fi
+}
+PS1='$(show_virtual_env)'$PS1
+
 # ALIASES =====================================================================
 
 # Configs
-alias vim="nvim"
 alias zshconfig="vim ~/.zshrc"
 alias vimconfig="vim ~/.config/nvim/init.vim"
 alias tmuxconfig="vim ~/.tmux.conf"
+
+# VIM
+alias vim="nvim"
 
 # Git
 alias gc="git commit"
 alias gs="git status"
 alias gd="git diff"
 
+alias g="lazygit"
+
+alias notes="cd ~/TimDocs/90-99\ Notes/91\ notes"
 
 # Paths =======================================================================
-
-# Add conda to path
-export PATH="$PATH:$HOME/miniconda3/bin"
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/timdeklijn/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/timdeklijn/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/timdeklijn/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/timdeklijn/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/timdeklijn/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/timdeklijn/Downloads/google-cloud-sdk/path.zsh.inc'; fi
@@ -144,3 +144,10 @@ if [ -f '/Users/timdeklijn/Downloads/google-cloud-sdk/completion.zsh.inc' ]; the
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+
+export NVM_DIR="/Users/timdeklijn/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+export PATH="/usr/local/opt/sbt@0.13/bin:$PATH"
+export PATH="/usr/local/opt/openjdk@8/bin:$PATH"
+
+
