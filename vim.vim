@@ -4,27 +4,26 @@
 
 call plug#begin('~/.vim/plugged')
 " Looks
-Plug 'sheerun/vim-polyglot'
-Plug 'itchyny/lightline.vim'
-Plug 'phanviet/vim-monokai-pro'
+Plug 'sheerun/vim-polyglot'                         " better syntax highlighting
+Plug 'itchyny/lightline.vim'                        " status bar
+Plug 'lifepillar/vim-solarized8'                    " color theme
 
 " Handy
-Plug 'preservim/nerdcommenter'
-Plug 'machakann/vim-highlightedyank'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'tpope/vim-surround'
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-Plug 'itchyny/vim-gitbranch' " For lightline
-Plug 'direnv/direnv.vim'
-Plug 'osyo-manga/vim-over'
+Plug 'preservim/nerdcommenter'                      " comment using <leader> cc
+Plug 'machakann/vim-highlightedyank'                " show what is yanked
+Plug 'christoomey/vim-tmux-navigator'               " use <ctrl> + hjkl to move around all splits
+Plug 'tpope/vim-surround'                           " surround with quotes/brackets everything
+Plug 'plasticboy/vim-markdown'                      " markdown plugin
+Plug 'itchyny/vim-gitbranch'                        " For lightline git status
+Plug 'direnv/direnv.vim'                            " use 'local' conf
+Plug 'osyo-manga/vim-over'                          " highlight while searching
 
 " LSP
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}     " language server client
 
 " FZF
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " install fzf
+Plug 'junegunn/fzf.vim'                             " vim bindings to fzf
 
 call plug#end()
 
@@ -80,7 +79,7 @@ let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 
 set cursorline
 set termguicolors
-colorscheme monokai_pro
+colorscheme solarized8
 highlight Normal guibg=NONE ctermbg=NONE
 highlight LineNr guibg=NONE ctermbg=NONE
 highlight SignColumn guibg=NONE ctermbg=NONE
@@ -92,7 +91,7 @@ highlight NonText guibg=None ctermbg=None
 " =============================================================================
 
 let g:lightline = {
-  \ 'colorscheme': 'monokai_pro',
+  \ 'colorscheme': 'solarized',
   \ 'active' : {
   \   'left': [ [ 'mode', 'paste'],
   \             [ 'filename', 'modified', 'gitbranch', 'readonly' ] ]
