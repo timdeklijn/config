@@ -151,3 +151,9 @@ export PATH="/usr/local/opt/sbt@0.13/bin:$PATH"
 export PATH="/usr/local/opt/openjdk@8/bin:$PATH"
 
 
+export PATH="~/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
