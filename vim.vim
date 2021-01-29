@@ -7,6 +7,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'sheerun/vim-polyglot'                         " better syntax highlighting
 Plug 'itchyny/lightline.vim'                        " status bar
 Plug 'lifepillar/vim-solarized8'                    " color theme
+Plug 'NLKNguyen/papercolor-theme'
 
 " Handy
 Plug 'preservim/nerdcommenter'                      " comment using <leader> cc
@@ -79,7 +80,7 @@ let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 
 set cursorline
 set termguicolors
-colorscheme solarized8
+colorscheme PaperColor
 highlight Normal guibg=NONE ctermbg=NONE
 highlight LineNr guibg=NONE ctermbg=NONE
 highlight SignColumn guibg=NONE ctermbg=NONE
@@ -91,7 +92,7 @@ highlight NonText guibg=None ctermbg=None
 " =============================================================================
 
 let g:lightline = {
-  \ 'colorscheme': 'solarized',
+  \ 'colorscheme': 'PaperColor',
   \ 'active' : {
   \   'left': [ [ 'mode', 'paste'],
   \             [ 'filename', 'modified', 'gitbranch', 'readonly' ] ]

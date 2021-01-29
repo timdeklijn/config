@@ -2,8 +2,8 @@
 
 # Create symlink to init.vim
 echo "-- Replacing nvim config file"
-rm ~/.vimrc
-ln -s $(pwd)/vim.vim ~/.config/nvim
+rm ~/.config/nvim/init.vim
+ln -s $(pwd)/vim.vim ~/.config/nvim/init.vim
 
 
 # Create symlink to .zshrc
