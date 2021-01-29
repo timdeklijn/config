@@ -6,8 +6,7 @@ call plug#begin('~/.vim/plugged')
 " Looks
 Plug 'sheerun/vim-polyglot'                         " better syntax highlighting
 Plug 'itchyny/lightline.vim'                        " status bar
-Plug 'lifepillar/vim-solarized8'                    " color theme
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'NLKNguyen/papercolor-theme'                   " color theme
 
 " Handy
 Plug 'preservim/nerdcommenter'                      " comment using <leader> cc
