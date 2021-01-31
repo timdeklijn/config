@@ -144,15 +144,28 @@ au FileType markdown
   \ setlocal formatoptions+=cn
 
 " Go -------------------------------------------------------------------------
+
 autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
+
 " python ----------------------------------------------------------------------
+
 autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab
+
 " vim -------------------------------------------------------------------------
+
 autocmd FileType vim setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+
 " html ------------------------------------------------------------------------
+
 autocmd FileType html setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 autocmd FileType javasript setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 autocmd FileType css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+
+" scala------------------------------------------------------------------------
+
+" Treat a scala worksheet as if it is a scala file. This is needed to keep the
+" (treesitter) syntax highlighting.
+autocmd BufEnter *.worksheet.sc :setlocal filetype=scala
 
 " Tree Sitter -----------------------------------------------------------------
 
