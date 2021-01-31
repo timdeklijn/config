@@ -4,9 +4,11 @@
 
 call plug#begin('~/.vim/plugged')
 " Looks
-Plug 'sheerun/vim-polyglot'                         " better syntax highlighting
+" Plug 'sheerun/vim-polyglot'                         " better syntax highlighting
 Plug 'itchyny/lightline.vim'                        " status bar
-Plug 'NLKNguyen/papercolor-theme'                   " color theme
+Plug 'mhartington/oceanic-next'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  
+
 
 " Handy
 Plug 'preservim/nerdcommenter'                      " comment using <leader> cc
@@ -79,7 +81,7 @@ let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 
 set cursorline
 set termguicolors
-colorscheme PaperColor
+colorscheme OceanicNext
 highlight Normal guibg=NONE ctermbg=NONE
 highlight LineNr guibg=NONE ctermbg=NONE
 highlight SignColumn guibg=NONE ctermbg=NONE
@@ -91,7 +93,7 @@ highlight NonText guibg=None ctermbg=None
 " =============================================================================
 
 let g:lightline = {
-  \ 'colorscheme': 'PaperColor',
+  \ 'colorscheme': 'oceanicnext',
   \ 'active' : {
   \   'left': [ [ 'mode', 'paste'],
   \             [ 'filename', 'modified', 'gitbranch', 'readonly' ] ]
@@ -151,6 +153,17 @@ autocmd FileType vim setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 autocmd FileType html setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 autocmd FileType javasript setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 autocmd FileType css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+
+" Tree Sitter -----------------------------------------------------------------
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained", 
+  highlight = {
+    enable = true,
+  },
+}
+EOF
 
 " LSP ------------------------------------------------------------------------
 "
