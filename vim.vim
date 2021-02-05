@@ -6,8 +6,8 @@ call plug#begin('~/.vim/plugged')
 " Looks
 " Plug 'sheerun/vim-polyglot'                         " better syntax highlighting
 Plug 'itchyny/lightline.vim'                        " status bar
-Plug 'mhartington/oceanic-next'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  
+Plug 'kristijanhusak/vim-hybrid-material'
 
 
 " Handy
@@ -19,6 +19,9 @@ Plug 'plasticboy/vim-markdown'                      " markdown plugin
 Plug 'itchyny/vim-gitbranch'                        " For lightline git status
 Plug 'direnv/direnv.vim'                            " use 'local' conf
 Plug 'osyo-manga/vim-over'                          " highlight while searching
+Plug 'justinmk/vim-dirvish'
+
+Plug 'vim-test/vim-test'
 
 " LSP
 Plug 'neoclide/coc.nvim', {'branch': 'release'}     " language server client
@@ -81,7 +84,9 @@ let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 
 set cursorline
 set termguicolors
-colorscheme OceanicNext
+" colorscheme gruvbox
+colorscheme hybrid_material
+
 highlight Normal guibg=NONE ctermbg=NONE
 highlight LineNr guibg=NONE ctermbg=NONE
 highlight SignColumn guibg=NONE ctermbg=NONE
@@ -93,15 +98,22 @@ highlight NonText guibg=None ctermbg=None
 " =============================================================================
 
 let g:lightline = {
-  \ 'colorscheme': 'oceanicnext',
+  \ 'colorscheme': 'material',
   \ 'active' : {
   \   'left': [ [ 'mode', 'paste'],
-  \             [ 'filename', 'modified', 'gitbranch', 'readonly' ] ]
+  \             [ 'filename', 'modified', 'gitbranch', 'readonly' , 'cocstatus'] ]
   \ },
   \ 'component_function': {
-  \   'gitbranch': 'gitbranch#name'
+  \   'gitbranch': 'gitbranch#name',
+  \   'cocstatus': 'coc#status',
   \ },
   \ }
+
+" =============================================================================
+" Dirvish
+" =============================================================================
+
+nnoremap <silent> <leader>fe :Dirvish<CR>
 
 " =============================================================================
 " FZF
@@ -114,6 +126,22 @@ nnoremap <silent> <leader>fl :BLines<CR>
 nnoremap <silent> <leader>fg :Ag<CR>
 
 let g:fzf_preview_window = 'right:60%'
+
+" =============================================================================
+" vim-test
+" =============================================================================
+
+" vim-test allows to run test from within vim. Which tests to run and by what
+" runner can be configured or determined by a command.
+
+let test#strategy = "neovim" " Use neovim term to run the tests in
+let test#python#runner = 'pytest' " use pytest for python projects
+
+nmap <silent> <leader>tt :TestNearest<CR>
+nmap <silent> <leader>tf :TestFile<CR>
+nmap <silent> <leader>ts :TestSuite<CR>
+nmap <silent> <leader>tl :TestLast<CR>
+nmap <silent> <leader>tv :TestVisit<CR>
 
 " =============================================================================
 " File specific settings
