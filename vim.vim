@@ -7,8 +7,7 @@ call plug#begin('~/.vim/plugged')
 " Plug 'sheerun/vim-polyglot'                         " better syntax highlighting
 Plug 'itchyny/lightline.vim'                        " status bar
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  
-Plug 'kristijanhusak/vim-hybrid-material'
-
+Plug 'morhetz/gruvbox'
 
 " Handy
 Plug 'preservim/nerdcommenter'                      " comment using <leader> cc
@@ -22,6 +21,7 @@ Plug 'osyo-manga/vim-over'                          " highlight while searching
 Plug 'justinmk/vim-dirvish'
 
 Plug 'vim-test/vim-test'
+Plug 'ludovicchabant/vim-gutentags'
 
 " LSP
 Plug 'neoclide/coc.nvim', {'branch': 'release'}     " language server client
@@ -84,13 +84,13 @@ let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 
 set cursorline
 set termguicolors
-" colorscheme gruvbox
-colorscheme hybrid_material
+let g:gruvbox_contrast_dark='hard'
+colorscheme gruvbox
 
-highlight Normal guibg=NONE ctermbg=NONE
-highlight LineNr guibg=NONE ctermbg=NONE
-highlight SignColumn guibg=NONE ctermbg=NONE
-highlight NonText guibg=None ctermbg=None
+" highlight Normal guibg=NONE ctermbg=NONE
+" highlight LineNr guibg=NONE ctermbg=NONE
+" highlight SignColumn guibg=NONE ctermbg=NONE
+" highlight NonText guibg=None ctermbg=None
  
 
 " =============================================================================
@@ -98,7 +98,7 @@ highlight NonText guibg=None ctermbg=None
 " =============================================================================
 
 let g:lightline = {
-  \ 'colorscheme': 'material',
+  \ 'colorscheme': 'gruvbox',
   \ 'active' : {
   \   'left': [ [ 'mode', 'paste'],
   \             [ 'filename', 'modified', 'gitbranch', 'readonly' , 'cocstatus'] ]
@@ -108,6 +108,12 @@ let g:lightline = {
   \   'cocstatus': 'coc#status',
   \ },
   \ }
+
+" =============================================================================
+" Gutentags
+" =============================================================================
+
+let g:gutentags_ctags_exclude = [".direnv", "*.envrc", ".git"]
 
 " =============================================================================
 " Dirvish
@@ -124,6 +130,7 @@ nnoremap <silent> <leader>fb :Buffers<CR>
 nnoremap <silent> <leader>fw :Windows<CR>
 nnoremap <silent> <leader>fl :BLines<CR>
 nnoremap <silent> <leader>fg :Ag<CR>
+nnoremap <silent> <leader>ft :Tags<CR>
 
 let g:fzf_preview_window = 'right:60%'
 
