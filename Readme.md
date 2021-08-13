@@ -6,6 +6,6 @@ My dotfiles
 
 Use stow to create symlinks to config files:
 
-``h
+``` sh
 stow <folder>
 ```
