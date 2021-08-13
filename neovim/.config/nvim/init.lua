@@ -57,9 +57,6 @@ require('packer').startup(function()
 
   -- Colors -------------------------------------------------------------------
   use 'lifepillar/vim-gruvbox8'
-  use 'projekt0n/github-nvim-theme'
-  use 'bluz71/vim-moonfly-colors'
-  use {'olimorris/onedark.nvim', requires = 'rktjmp/lush.nvim'}
 
   -- LuaLine ------------------------------------------------------------------
   use 'hoob3rt/lualine.nvim'
