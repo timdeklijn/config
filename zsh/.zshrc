@@ -117,22 +117,28 @@ PS1='$(show_virtual_env)'$PS1
 
 # ALIASES =====================================================================
 
+# fix ctop
+alias ctop='TERM="${TERM/#tmux/screen}" ctop'
+
 # Configs
 alias zshconfig="vim ~/.zshrc"
-alias vimconfig="vim ~/.config/nvim/init.vim"
+
+# Change directory to vimconfig folder and open init.lua
+alias vimconfig="cd ~/.config/nvim/; vim init.lua"
 alias tmuxconfig="vim ~/.tmux.conf"
 
 # VIM
 alias vim="nvim"
+
+# Kubernetes
+alias k="kubectl"
 
 # Git
 alias gc="git commit"
 alias gs="git status"
 alias gd="git diff"
 
-alias g="lazygit"
-
-alias notes="cd ~/TimDocs/90-99\ Notes/91\ notes"
+alias n=notable
 
 # Paths =======================================================================
 
@@ -152,10 +158,10 @@ export PATH="/usr/local/opt/openjdk@8/bin:$PATH"
 
 
 export PATH="~/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
+eval "$(pyenv init --path)"
 eval "$(pyenv virtualenv-init -)"
 if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
+  eval "$(pyenv init --path)"
 fi
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
@@ -173,4 +179,19 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+# update X11 display (this is overwritten in tmux)
+echo $DISPLAY > ~/.display.txt
+alias up_disp='export DISPLAY=`cat ~/.display.txt`'
+
+# Go bin
+export GOPATH="$HOME/go"
+export PATH=$PATH:$(go env GOPATH)/bin
+# export PATH="$GOPATH/bin:$PATH"
+export PATH="/usr/local/opt/libarchive/bin:$PATH"
+
+# TMUX in kitty
+export LC_ALL=en_GB.UTF-8  
+export LANG=en_GB.UTF-8
+
 
