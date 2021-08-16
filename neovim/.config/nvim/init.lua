@@ -108,6 +108,9 @@ vim.o.smartcase = true
 vim.o.updatetime = 250
 vim.wo.signcolumn = "yes"
 
+-- Copy paste from system clipboard
+vim.cmd[[ set clipboard=unnamedplus ]]
+
 -- highlight current line
 vim.cmd[[set cursorline]]
 
