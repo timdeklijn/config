@@ -58,7 +58,7 @@ require('packer').startup(function()
   use 'vimwiki/vimwiki'
 
   -- Colors -------------------------------------------------------------------
-  use 'lifepillar/vim-gruvbox8'
+  use 'EdenEast/nightfox.nvim'
 
   -- LuaLine ------------------------------------------------------------------
   use 'hoob3rt/lualine.nvim'
@@ -127,15 +127,19 @@ require'nvim-treesitter.configs'.setup {
 --Set colorscheme
 vim.o.termguicolors = true
 
--- Set colorscheme
-vim.cmd[[ set background=dark ]]
-vim.cmd[[ colorscheme gruvbox8 ]]
-vim.cmd[[ let g:gruvbox_bold = 1 ]]
-vim.cmd[[ let g:gruvbox_transp_bg = 1  ]]
-vim.cmd[[ let g:gruvbox_filetype_hi_groups = 1 ]]
-vim.cmd[[ let g:gruvbox_italics = 0 ]]
-vim.cmd[[ let g:gruvbox_italicize_strings = 1 ]]
-vim.cmd[[ let g:gruvbox_plugin_hi_groups = 1 ]]
+local nightfox = require('nightfox')
+nightfox.setup({
+  fox = "nightfox", -- change the colorscheme to use nordfox
+  transparent = true,
+  styles = {
+    comments = "NONE", -- change style of comments to be italic
+    keywords = "bold", -- change style of keywords to be bold
+    functions = "bold" -- styles can be a comma separated list
+  },
+})
+
+-- Load the configuration set above and apply the colorscheme
+nightfox.load()
 
 --Remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent=true})
