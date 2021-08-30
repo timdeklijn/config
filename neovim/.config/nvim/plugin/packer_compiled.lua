@@ -146,10 +146,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/vim-asciidoctor"
   },
-  ["vim-clap"] = {
-    loaded = true,
-    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/vim-clap"
-  },
   ["vim-commentary"] = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/vim-commentary"
@@ -177,6 +173,10 @@ _G.packer_plugins = {
   ["vim-tmux-navigator"] = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/vim-tmux-navigator"
+  },
+  vimwiki = {
+    loaded = true,
+    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/vimwiki"
   }
 }
 

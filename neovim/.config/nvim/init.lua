@@ -55,6 +55,8 @@ require('packer').startup(function()
   use 'plasticboy/vim-markdown'
   use 'vim-pandoc/vim-pandoc-syntax'
 
+  use 'vimwiki/vimwiki'
+
   -- Colors -------------------------------------------------------------------
   use 'lifepillar/vim-gruvbox8'
 
@@ -227,3 +229,4 @@ require("tim.telescope")
 require("tim.lsp_config")
 require("tim.formatter")
 require("tim.compe")
+require("tim.vimwiki")
