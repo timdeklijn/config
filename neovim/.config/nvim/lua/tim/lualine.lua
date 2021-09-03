@@ -26,7 +26,7 @@ end
 -- Init and configure lualine
 require('lualine').setup{
   options = {
-    theme = 'nightfox',
+    theme = 'gruvbox_material',
     -- Unset separators, keep it simple
     section_separators = {'', ''},
     component_separators = {'', ''}
