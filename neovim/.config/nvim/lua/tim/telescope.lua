@@ -37,6 +37,8 @@ vim.api.nvim_set_keymap('n', '<leader>f', [[<cmd>lua require('telescope.builtin'
 -- Look for previously opened files
 vim.api.nvim_set_keymap('n', '<leader>s?', [[<cmd>lua require('telescope.builtin').oldfiles(themes.get_ivy({}))<cr>]],  opts)
 
+vim.api.nvim_set_keymap('n', '<leader>sl', [[<cmd>lua require('telescope.builtin').treesitter(themes.get_ivy({}))<cr>]],  opts)
+
 -- Greps --
 -- Find in current file:
 vim.api.nvim_set_keymap('n', '<leader>ssf', [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find(themes.get_ivy({}))<cr>]],  opts)
