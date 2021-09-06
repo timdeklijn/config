@@ -133,7 +133,7 @@ vim.cmd[[ colorscheme gruvbox8 ]]
 vim.cmd[[ let g:gruvbox_filetype_hi_groups = 1 ]]
 vim.cmd[[ let g:gruvbox_plugin_hi_groups = 1 ]]
 vim.cmd[[ let g:gruvbox_italicize_strings = 0 ]]
-vim.cmd[[ let g:gruvbox_italics = 0 ]]
+vim.cmd[[ let g:gruvbox_italics = 1 ]]
 vim.cmd[[ let g:gruvbox_transp_bg = 1 ]]
 
 -- local nightfox = require('nightfox')
