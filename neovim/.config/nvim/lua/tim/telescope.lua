@@ -36,7 +36,11 @@ vim.api.nvim_set_keymap('n', '<leader><space>', [[<cmd>lua require('telescope.bu
 vim.api.nvim_set_keymap('n', '<leader>f', [[<cmd>lua require('telescope.builtin').find_files(themes.get_ivy({}))<cr>]],  opts)
 -- Look for previously opened files
 vim.api.nvim_set_keymap('n', '<leader>s?', [[<cmd>lua require('telescope.builtin').oldfiles(themes.get_ivy({}))<cr>]],  opts)
+-- File browser
+vim.api.nvim_set_keymap('n', '<leader>sse', [[<cmd>lua require('telescope.builtin').file_browser(themes.get_ivy({}))<cr>]],  opts)
 
+
+-- Treesitter variables in file
 vim.api.nvim_set_keymap('n', '<leader>sl', [[<cmd>lua require('telescope.builtin').treesitter(themes.get_ivy({}))<cr>]],  opts)
 
 -- Greps --

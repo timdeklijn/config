@@ -58,7 +58,6 @@ require('packer').startup(function()
   use 'vimwiki/vimwiki'
 
   -- Colors -------------------------------------------------------------------
-  use 'EdenEast/nightfox.nvim'
   use 'lifepillar/vim-gruvbox8'
 
   -- LuaLine ------------------------------------------------------------------
@@ -71,14 +70,6 @@ require('packer').startup(function()
   use 'kyazdani42/nvim-web-devicons'
   use 'kyazdani42/nvim-tree.lua'
 
-  -- TODOS --------------------------------------------------------------------
-  use {
-  "folke/todo-comments.nvim",
-  requires = "nvim-lua/plenary.nvim",
-  config = function()
-    require("todo-comments").setup { }
-  end
-}
 end)
 
 --Incremental live completion
@@ -133,22 +124,8 @@ vim.cmd[[ colorscheme gruvbox8 ]]
 vim.cmd[[ let g:gruvbox_filetype_hi_groups = 1 ]]
 vim.cmd[[ let g:gruvbox_plugin_hi_groups = 1 ]]
 vim.cmd[[ let g:gruvbox_italicize_strings = 0 ]]
-vim.cmd[[ let g:gruvbox_italics = 1 ]]
+vim.cmd[[ let g:gruvbox_italics = 0 ]]
 vim.cmd[[ let g:gruvbox_transp_bg = 1 ]]
-
--- local nightfox = require('nightfox')
--- nightfox.setup({
---   fox = "nightfox", -- change the colorscheme to use nordfox
---   transparent = true,
---   styles = {
---     comments = "NONE", -- change style of comments to be italic
---     keywords = "bold", -- change style of keywords to be bold
---     functions = "bold" -- styles can be a comma separated list
---   },
--- })
-
--- Load the configuration set above and apply the colorscheme
--- nightfox.load()
 
 --Remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent=true})
