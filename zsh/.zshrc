@@ -140,7 +140,7 @@ alias k="kubectl"
 alias gc="git commit"
 alias gs="git status"
 alias gd="git diff"
-alias gl="git log --all --decorate --oneline --graph"
+alias glog="git log --all --decorate --oneline --graph"
 
 alias n=notable
 
