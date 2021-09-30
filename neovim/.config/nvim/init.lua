@@ -59,6 +59,7 @@ require('packer').startup(function()
 
   -- Colors -------------------------------------------------------------------
   use 'lifepillar/vim-gruvbox8'
+  use 'mhartington/oceanic-next'
 
   -- LuaLine ------------------------------------------------------------------
   use 'hoob3rt/lualine.nvim'
@@ -119,13 +120,41 @@ require'nvim-treesitter.configs'.setup {
 --Set colorscheme
 vim.o.termguicolors = true
 
-vim.cmd[[ set background=dark ]]
-vim.cmd[[ colorscheme gruvbox8 ]]
-vim.cmd[[ let g:gruvbox_filetype_hi_groups = 1 ]]
-vim.cmd[[ let g:gruvbox_plugin_hi_groups = 1 ]]
-vim.cmd[[ let g:gruvbox_italicize_strings = 0 ]]
-vim.cmd[[ let g:gruvbox_italics = 0 ]]
-vim.cmd[[ let g:gruvbox_transp_bg = 1 ]]
+-- vim.cmd[[ set background=dark ]]
+-- vim.cmd[[ colorscheme gruvbox8 ]]
+-- vim.cmd[[ let g:gruvbox_filetype_hi_groups = 1 ]]
+-- vim.cmd[[ let g:gruvbox_plugin_hi_groups = 1 ]]
+-- vim.cmd[[ let g:gruvbox_italicize_strings = 0 ]]
+-- vim.cmd[[ let g:gruvbox_italics = 0 ]]
+-- vim.cmd[[ let g:gruvbox_transp_bg = 1 ]]
+
+function create_augroup(name, autocmds)
+    cmd = vim.cmd
+    cmd('augroup ' .. name)
+    cmd('autocmd!')
+    for _, autocmd in ipairs(autocmds) do
+        cmd('autocmd ' .. table.concat(autocmd, ' '))
+    end
+    cmd('augroup END')
+end
+
+function HighlightNone()
+    vim.highlight.create("Normal", {ctermbg = "NONE", guibg = "NONE"})
+    vim.highlight.create("LineNr", {ctermbg = "NONE", guibg = "NONE"})
+    vim.highlight.create("SignColumn", {ctermbg = "NONE", guibg = "NONE"})
+    vim.highlight.create("EndOfBuffer", {ctermbg = "NONE", guibg = "NONE"})
+    vim.highlight.create("TSMethod", {cterm = "bold", gui = "bold"})
+    vim.highlight.create("TSFunction", {cterm = "bold", gui = "bold"})
+    vim.highlight.create("TSType", {cterm = "bold", gui = "bold"})
+    vim.highlight.create("TSOperator", {cterm = "bold", gui = "bold"})
+end
+
+vim.cmd[[ colorscheme OceanicNext ]]
+vim.cmd[[ let g:oceanic_next_terminal_bold = 1 ]]
+
+create_augroup("HighlightNone", {
+    {"ColorScheme", "*", "lua HighlightNone()"}
+})
 
 --Remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent=true})
@@ -197,6 +226,7 @@ vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true})
 require('gitsigns').setup()
 
 -- Nvim tree
+require('nvim-tree').setup()
 vim.cmd[[ nnoremap <C-n> :NvimTreeToggle<CR> ]]
 vim.cmd[[ nnoremap <leader>r :NvimTreeRefresh<CR> ]]
 vim.cmd[[ nnoremap <leader>n :NvimTreeFindFile<CR> ]]
