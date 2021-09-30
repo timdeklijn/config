@@ -77,6 +77,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/formatter.nvim"
   },
+  ["fzf-lua"] = {
+    loaded = true,
+    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/fzf-lua"
+  },
   ["gitsigns.nvim"] = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/gitsigns.nvim"
@@ -96,6 +100,10 @@ _G.packer_plugins = {
   ["nvim-compe"] = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/nvim-compe"
+  },
+  ["nvim-fzf"] = {
+    loaded = true,
+    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/nvim-fzf"
   },
   ["nvim-lspconfig"] = {
     loaded = true,

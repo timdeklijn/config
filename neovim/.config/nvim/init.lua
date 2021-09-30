@@ -20,13 +20,12 @@ require('packer').startup(function()
   use 'tpope/vim-commentary'         -- "gc" to comment visual regions/lines
   use 'tpope/vim-fugitive'
 
-  -- UI to select things (files, grep results, open buffers...)
-  use {'nvim-telescope/telescope.nvim', 
+  -- fzf everything
+  use { 'ibhagwan/fzf-lua',
     requires = {
-      {'nvim-lua/popup.nvim'},
-      {'nvim-lua/plenary.nvim'}
-    }}
-  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+      'vijaymarupudi/nvim-fzf',
+      'kyazdani42/nvim-web-devicons' } -- optional for icons
+    }
 
   -- Add indentation guides even on blank lines
   use { 'lukas-reineke/indent-blankline.nvim' }
@@ -238,14 +237,10 @@ vim.cmd[[ let g:nvim_tree_lsp_diagnostics = 1 ]]
 vim.api.nvim_set_keymap('n', '<leader>gg', [[:Git <CR>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>gp', [[:Git push<CR>]], { noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>gP', [[:Git pull<CR>]], { noremap = true, silent = true})
--- Telescope git commands:
--- <leader>gb branches
--- <leader>ga all commits
--- <leader>gc commits for file
 
 -- Load external configs
 require("tim.lualine")
-require("tim.telescope")
+require("tim.fzf")
 require("tim.lsp_config")
 require("tim.formatter")
 require("tim.compe")
