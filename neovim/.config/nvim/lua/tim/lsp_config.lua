@@ -28,6 +28,7 @@ nvim_lsp.rust_analyzer.setup { on_attach = on_attach }
 nvim_lsp.tsserver.setup { on_attach = on_attach }
 nvim_lsp.gopls.setup { on_attach = on_attach }
 nvim_lsp.pyright.setup { on_attach = on_attach }
+nvim_lsp.bashls.setup { on_attach = on_attach }
 nvim_lsp.html.setup{ on_attach = on_attach, cmd = {"vscode-html-language-server", "--stdio" } }
 
 local sumneko_root_path = vim.fn.getenv("HOME").."/.local/bin/sumneko_lua" -- Change to your sumneko root installation
