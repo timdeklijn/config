@@ -3,10 +3,16 @@
 -- Tim de Klijn, 2021
 
 local nvim_lsp = require('lspconfig')
+
 local on_attach = function(_client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  -- Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   local opts = { noremap=true, silent=true }
+
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
@@ -17,6 +23,7 @@ local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
@@ -24,12 +31,12 @@ local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
 
-nvim_lsp.rust_analyzer.setup { on_attach = on_attach }
-nvim_lsp.tsserver.setup { on_attach = on_attach }
-nvim_lsp.gopls.setup { on_attach = on_attach }
-nvim_lsp.pyright.setup { on_attach = on_attach }
-nvim_lsp.bashls.setup { on_attach = on_attach }
-nvim_lsp.html.setup{ on_attach = on_attach, cmd = {"vscode-html-language-server", "--stdio" } }
+nvim_lsp.rust_analyzer.setup { on_attach = on_attach, flags = { debounce_text_changes = 150, }}
+nvim_lsp.tsserver.setup { on_attach = on_attach, flags = { debounce_text_changes = 150, }}
+nvim_lsp.gopls.setup { on_attach = on_attach, flags = { debounce_text_changes = 150, }}
+nvim_lsp.pyright.setup { on_attach = on_attach, flags = { debounce_text_changes = 150, }}
+nvim_lsp.bashls.setup { on_attach = on_attach, flags = { debounce_text_changes = 150, }}
+nvim_lsp.html.setup{ on_attach = on_attach, cmd = {"vscode-html-language-server", "--stdio" }, flags = { debounce_text_changes = 150, }}
 
 local sumneko_root_path = vim.fn.getenv("HOME").."/.local/bin/sumneko_lua" -- Change to your sumneko root installation
 local sumneko_binary_path = "/bin/linux/lua-language-server" -- Change to your OS specific output folder
@@ -56,5 +63,5 @@ nvim_lsp.sumneko_lua.setup {
 }
 
 -- Map :Format to vim.lsp.buf.formatting(), also mapped to <SPACE>=
-vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
-
+-- vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
+-- vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])

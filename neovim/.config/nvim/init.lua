@@ -231,7 +231,7 @@ vim.cmd[[ nnoremap <leader>r :NvimTreeRefresh<CR> ]]
 vim.cmd[[ nnoremap <leader>n :NvimTreeFindFile<CR> ]]
 vim.cmd[[ let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache', '__pycache__/' ] ]]
 vim.cmd[[ let g:nvim_tree_gitignore=1 ]]
-vim.cmd[[ let g:nvim_tree_lsp_diagnostics = 1 ]]
+-- vim.cmd[[ let g:nvim_tree_lsp_diagnostics = 1 ]]
 
 -- fugitive shortcuts
 vim.api.nvim_set_keymap('n', '<leader>gg', [[:Git <CR>]], { noremap = true, silent = true})

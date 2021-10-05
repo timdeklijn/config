@@ -9,7 +9,7 @@ require('formatter').setup({
       function()
         return {
           exe = "pandoc",
-          args = {"-f", "markdown", "-t", "gfm", "-sp", "--tab-stop=2"},
+          args = {"-f", "markdown", "-t", "gfm", "-sp", "--tab-stop=2", "--columns=88"},
           stdin = true
         }
       end
