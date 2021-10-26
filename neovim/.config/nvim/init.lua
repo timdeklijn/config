@@ -20,19 +20,30 @@ require('packer').startup(function()
   use 'tpope/vim-commentary'         -- "gc" to comment visual regions/lines
   use 'tpope/vim-fugitive'
 
-  -- fzf everything
-  use { 'ibhagwan/fzf-lua',
-    requires = {
-      'vijaymarupudi/nvim-fzf',
-      'kyazdani42/nvim-web-devicons' } -- optional for icons
-    }
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = { {'nvim-lua/plenary.nvim'} }
+  }
+
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
   -- Add indentation guides even on blank lines
   use { 'lukas-reineke/indent-blankline.nvim' }
   -- Add git related info in the signs columns and popups
   use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'} }
   use 'neovim/nvim-lspconfig'        -- Collection of configurations for built-in LSP client
-  use 'hrsh7th/nvim-compe'           -- Autocompletion plugin
+
+  use 'kabouzeid/nvim-lspinstall'
+
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/nvim-cmp'
+
+  -- LuaSnip
+  use 'L3MON4D3/LuaSnip'
+  use "rafamadriz/friendly-snippets"
+  use 'saadparwaiz1/cmp_luasnip'
+
   -- Tree sitter
   use 'nvim-treesitter/nvim-treesitter'
 
@@ -57,8 +68,8 @@ require('packer').startup(function()
   use 'vimwiki/vimwiki'
 
   -- Colors -------------------------------------------------------------------
+  use 'shaunsingh/nord.nvim' 
   use 'lifepillar/vim-gruvbox8'
-  use 'mhartington/oceanic-next'
 
   -- LuaLine ------------------------------------------------------------------
   use 'hoob3rt/lualine.nvim'
@@ -119,41 +130,30 @@ require'nvim-treesitter.configs'.setup {
 --Set colorscheme
 vim.o.termguicolors = true
 
--- vim.cmd[[ set background=dark ]]
--- vim.cmd[[ colorscheme gruvbox8 ]]
+-- vim.cmd[[ let g:gruvbox_bold = 1 ]]
 -- vim.cmd[[ let g:gruvbox_filetype_hi_groups = 1 ]]
--- vim.cmd[[ let g:gruvbox_plugin_hi_groups = 1 ]]
--- vim.cmd[[ let g:gruvbox_italicize_strings = 0 ]]
 -- vim.cmd[[ let g:gruvbox_italics = 0 ]]
--- vim.cmd[[ let g:gruvbox_transp_bg = 1 ]]
+-- vim.cmd[[ let g:gruvbox_plugin_hi_groups = 1 ]]
+-- vim.cmd[[ let g:gruvbox_transp_bg = 1 ]] 
 
-function create_augroup(name, autocmds)
-    cmd = vim.cmd
-    cmd('augroup ' .. name)
-    cmd('autocmd!')
-    for _, autocmd in ipairs(autocmds) do
-        cmd('autocmd ' .. table.concat(autocmd, ' '))
-    end
-    cmd('augroup END')
-end
+vim.cmd[[ colorscheme nord ]]
 
-function HighlightNone()
-    -- vim.highlight.create("Normal", {ctermbg = "NONE", guibg = "NONE"})
-    -- vim.highlight.create("LineNr", {ctermbg = "NONE", guibg = "NONE"})
-    -- vim.highlight.create("SignColumn", {ctermbg = "NONE", guibg = "NONE"})
-    -- vim.highlight.create("EndOfBuffer", {ctermbg = "NONE", guibg = "NONE"})
-    vim.highlight.create("TSMethod", {cterm = "bold", gui = "bold"})
-    vim.highlight.create("TSFunction", {cterm = "bold", gui = "bold"})
-    vim.highlight.create("TSType", {cterm = "bold", gui = "bold"})
-    vim.highlight.create("TSOperator", {cterm = "bold", gui = "bold"})
-end
+vim.g.nord_contrast = false
+vim.g.nord_borders = true
+vim.g.nord_disable_background = false
+vim.g.nord_italic = false
 
-vim.cmd[[ colorscheme OceanicNext ]]
-vim.cmd[[ let g:oceanic_next_terminal_bold = 1 ]]
-
-create_augroup("HighlightNone", {
-    {"ColorScheme", "*", "lua HighlightNone()"}
-})
+-- I really like Treesitter, and I can use the highlight groups to make
+-- specific groups dispolay as bold.
+--
+-- TODO: improve on this, make it a single function
+vim.cmd[[autocmd ColorScheme * highlight TSBoolean cterm=bold gui=bold]]
+vim.cmd[[autocmd ColorScheme * highlight TSType cterm=bold gui=bold]]
+vim.cmd[[autocmd ColorScheme * highlight TSMethod cterm=bold gui=bold]]
+vim.cmd[[autocmd ColorScheme * highlight TSFunction cterm=bold gui=bold]]
+vim.cmd[[autocmd ColorScheme * highlight TSConditional cterm=bold gui=bold]]
+vim.cmd[[autocmd ColorScheme * highlight TSConstant cterm=bold gui=bold]]
+vim.cmd[[autocmd ColorScheme * highlight TODO cterm=bold gui=bold]]
 
 --Remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent=true})
@@ -188,25 +188,6 @@ vim.g.indent_blankline_filetype_exclude = { 'help', 'packer' }
 vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile'}
 vim.g.indent_blankline_char_highlight = 'LineNr'
 
--- Toggle to disable mouse mode and indentlines for easier paste
-ToggleMouse = function()
-  if vim.o.mouse == 'a' then
-    vim.cmd[[IndentBlanklineDisable]]
-    vim.wo.signcolumn='no'
-    vim.o.mouse = 'v'
-    vim.wo.number = false
-    print("Mouse disabled")
-  else
-    vim.cmd[[IndentBlanklineEnable]]
-    vim.wo.signcolumn='yes'
-    vim.o.mouse = 'a'
-    vim.wo.number = true
-    print("Mouse enabled")
-  end
-end
-
-vim.api.nvim_set_keymap('n', '<F10>', '<cmd>lua ToggleMouse()<cr>', { noremap = true })
-
 -- Change preview window location
 vim.g.splitbelow = true
 
@@ -234,14 +215,21 @@ vim.cmd[[ let g:nvim_tree_gitignore=1 ]]
 -- vim.cmd[[ let g:nvim_tree_lsp_diagnostics = 1 ]]
 
 -- fugitive shortcuts
-vim.api.nvim_set_keymap('n', '<leader>gg', [[:Git <CR>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>gp', [[:Git push<CR>]], { noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>gP', [[:Git pull<CR>]], { noremap = true, silent = true})
+local opts = { noremap = true, silent = true}
+vim.api.nvim_set_keymap('n', '<leader>gg', [[:Git <CR>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>gp', [[:Git push<CR>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>gP', [[:Git pull<CR>]], opts)
+
+-- useful quickfix keybinds
+vim.api.nvim_set_keymap('n', '[q', [[:cp<cr>]], opts)
+vim.api.nvim_set_keymap('n', ']q', [[:cn<cr>]], opts)
+vim.api.nvim_set_keymap('n', '[-', [[:cclose<cr>]], opts)
+vim.api.nvim_set_keymap('n', '[+', [[:copen<cr>]], opts)
 
 -- Load external configs
 require("tim.lualine")
-require("tim.fzf")
+require("tim.telescope")
 require("tim.lsp_config")
 require("tim.formatter")
-require("tim.compe")
+require("tim.cmp")
 require("tim.vimwiki")

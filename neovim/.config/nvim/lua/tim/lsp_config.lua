@@ -31,12 +31,13 @@ local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 end
 
-nvim_lsp.rust_analyzer.setup { on_attach = on_attach, flags = { debounce_text_changes = 150, }}
-nvim_lsp.tsserver.setup { on_attach = on_attach, flags = { debounce_text_changes = 150, }}
-nvim_lsp.gopls.setup { on_attach = on_attach, flags = { debounce_text_changes = 150, }}
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+nvim_lsp.rust_analyzer.setup { on_attach = on_attach, flags = { debounce_text_changes = 150, capabilities = capabilities}}
+nvim_lsp.tsserver.setup { on_attach = on_attach, flags = { debounce_text_changes = 150, capabilities = capabilities }}
+nvim_lsp.gopls.setup { on_attach = on_attach, flags = { debounce_text_changes = 150,  capabilities = capabilities }}
 nvim_lsp.pyright.setup { on_attach = on_attach, flags = { debounce_text_changes = 150, }}
 nvim_lsp.bashls.setup { on_attach = on_attach, flags = { debounce_text_changes = 150, }}
-nvim_lsp.html.setup{ on_attach = on_attach, cmd = {"vscode-html-language-server", "--stdio" }, flags = { debounce_text_changes = 150, }}
+nvim_lsp.html.setup{ on_attach = on_attach, cmd = {"vscode-html-language-server", "--stdio" }, flags = { debounce_text_changes = 150, }, capabilities = capabilities }
 
 local sumneko_root_path = vim.fn.getenv("HOME").."/.local/bin/sumneko_lua" -- Change to your sumneko root installation
 local sumneko_binary_path = "/bin/linux/lua-language-server" -- Change to your OS specific output folder
@@ -60,6 +61,7 @@ nvim_lsp.sumneko_lua.setup {
           },
       },
   },
+  capabilities = capabilities 
 }
 
 -- Map :Format to vim.lsp.buf.formatting(), also mapped to <SPACE>=
