@@ -35,7 +35,9 @@ end
 
 -- Search through all open buffers
 my_buffers = function()
-  require("telescope.builtin").buffers()
+  require("telescope.builtin").buffers({
+    sort_lastused = true
+  })
 end
 
 -- Live grep the project

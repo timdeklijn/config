@@ -18,13 +18,13 @@ local use = require('packer').use
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'       -- Package manager
   use 'tpope/vim-commentary'         -- "gc" to comment visual regions/lines
-  use 'tpope/vim-fugitive'
+  use 'tpope/vim-fugitive'           --git
 
+  -- Telescope to navigate and do some other cool search things
   use {
     'nvim-telescope/telescope.nvim',
     requires = { {'nvim-lua/plenary.nvim'} }
   }
-
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
   -- Add indentation guides even on blank lines
@@ -33,11 +33,10 @@ require('packer').startup(function()
   use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'} }
   use 'neovim/nvim-lspconfig'        -- Collection of configurations for built-in LSP client
 
-  use 'kabouzeid/nvim-lspinstall'
-
+  -- completion
+  use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'
-  use 'hrsh7th/nvim-cmp'
 
   -- LuaSnip
   use 'L3MON4D3/LuaSnip'
@@ -70,6 +69,8 @@ require('packer').startup(function()
   -- Colors -------------------------------------------------------------------
   use 'shaunsingh/nord.nvim' 
   use 'lifepillar/vim-gruvbox8'
+  use 'Shatur/neovim-ayu'
+  use 'Mofiqul/dracula.nvim'
 
   -- LuaLine ------------------------------------------------------------------
   use 'hoob3rt/lualine.nvim'
@@ -136,24 +137,63 @@ vim.o.termguicolors = true
 -- vim.cmd[[ let g:gruvbox_plugin_hi_groups = 1 ]]
 -- vim.cmd[[ let g:gruvbox_transp_bg = 1 ]] 
 
-vim.cmd[[ colorscheme nord ]]
-
-vim.g.nord_contrast = false
-vim.g.nord_borders = true
-vim.g.nord_disable_background = false
-vim.g.nord_italic = false
+-- vim.cmd[[ colorscheme nord ]]
+-- vim.cmd[[ colorscheme jellybeans-nvim ]]
+-- vim.g.nord_contrast = false
+-- vim.g.nord_borders = true
+-- vim.g.nord_disable_background = false
+-- vim.g.nord_italic = false
 
 -- I really like Treesitter, and I can use the highlight groups to make
 -- specific groups dispolay as bold.
---
--- TODO: improve on this, make it a single function
-vim.cmd[[autocmd ColorScheme * highlight TSBoolean cterm=bold gui=bold]]
-vim.cmd[[autocmd ColorScheme * highlight TSType cterm=bold gui=bold]]
-vim.cmd[[autocmd ColorScheme * highlight TSMethod cterm=bold gui=bold]]
-vim.cmd[[autocmd ColorScheme * highlight TSFunction cterm=bold gui=bold]]
-vim.cmd[[autocmd ColorScheme * highlight TSConditional cterm=bold gui=bold]]
-vim.cmd[[autocmd ColorScheme * highlight TSConstant cterm=bold gui=bold]]
-vim.cmd[[autocmd ColorScheme * highlight TODO cterm=bold gui=bold]]
+
+-- =============================================================================
+-- COLORS
+-- =============================================================================
+
+-- require('colorbuddy').colorscheme('timbeans')
+vim.cmd[[colorscheme dracula]]
+
+---- Fixup color scheme. To get bold highlights the colorscheme should be 
+---- overwritten. To prevent overwriting the colors, we need to save them
+---- and reapply them when making the highlights bold.
+----
+---- get the guifg by checking the output of the `:hi` command
+local c1 = '#F1FA8C' -- TSFunction
+local c2 = '#F1FA8C' -- TSConstant
+local c3 = '#FF79C6' -- TSType
+local c4 = '#BD93F9' -- TODO
+local c5 = '#FF79C6' -- TSConditional
+local c6 = '#BD93F9' -- All keywords
+-- List of color 'corrections'
+-- TODO: this can be made into a function
+
+local recolors = {
+  {"TSFunction", c1},
+  {"TSConstant", c2},
+  {"TSType", c3},
+  {"TODO", c4},
+  {"TSConditional", c5},
+  {"TSOperator", c6}, 
+  {"TSKeyword", c6},
+  {"TSKeywordOperator", c6},
+  {"TSKeywordFunction", c6},
+  {"TSKeywordReturn", c6},
+  {"TSRepeat", c6},
+}
+
+local color_string = function(group, color)
+  return 'autocmd ColorScheme * highlight ' .. group .. ' gui=bold, guifg=' .. color
+end
+
+-- Recolor
+for i, v in ipairs(recolors) do
+  vim.cmd(color_string(v[1], v[2]))
+end
+
+-- =============================================================================
+-- REMAPS
+-- =============================================================================
 
 --Remap space as leader key
 vim.api.nvim_set_keymap('', '<Space>', '<Nop>', { noremap = true, silent=true})
