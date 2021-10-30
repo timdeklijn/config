@@ -12,7 +12,6 @@ setlocal expandtab
 setlocal autoindent
 
 setlocal textwidth=88
-setlocal colorcolumn=88
 
 " Conceal on to hide some boilerplate
 setlocal conceallevel=3
