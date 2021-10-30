@@ -89,9 +89,9 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/direnv.vim"
   },
-  ["dracula.nvim"] = {
+  everforest = {
     loaded = true,
-    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/dracula.nvim"
+    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/everforest"
   },
   ["formatter.nvim"] = {
     loaded = true,
@@ -116,18 +116,6 @@ _G.packer_plugins = {
   ["lualine.nvim"] = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/lualine.nvim"
-  },
-  ["neovim-ayu"] = {
-    loaded = true,
-    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/neovim-ayu"
-  },
-  ["nord.nvim"] = {
-    loaded = true,
-    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/nord.nvim"
-  },
-  ["nvim-base16"] = {
-    loaded = true,
-    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/nvim-base16"
   },
   ["nvim-cmp"] = {
     loaded = true,
@@ -184,10 +172,6 @@ _G.packer_plugins = {
   ["vim-go"] = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/vim-go"
-  },
-  ["vim-gruvbox8"] = {
-    loaded = true,
-    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/vim-gruvbox8"
   },
   ["vim-markdown"] = {
     loaded = true,

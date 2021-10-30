@@ -5,7 +5,7 @@
 -- Init and configure lualine
 require('lualine').setup{
   options = {
-    theme = 'OceanicNext',
+    theme = 'everforest',
     -- Unset separators, keep it simple
     section_separators = {'', ''},
     component_separators = {'', ''}

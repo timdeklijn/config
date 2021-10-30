@@ -67,11 +67,7 @@ require('packer').startup(function()
   use 'vimwiki/vimwiki'
 
   -- Colors -------------------------------------------------------------------
-  use 'shaunsingh/nord.nvim' 
-  use 'lifepillar/vim-gruvbox8'
-  use 'Shatur/neovim-ayu'
-  use 'Mofiqul/dracula.nvim'
-  use 'RRethy/nvim-base16'
+  use 'sainnhe/everforest'
 
   -- LuaLine ------------------------------------------------------------------
   use 'hoob3rt/lualine.nvim'
@@ -129,86 +125,46 @@ require'nvim-treesitter.configs'.setup {
   }
 }
 
---Set colorscheme
-vim.o.termguicolors = true
-
--- vim.cmd[[ let g:gruvbox_bold = 1 ]]
--- vim.cmd[[ let g:gruvbox_filetype_hi_groups = 1 ]]
--- vim.cmd[[ let g:gruvbox_italics = 0 ]]
--- vim.cmd[[ let g:gruvbox_plugin_hi_groups = 1 ]]
--- vim.cmd[[ let g:gruvbox_transp_bg = 1 ]] 
-
--- vim.cmd[[ colorscheme nord ]]
--- vim.cmd[[ colorscheme jellybeans-nvim ]]
--- vim.g.nord_contrast = false
--- vim.g.nord_borders = true
--- vim.g.nord_disable_background = false
--- vim.g.nord_italic = false
-
--- I really like Treesitter, and I can use the highlight groups to make
--- specific groups dispolay as bold.
-
 -- =============================================================================
 -- COLORS
 -- =============================================================================
 
-vim.cmd[[ colorscheme base16-tomorrow-night ]]
-vim.cmd[[ autocmd ColorScheme * highlight TSFunction gui=bold ]]
-vim.cmd[[ autocmd ColorScheme * highlight TSConstant gui=bold ]]
-vim.cmd[[ autocmd ColorScheme * highlight TSType gui=bold ]]
-vim.cmd[[ autocmd ColorScheme * highlight TODO gui=bold ]]
-vim.cmd[[ autocmd ColorScheme * highlight TSConstant gui=bold ]]
-vim.cmd[[ autocmd ColorScheme * highlight TSOperator gui=bold ]]
-vim.cmd[[ autocmd ColorScheme * highlight TSKeyword gui=bold ]]
-vim.cmd[[ autocmd ColorScheme * highlight TSKeywordOperator gui=bold ]]
-vim.cmd[[ autocmd ColorScheme * highlight TSKeywordFunction gui=bold ]]
-vim.cmd[[ autocmd ColorScheme * highlight TSKeywordReturn gui=bold ]]
-vim.cmd[[ autocmd ColorScheme * highlight TSRepeat gui=bold ]]
-vim.cmd[[ autocmd ColorScheme * highlight TSMethod gui=bold ]]
-vim.cmd[[ autocmd ColorScheme * highlight TSBoolean gui=bold ]]
+--Set colorscheme
 
--- require('colorbuddy').colorscheme('timbeans')
---vim.cmd[[colorscheme dracula]]
+vim.o.termguicolors = true
+vim.cmd[[ let g:everforest_background = 'hard' ]]
+vim.cmd[[ let g:everforest_enable_italic = 0 ]] 
+vim.cmd[[ let g:everforest_disable_italic_comment = 1 ]]
+vim.cmd[[ let g:everforest_cursor = 'green' ]]
+vim.cmd[[ let g:everforest_sign_column_background = 'none' ]]
+vim.cmd[[ let g:everforest_ui_contrast = 'high' ]]
+vim.cmd[[ let g:everforest_show_eob = 0 ]]
+vim.cmd[[ let g:everforest_diagnostic_virtual_text = 'colored' ]]
+vim.cmd[[ let g:everforest_better_performance = 1 ]]
 
------- Fixup color scheme. To get bold highlights the colorscheme should be 
------- overwritten. To prevent overwriting the colors, we need to save them
------- and reapply them when making the highlights bold.
-------
------- get the guifg by checking the output of the `:hi` command
---local c1 = '#F1FA8C' -- TSFunction
---local c2 = '#F1FA8C' -- TSConstant
---local c3 = '#FF79C6' -- TSType
---local c4 = '#BD93F9' -- TODO
---local c5 = '#FF79C6' -- TSConditional
---local c6 = '#BD93F9' -- All keywords
---local c7 = '#50fa7b'
----- List of color 'corrections'
----- TODO: this can be made into a function
+vim.cmd [[ colorschem everforest ]]
 
---local recolors = {
---  {"TSFunction", c1},
---  {"TSConstant", c2},
---  {"TSType", c3},
---  {"TODO", c4},
---  {"TSConditional", c5},
---  {"TSOperator", c6}, 
---  {"TSKeyword", c6},
---  {"TSKeywordOperator", c6},
---  {"TSKeywordFunction", c6},
---  {"TSKeywordReturn", c6},
---  {"TSRepeat", c6},
---  {"TSMethod", c7},
---  {"TSBoolean", c4},
---}
+vim.cmd[[ autocmd ColorScheme * highlight TSWarning ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#e68183 ]]
+vim.cmd[[ autocmd ColorScheme * highlight TSNote ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#d9bb80 ]]
 
---local color_string = function(group, color)
---  return 'autocmd ColorScheme * highlight ' .. group .. ' gui=bold, guifg=' .. color
---end
+-- TSWarning      xxx cterm=bold ctermfg=235 ctermbg=214 gui=bold guifg=#2b3339 guibg=#dbbc7f
+-- I really like Treesitter, and I can use the highlight groups to make
+-- specific groups dispolay as bold.
 
----- Recolor
---for i, v in ipairs(recolors) do
---  vim.cmd(color_string(v[1], v[2]))
---end
+-- vim.cmd[[ autocmd ColorScheme * highlight TSFunction gui=bold ]]
+-- vim.cmd[[ autocmd ColorScheme * highlight TSConstant gui=bold ]]
+-- vim.cmd[[ autocmd ColorScheme * highlight TSType gui=bold ]]
+-- vim.cmd[[ autocmd ColorScheme * highlight TODO gui=bold ]]
+-- vim.cmd[[ autocmd ColorScheme * highlight TSConstant gui=bold ]]
+-- vim.cmd[[ autocmd ColorScheme * highlight TSOperator gui=bold ]]
+-- vim.cmd[[ autocmd ColorScheme * highlight TSKeyword gui=bold ]]
+-- vim.cmd[[ autocmd ColorScheme * highlight TSKeywordOperator gui=bold ]]
+-- vim.cmd[[ autocmd ColorScheme * highlight TSKeywordFunction gui=bold ]]
+-- vim.cmd[[ autocmd ColorScheme * highlight TSKeywordReturn gui=bold ]]
+-- vim.cmd[[ autocmd ColorScheme * highlight TSRepeat gui=bold ]]
+-- vim.cmd[[ autocmd ColorScheme * highlight TSMethod gui=bold ]]
+-- vim.cmd[[ autocmd ColorScheme * highlight TSBoolean gui=bold ]]
+-- vim.cmd[[ autocmd ColorScheme * highlight TSComment gui=none ]]
 
 -- =============================================================================
 -- REMAPS
