@@ -71,6 +71,7 @@ require('packer').startup(function()
   use 'lifepillar/vim-gruvbox8'
   use 'Shatur/neovim-ayu'
   use 'Mofiqul/dracula.nvim'
+  use 'RRethy/nvim-base16'
 
   -- LuaLine ------------------------------------------------------------------
   use 'hoob3rt/lualine.nvim'
@@ -151,45 +152,63 @@ vim.o.termguicolors = true
 -- COLORS
 -- =============================================================================
 
+vim.cmd[[ colorscheme base16-tomorrow-night ]]
+vim.cmd[[ autocmd ColorScheme * highlight TSFunction gui=bold ]]
+vim.cmd[[ autocmd ColorScheme * highlight TSConstant gui=bold ]]
+vim.cmd[[ autocmd ColorScheme * highlight TSType gui=bold ]]
+vim.cmd[[ autocmd ColorScheme * highlight TODO gui=bold ]]
+vim.cmd[[ autocmd ColorScheme * highlight TSConstant gui=bold ]]
+vim.cmd[[ autocmd ColorScheme * highlight TSOperator gui=bold ]]
+vim.cmd[[ autocmd ColorScheme * highlight TSKeyword gui=bold ]]
+vim.cmd[[ autocmd ColorScheme * highlight TSKeywordOperator gui=bold ]]
+vim.cmd[[ autocmd ColorScheme * highlight TSKeywordFunction gui=bold ]]
+vim.cmd[[ autocmd ColorScheme * highlight TSKeywordReturn gui=bold ]]
+vim.cmd[[ autocmd ColorScheme * highlight TSRepeat gui=bold ]]
+vim.cmd[[ autocmd ColorScheme * highlight TSMethod gui=bold ]]
+vim.cmd[[ autocmd ColorScheme * highlight TSBoolean gui=bold ]]
+
 -- require('colorbuddy').colorscheme('timbeans')
-vim.cmd[[colorscheme dracula]]
+--vim.cmd[[colorscheme dracula]]
 
----- Fixup color scheme. To get bold highlights the colorscheme should be 
----- overwritten. To prevent overwriting the colors, we need to save them
----- and reapply them when making the highlights bold.
-----
----- get the guifg by checking the output of the `:hi` command
-local c1 = '#F1FA8C' -- TSFunction
-local c2 = '#F1FA8C' -- TSConstant
-local c3 = '#FF79C6' -- TSType
-local c4 = '#BD93F9' -- TODO
-local c5 = '#FF79C6' -- TSConditional
-local c6 = '#BD93F9' -- All keywords
--- List of color 'corrections'
--- TODO: this can be made into a function
+------ Fixup color scheme. To get bold highlights the colorscheme should be 
+------ overwritten. To prevent overwriting the colors, we need to save them
+------ and reapply them when making the highlights bold.
+------
+------ get the guifg by checking the output of the `:hi` command
+--local c1 = '#F1FA8C' -- TSFunction
+--local c2 = '#F1FA8C' -- TSConstant
+--local c3 = '#FF79C6' -- TSType
+--local c4 = '#BD93F9' -- TODO
+--local c5 = '#FF79C6' -- TSConditional
+--local c6 = '#BD93F9' -- All keywords
+--local c7 = '#50fa7b'
+---- List of color 'corrections'
+---- TODO: this can be made into a function
 
-local recolors = {
-  {"TSFunction", c1},
-  {"TSConstant", c2},
-  {"TSType", c3},
-  {"TODO", c4},
-  {"TSConditional", c5},
-  {"TSOperator", c6}, 
-  {"TSKeyword", c6},
-  {"TSKeywordOperator", c6},
-  {"TSKeywordFunction", c6},
-  {"TSKeywordReturn", c6},
-  {"TSRepeat", c6},
-}
+--local recolors = {
+--  {"TSFunction", c1},
+--  {"TSConstant", c2},
+--  {"TSType", c3},
+--  {"TODO", c4},
+--  {"TSConditional", c5},
+--  {"TSOperator", c6}, 
+--  {"TSKeyword", c6},
+--  {"TSKeywordOperator", c6},
+--  {"TSKeywordFunction", c6},
+--  {"TSKeywordReturn", c6},
+--  {"TSRepeat", c6},
+--  {"TSMethod", c7},
+--  {"TSBoolean", c4},
+--}
 
-local color_string = function(group, color)
-  return 'autocmd ColorScheme * highlight ' .. group .. ' gui=bold, guifg=' .. color
-end
+--local color_string = function(group, color)
+--  return 'autocmd ColorScheme * highlight ' .. group .. ' gui=bold, guifg=' .. color
+--end
 
--- Recolor
-for i, v in ipairs(recolors) do
-  vim.cmd(color_string(v[1], v[2]))
-end
+---- Recolor
+--for i, v in ipairs(recolors) do
+--  vim.cmd(color_string(v[1], v[2]))
+--end
 
 -- =============================================================================
 -- REMAPS

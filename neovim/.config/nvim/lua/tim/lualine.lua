@@ -5,7 +5,7 @@
 -- Init and configure lualine
 require('lualine').setup{
   options = {
-    theme = 'dracula-nvim',
+    theme = 'OceanicNext',
     -- Unset separators, keep it simple
     section_separators = {'', ''},
     component_separators = {'', ''}
