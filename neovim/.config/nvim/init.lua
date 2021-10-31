@@ -19,103 +19,74 @@ require('packer').startup(function()
   use 'wbthomason/packer.nvim'       -- Package manager
   use 'tpope/vim-commentary'         -- "gc" to comment visual regions/lines
   use 'tpope/vim-fugitive'           --git
-
   -- Telescope to navigate and do some other cool search things
-  use {
-    'nvim-telescope/telescope.nvim',
-    requires = { {'nvim-lua/plenary.nvim'} }
-  }
+  use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/plenary.nvim'}}}
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-
   -- Add indentation guides even on blank lines
   use { 'lukas-reineke/indent-blankline.nvim' }
   -- Add git related info in the signs columns and popups
   use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'} }
-  use 'neovim/nvim-lspconfig'        -- Collection of configurations for built-in LSP client
-
-  -- completion
+  -- Collection of configurations for built-in LSP client
+  use 'neovim/nvim-lspconfig'        
+  -- Autocomplete
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'
-
-  -- LuaSnip
+  -- Snippets
   use 'L3MON4D3/LuaSnip'
   use "rafamadriz/friendly-snippets"
   use 'saadparwaiz1/cmp_luasnip'
-
   -- Tree sitter
   use 'nvim-treesitter/nvim-treesitter'
-
   -- Environment setup
   use 'direnv/direnv.vim' 
   use 'christoomey/vim-tmux-navigator'
-
-  -- Language packages --------------------------------------------------------
+  -- REPL development
+  use 'jpalardy/vim-slime'
+  -- Language packages, TODO: switch to EFM/Null-ls
   use 'mhartington/formatter.nvim'
-
   -- Go:
   use 'fatih/vim-go'
   use 'buoto/gotests-vim'
-
   -- Asciidoctor:
   use 'habamax/vim-asciidoctor'
-
   -- Markdown:
   use 'plasticboy/vim-markdown'
   use 'vim-pandoc/vim-pandoc-syntax'
-
-  use 'vimwiki/vimwiki'
-
-  -- Colors -------------------------------------------------------------------
+  -- Colors
   use 'sainnhe/everforest'
-
-  -- LuaLine ------------------------------------------------------------------
+  -- LuaLine
   use 'hoob3rt/lualine.nvim'
-
-  -- Editing ------------------------------------------------------------------
+  -- Editing
   use 'godlygeek/tabular'
-
-  -- File Tree ----------------------------------------------------------------
+  -- File Tree
   use 'kyazdani42/nvim-web-devicons'
   use 'kyazdani42/nvim-tree.lua'
-
 end)
 
---Incremental live completion
-vim.o.inccommand = "nosplit"
+-- =============================================================================
+-- General Settings
+-- =============================================================================
 
---Set highlight on search
+vim.o.inccommand = "nosplit"
 vim.o.hlsearch = false
 vim.o.incsearch = true
-
---Make line numbers default
 vim.wo.number = true
-
---Do not save when switching buffers
 vim.o.hidden = true
-
---Enable mouse mode
 vim.o.mouse = "a"
-
---Enable break indent
 vim.o.breakindent = true
-
---Save undo history
 vim.cmd[[set undofile]]
-
---Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
-
---Decrease update time
 vim.o.updatetime = 250
 vim.wo.signcolumn = "yes"
-
--- Copy paste from system clipboard
 vim.cmd[[ set clipboard=unnamedplus ]]
-
--- highlight current line
 vim.cmd[[set cursorline]]
+vim.g.splitbelow = true
+
+-- =============================================================================
+-- TREESITTER
+-- =============================================================================
 
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
@@ -125,11 +96,14 @@ require'nvim-treesitter.configs'.setup {
   }
 }
 
+-- Treesitter based folder
+vim.o.foldmethod='expr'
+vim.o.foldenable = false
+vim.o.foldexpr='nvim_treesitter#foldexpr()'
+
 -- =============================================================================
 -- COLORS
 -- =============================================================================
-
---Set colorscheme
 
 vim.o.termguicolors = true
 vim.cmd[[ let g:everforest_background = 'hard' ]]
@@ -144,27 +118,9 @@ vim.cmd[[ let g:everforest_better_performance = 1 ]]
 
 vim.cmd [[ colorschem everforest ]]
 
+-- Remove foreground color from TODO: and NOTE:
 vim.cmd[[ autocmd ColorScheme * highlight TSWarning ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#e68183 ]]
 vim.cmd[[ autocmd ColorScheme * highlight TSNote ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#d9bb80 ]]
-
--- TSWarning      xxx cterm=bold ctermfg=235 ctermbg=214 gui=bold guifg=#2b3339 guibg=#dbbc7f
--- I really like Treesitter, and I can use the highlight groups to make
--- specific groups dispolay as bold.
-
--- vim.cmd[[ autocmd ColorScheme * highlight TSFunction gui=bold ]]
--- vim.cmd[[ autocmd ColorScheme * highlight TSConstant gui=bold ]]
--- vim.cmd[[ autocmd ColorScheme * highlight TSType gui=bold ]]
--- vim.cmd[[ autocmd ColorScheme * highlight TODO gui=bold ]]
--- vim.cmd[[ autocmd ColorScheme * highlight TSConstant gui=bold ]]
--- vim.cmd[[ autocmd ColorScheme * highlight TSOperator gui=bold ]]
--- vim.cmd[[ autocmd ColorScheme * highlight TSKeyword gui=bold ]]
--- vim.cmd[[ autocmd ColorScheme * highlight TSKeywordOperator gui=bold ]]
--- vim.cmd[[ autocmd ColorScheme * highlight TSKeywordFunction gui=bold ]]
--- vim.cmd[[ autocmd ColorScheme * highlight TSKeywordReturn gui=bold ]]
--- vim.cmd[[ autocmd ColorScheme * highlight TSRepeat gui=bold ]]
--- vim.cmd[[ autocmd ColorScheme * highlight TSMethod gui=bold ]]
--- vim.cmd[[ autocmd ColorScheme * highlight TSBoolean gui=bold ]]
--- vim.cmd[[ autocmd ColorScheme * highlight TSComment gui=none ]]
 
 -- =============================================================================
 -- REMAPS
@@ -203,9 +159,6 @@ vim.g.indent_blankline_filetype_exclude = { 'help', 'packer' }
 vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile'}
 vim.g.indent_blankline_char_highlight = 'LineNr'
 
--- Change preview window location
-vim.g.splitbelow = true
-
 -- Highlight on yank
 vim.api.nvim_exec([[
   augroup YankHighlight
@@ -221,13 +174,13 @@ vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true})
 require('gitsigns').setup()
 
 -- Nvim tree
-require('nvim-tree').setup()
+require('nvim-tree').setup({
+  nvim_tree_gitignore = true,
+  nvim_tree_ignore = { '.git', 'node_modules', '.cache', '__pycache__/'}
+})
 vim.cmd[[ nnoremap <C-n> :NvimTreeToggle<CR> ]]
 vim.cmd[[ nnoremap <leader>r :NvimTreeRefresh<CR> ]]
 vim.cmd[[ nnoremap <leader>n :NvimTreeFindFile<CR> ]]
-vim.cmd[[ let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache', '__pycache__/' ] ]]
-vim.cmd[[ let g:nvim_tree_gitignore=1 ]]
--- vim.cmd[[ let g:nvim_tree_lsp_diagnostics = 1 ]]
 
 -- fugitive shortcuts
 local opts = { noremap = true, silent = true}
@@ -240,6 +193,9 @@ vim.api.nvim_set_keymap('n', '[q', [[:cp<cr>]], opts)
 vim.api.nvim_set_keymap('n', ']q', [[:cn<cr>]], opts)
 vim.api.nvim_set_keymap('n', '[-', [[:cclose<cr>]], opts)
 vim.api.nvim_set_keymap('n', '[+', [[:copen<cr>]], opts)
+
+-- slime, set the target to tmux to use tmux splits to send code to.
+vim.g.slime_target = "tmux"
 
 -- Load external configs
 require("tim.lualine")
