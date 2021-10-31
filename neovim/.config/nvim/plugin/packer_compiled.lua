@@ -181,13 +181,13 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/vim-pandoc-syntax"
   },
+  ["vim-slime"] = {
+    loaded = true,
+    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/vim-slime"
+  },
   ["vim-tmux-navigator"] = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/vim-tmux-navigator"
-  },
-  vimwiki = {
-    loaded = true,
-    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/vimwiki"
   }
 }
 

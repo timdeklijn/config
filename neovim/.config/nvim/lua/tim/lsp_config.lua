@@ -71,6 +71,12 @@ nvim_lsp.html.setup{
   capabilities = capabilities 
 }
 
+nvim_lsp.julials.setup{
+  on_attach = on_attach, 
+  flags = { debounce_text_changes = 150 }, 
+  capabilities = capabilities 
+}
+
 local sumneko_root_path = vim.fn.getenv("HOME").."/.local/bin/sumneko_lua" -- Change to your sumneko root installation
 local sumneko_binary_path = "/bin/linux/lua-language-server" -- Change to your OS specific output folder
 nvim_lsp.sumneko_lua.setup {
