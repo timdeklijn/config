@@ -28,6 +28,7 @@ require('packer').startup(function()
   use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'} }
   -- Collection of configurations for built-in LSP client
   use 'neovim/nvim-lspconfig'        
+  use 'jose-elias-alvarez/null-ls.nvim'
   -- Autocomplete
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
@@ -43,8 +44,6 @@ require('packer').startup(function()
   use 'christoomey/vim-tmux-navigator'
   -- REPL development
   use 'jpalardy/vim-slime'
-  -- Language packages, TODO: switch to EFM/Null-ls
-  use 'mhartington/formatter.nvim'
   -- Go:
   use 'fatih/vim-go'
   use 'buoto/gotests-vim'
@@ -201,6 +200,5 @@ vim.g.slime_target = "tmux"
 require("tim.lualine")
 require("tim.telescope")
 require("tim.lsp_config")
-require("tim.formatter")
 require("tim.cmp")
 require("tim.vimwiki")

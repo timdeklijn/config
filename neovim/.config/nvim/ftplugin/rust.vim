@@ -4,5 +4,4 @@ autocmd BufWritePre *.rs :lua vim.lsp.buf.formatting()
 setlocal expandtab
 setlocal autoindent
 
-setlocal textwidth=88
-setlocal colorcolumn=88
+setlocal textwidth=80
