@@ -4,4 +4,4 @@ setlocal expandtab
 setlocal autoindent
 
 " Use this to autowrap text
-setlocal textwidth=88
+setlocal textwidth=80
