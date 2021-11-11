@@ -50,6 +50,8 @@ require('packer').startup(function()
   use 'vim-pandoc/vim-pandoc-syntax'
   -- Colors
   use 'sainnhe/everforest'
+  use 'sainnhe/gruvbox-material'
+  use 'bluz71/vim-moonfly-colors'
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
   -- Editing
@@ -101,21 +103,18 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 -- =============================================================================
 
 vim.o.termguicolors = true
-vim.cmd[[ let g:everforest_background = 'hard' ]]
-vim.cmd[[ let g:everforest_enable_italic = 0 ]] 
-vim.cmd[[ let g:everforest_disable_italic_comment = 1 ]]
-vim.cmd[[ let g:everforest_cursor = 'green' ]]
-vim.cmd[[ let g:everforest_sign_column_background = 'none' ]]
-vim.cmd[[ let g:everforest_ui_contrast = 'high' ]]
-vim.cmd[[ let g:everforest_show_eob = 0 ]]
-vim.cmd[[ let g:everforest_diagnostic_virtual_text = 'colored' ]]
-vim.cmd[[ let g:everforest_better_performance = 1 ]]
 
-vim.cmd [[ colorschem everforest ]]
+-- Set colorscheme and prevent italics
+vim.cmd[[ let g:gruvbox_material_background = 'hard' ]]
+vim.cmd[[ let g:gruvbox_material_enable_italic = 0 ]]
+vim.cmd[[ let g:gruvbox_material_disable_italic_comment = 0 ]]
+vim.cmd[[ let g:gruvbox_material_show_eob = 0  ]]
+vim.cmd[[ let g:gruvbox_material_statusline_style = 'original' ]]
+vim.cmd[[ colorscheme gruvbox-material ]]
 
 -- Remove foreground color from TODO: and NOTE:
-vim.cmd[[ autocmd ColorScheme * highlight TSWarning ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#e68183 ]]
-vim.cmd[[ autocmd ColorScheme * highlight TSNote ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#d9bb80 ]]
+vim.cmd[[ autocmd ColorScheme * highlight TSWarning ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#e68183 gui=bold ]]
+vim.cmd[[ autocmd ColorScheme * highlight TSNote ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#d9bb80 gui=bold ]]
 
 -- =============================================================================
 -- REMAPS
