@@ -80,7 +80,8 @@ nvim_lsp.julials.setup{
 null_ls = require("null-ls")
 local sources = {
   null_ls.builtins.formatting.black,
-  null_ls.builtins.diagnostics.flake8
+  null_ls.builtins.diagnostics.flake8,
+  null_ls.builtins.formatting.markdownlint
 }
 
 null_ls.config({
@@ -118,5 +119,4 @@ nvim_lsp.sumneko_lua.setup {
 }
 
 -- Map :Format to vim.lsp.buf.formatting(), also mapped to <SPACE>=
-vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()<cr>' ]])
--- vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
+vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
