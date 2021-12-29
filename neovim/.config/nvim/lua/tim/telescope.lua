@@ -25,6 +25,13 @@ my_config_files = function()
     })
 end
 
+my_note_files = function()
+  local dir = "/Users/timdeklijn/wiki/"
+  require("telescope.builtin").find_files({
+    find_command = { 'rg', '--files', '!.git', dir }
+  })
+end
+
 -- All finders are wrapped in functions for better highlighting and ease of
 -- use.
 
@@ -74,3 +81,4 @@ vim.api.nvim_set_keymap('n', '<leader>lr', [[<cmd>lua my_lsp_references()<cr>]],
 vim.api.nvim_set_keymap('n', '<leader>ls', [[<cmd>lua my_lsp_workspace_symbols()<cr>]], opts)
 vim.api.nvim_set_keymap('n', '<leader>sb', [[<cmd>lua my_current_buffer_fuzzy_find()<cr>]], opts)
 vim.api.nvim_set_keymap('n', '<leader>ss', [[<cmd>lua my_resume()<cr>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>Ns', [[<cmd>lua my_note_files()<cr>]], opts)

@@ -198,4 +198,4 @@ export PATH="/usr/local/opt/libarchive/bin:$PATH"
 export LC_ALL=en_GB.UTF-8  
 export LANG=en_GB.UTF-8
 
-
+export PROJECTFILE="/Users/timdeklijn/ps.json"

@@ -5,10 +5,12 @@
 -- Init and configure lualine
 require('lualine').setup{
   options = {
-    theme = 'gruvbox-material',
+    theme = 'dracula-nvim',
     -- Unset separators, keep it simple
-    -- section_separators = {'', ''},
-    -- component_separators = {'', ''}
+    section_separators = {'', ''},
+    component_separators = {'', ''}
+    -- section_separators = { left='', right='' },    
+    -- component_separators = { left = '', right = ''}
   },
 }
 

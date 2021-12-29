@@ -29,10 +29,12 @@ require('packer').startup(function()
   -- Collection of configurations for built-in LSP client
   use 'neovim/nvim-lspconfig'        
   use 'jose-elias-alvarez/null-ls.nvim'
-  -- Autocomplete
+  -- Autocomplete using cmp
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'
+  use 'L3MON4D3/LuaSnip'
+  use 'saadparwaiz1/cmp_luasnip'
   -- Tree sitter
   use 'nvim-treesitter/nvim-treesitter'
   -- Environment setup
@@ -43,19 +45,13 @@ require('packer').startup(function()
   -- Go:
   use 'fatih/vim-go'
   use 'buoto/gotests-vim'
-  -- Asciidoctor:
-  use 'habamax/vim-asciidoctor'
   -- Markdown:
   use 'plasticboy/vim-markdown'
   use 'vim-pandoc/vim-pandoc-syntax'
   -- Colors
-  use 'sainnhe/everforest'
-  use 'sainnhe/gruvbox-material'
-  use 'bluz71/vim-moonfly-colors'
+  use 'Mofiqul/dracula.nvim'
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
-  -- Editing
-  use 'godlygeek/tabular'
   -- File Tree
   use 'kyazdani42/nvim-web-devicons'
   use 'kyazdani42/nvim-tree.lua'
@@ -89,7 +85,7 @@ vim.g.splitbelow = true
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained",
   highlight = {
-    enable = true
+    enable = true,
   }
 }
 
@@ -104,17 +100,21 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 
 vim.o.termguicolors = true
 
--- Set colorscheme and prevent italics
-vim.cmd[[ let g:gruvbox_material_background = 'hard' ]]
-vim.cmd[[ let g:gruvbox_material_enable_italic = 0 ]]
-vim.cmd[[ let g:gruvbox_material_disable_italic_comment = 0 ]]
-vim.cmd[[ let g:gruvbox_material_show_eob = 0  ]]
-vim.cmd[[ let g:gruvbox_material_statusline_style = 'original' ]]
-vim.cmd[[ colorscheme gruvbox-material ]]
+-- vim.cmd[[ colorscheme everforest ]]
+-- vim.cmd[[ let g:everforest_background = 'hard' ]]
+-- vim.cmd[[ let g:everforest_enable_italic = 0 ]]
+-- vim.cmd[[ let g:everforest_sign_column_background = 'none' ]]
+-- vim.cmd[[ let g:everforest_show_eob = 0 ]]
+-- vim.cmd[[ let g:everforest_diagnostic_virtual_text = 'colored' ]]
+-- vim.cmd[[ let g:everforest_sign_column_background = 'none' ]]
+-- vim.cmd[[ let g:everforest_disable_italic_comment = 1 ]]
+-- -- Remove foreground color from TODO: and NOTE:
+-- vim.cmd[[ autocmd ColorScheme * highlight TSWarning ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#e68183 gui=bold ]]
+-- vim.cmd[[ autocmd ColorScheme * highlight TSNote ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#d9bb80 gui=bold ]]
 
--- Remove foreground color from TODO: and NOTE:
-vim.cmd[[ autocmd ColorScheme * highlight TSWarning ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#e68183 gui=bold ]]
-vim.cmd[[ autocmd ColorScheme * highlight TSNote ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#d9bb80 gui=bold ]]
+vim.cmd[[colorscheme dracula]]
+vim.g.dracula_show_end_of_buffer = false
+vim.g.dracula_transparent_bg = false
 
 -- =============================================================================
 -- REMAPS
@@ -167,7 +167,10 @@ vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true})
 -- Show git info in the gutter
 require('gitsigns').setup()
 
--- Nvim tree
+-- =============================================================================
+-- NVIM TREE
+-- =============================================================================
+
 require('nvim-tree').setup({
   nvim_tree_gitignore = true,
   nvim_tree_ignore = { '.git', 'node_modules', '.cache', '__pycache__/'}
@@ -176,11 +179,18 @@ vim.cmd[[ nnoremap <C-n> :NvimTreeToggle<CR> ]]
 vim.cmd[[ nnoremap <leader>r :NvimTreeRefresh<CR> ]]
 vim.cmd[[ nnoremap <leader>n :NvimTreeFindFile<CR> ]]
 
--- fugitive shortcuts
+-- =============================================================================
+-- FUGITIVE
+-- =============================================================================
+
 local opts = { noremap = true, silent = true}
 vim.api.nvim_set_keymap('n', '<leader>gg', [[:Git <CR>]], opts)
 vim.api.nvim_set_keymap('n', '<leader>gp', [[:Git push<CR>]], opts)
 vim.api.nvim_set_keymap('n', '<leader>gP', [[:Git pull<CR>]], opts)
+
+-- =============================================================================
+-- KEYMAPS
+-- =============================================================================
 
 -- useful quickfix keybinds
 vim.api.nvim_set_keymap('n', '[q', [[:cp<cr>]], opts)
@@ -188,8 +198,56 @@ vim.api.nvim_set_keymap('n', ']q', [[:cn<cr>]], opts)
 vim.api.nvim_set_keymap('n', '[-', [[:cclose<cr>]], opts)
 vim.api.nvim_set_keymap('n', '[+', [[:copen<cr>]], opts)
 
+-- =============================================================================
+-- SLIME
+-- =============================================================================
+
 -- slime, set the target to tmux to use tmux splits to send code to.
 vim.g.slime_target = "tmux"
+
+-- =============================================================================
+-- CUSTOM FUNCTIONS
+-- =============================================================================
+
+T = {}
+
+-- new_note creates a not in my notes folder with an id based on datetime and a
+-- title prompted from the user. The id and title are used in the filename as
+-- well as the header written to the file.
+T.new_note = function()
+  -- where to save the note
+  local notes_dir = "/Users/timdeklijn/wiki/"
+
+  -- create ID for current datetime: YYYYMMDDHHMM
+  local c = os.date("*t")
+  local id = (tostring(c.year) .. tostring(c.month) .. 
+              tostring(c.day) .. tostring(c.hour) .. 
+              tostring(c.min))
+
+  -- get title from user prompt
+  local raw_title = vim.fn.input("Title: ")
+
+  -- filename from id and title
+  file_title = string.lower(string.gsub(raw_title, " ", "_"))
+  local filename = notes_dir .. id .. "_" .. file_title .. ".md"
+  
+  -- file title from id and title
+  local header_title = "# " .. raw_title
+
+  -- create an empty buffer, and focus the current window to it. Write the
+  -- title to it and save the file to the notes folder
+  local buf = vim.api.nvim_create_buf(false, false)
+  vim.api.nvim_win_set_buf(0, buf)
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, {header_title})
+  vim.api.nvim_command("write" .. " " .. filename)
+end
+
+-- Keybind to create a new note
+vim.api.nvim_set_keymap('n', '<leader>NN', [[<cmd>lua T.new_note()<cr>]], opts)
+
+-- =============================================================================
+-- IMPORT CONFIGS
+-- =============================================================================
 
 -- Load external configs
 require("tim.lualine")

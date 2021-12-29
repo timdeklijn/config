@@ -77,46 +77,40 @@ nvim_lsp.julials.setup{
   capabilities = capabilities 
 }
 
-null_ls = require("null-ls")
-local sources = {
-  null_ls.builtins.formatting.black,
-  null_ls.builtins.diagnostics.flake8,
-  null_ls.builtins.formatting.markdownlint
-}
-
-null_ls.config({
-  sources = sources
-})
-
-require("lspconfig")["null-ls"].setup({
-    on_attach = on_attach,
-    flags = { debounce_text_changes = 150 }, 
-})
-
-local sumneko_root_path = vim.fn.getenv("HOME").."/.local/bin/sumneko_lua" -- Change to your sumneko root installation
-local sumneko_binary_path = "/bin/linux/lua-language-server" -- Change to your OS specific output folder
-nvim_lsp.sumneko_lua.setup {
-  cmd = {sumneko_root_path .. sumneko_binary_path, "-E", sumneko_root_path.."/main.lua" };
-  on_attach = on_attach,
-  settings = {
-      Lua = {
-          runtime = {
-              version = 'LuaJIT',
-              path = vim.split(package.path, ';'),
-          },
-          diagnostics = {
-              globals = {'vim'},
-          },
-          workspace = {
-              library = {
-                  [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                  [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-              },
-          },
-      },
+require("null-ls").setup({
+  sources = {
+    require("null-ls").builtins.formatting.black,
+    require("null-ls").builtins.diagnostics.flake8,
+    require("null-ls").builtins.diagnostics.mypy,
+    require("null-ls").builtins.formatting.markdownlint,
+    require("null-ls").builtins.diagnostics.yamllint,
   },
-  capabilities = capabilities 
-}
+})
+
+-- local sumneko_root_path = vim.fn.getenv("HOME").."/.local/bin/sumneko_lua" -- Change to your sumneko root installation
+-- local sumneko_binary_path = "/bin/linux/lua-language-server" -- Change to your OS specific output folder
+-- nvim_lsp.sumneko_lua.setup {
+--   cmd = {sumneko_root_path .. sumneko_binary_path, "-E", sumneko_root_path.."/main.lua" };
+--   on_attach = on_attach,
+--   settings = {
+--       Lua = {
+--           runtime = {
+--               version = 'LuaJIT',
+--               path = vim.split(package.path, ';'),
+--           },
+--           diagnostics = {
+--               globals = {'vim'},
+--           },
+--           workspace = {
+--               library = {
+--                   [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+--                   [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+--               },
+--           },
+--       },
+--   },
+--   capabilities = capabilities 
+-- }
 
 -- Map :Format to vim.lsp.buf.formatting(), also mapped to <SPACE>=
 vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
