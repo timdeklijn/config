@@ -55,6 +55,9 @@ require('packer').startup(function()
   -- File Tree
   use 'kyazdani42/nvim-web-devicons'
   use 'kyazdani42/nvim-tree.lua'
+  -- Task runner
+  use 'skywind3000/asynctasks.vim'
+  use 'skywind3000/asyncrun.vim'
 end)
 
 -- =============================================================================
@@ -100,17 +103,9 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 
 vim.o.termguicolors = true
 
--- vim.cmd[[ colorscheme everforest ]]
--- vim.cmd[[ let g:everforest_background = 'hard' ]]
--- vim.cmd[[ let g:everforest_enable_italic = 0 ]]
--- vim.cmd[[ let g:everforest_sign_column_background = 'none' ]]
--- vim.cmd[[ let g:everforest_show_eob = 0 ]]
--- vim.cmd[[ let g:everforest_diagnostic_virtual_text = 'colored' ]]
--- vim.cmd[[ let g:everforest_sign_column_background = 'none' ]]
--- vim.cmd[[ let g:everforest_disable_italic_comment = 1 ]]
--- -- Remove foreground color from TODO: and NOTE:
--- vim.cmd[[ autocmd ColorScheme * highlight TSWarning ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#e68183 gui=bold ]]
--- vim.cmd[[ autocmd ColorScheme * highlight TSNote ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#d9bb80 gui=bold ]]
+-- Remove foreground color from TODO: and NOTE:
+vim.cmd[[ autocmd ColorScheme * highlight TSWarning ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#e68183 gui=bold ]]
+vim.cmd[[ autocmd ColorScheme * highlight TSNote ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#d9bb80 gui=bold ]]
 
 vim.cmd[[colorscheme dracula]]
 vim.g.dracula_show_end_of_buffer = false
@@ -204,6 +199,21 @@ vim.api.nvim_set_keymap('n', '[+', [[:copen<cr>]], opts)
 
 -- slime, set the target to tmux to use tmux splits to send code to.
 vim.g.slime_target = "tmux"
+
+-- =============================================================================
+-- ASYNCTASKS
+-- =============================================================================
+
+-- Use asynctasks to run tasks defined in a `.tasks` file. Depending on how the
+-- tasks are defined the output is in a quickfix window or in a terminal. The
+-- keybinds are all behind `<leader>R`.
+vim.cmd[[ let g:asyncrun_open = 6 ]]
+
+vim.api.nvim_set_keymap('n', '<leader>RR', [[<cmd>AsyncTask run<cr>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>Rb', [[<cmd>AsyncTask build<cr>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>Rt', [[<cmd>AsyncTask test<cr>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>Rc', [[<cmd>AsyncTask check<cr>]], opts)
+vim.api.nvim_set_keymap('n', '<leader>Rl', [[<cmd>AsyncTaskList<cr>]], opts)
 
 -- =============================================================================
 -- CUSTOM FUNCTIONS
