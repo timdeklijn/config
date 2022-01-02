@@ -55,6 +55,7 @@ nvim_lsp.gopls.setup {
 nvim_lsp.pyright.setup { 
   on_attach = on_attach, 
   flags = { debounce_text_changes = 150 }, 
+  pycodestyle = { enabled = false },
   capabilities = capabilities 
 }
 
