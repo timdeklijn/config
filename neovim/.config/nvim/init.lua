@@ -26,7 +26,7 @@ require('packer').startup(function()
   use { 'lukas-reineke/indent-blankline.nvim' }
   -- Add git related info in the signs columns and popups
   use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'} }
-  -- Collection of configurations for built-in LSP client
+ -- Collection of configurations for built-in LSP client
   use 'neovim/nvim-lspconfig'        
   use 'jose-elias-alvarez/null-ls.nvim'
   -- Autocomplete using cmp
@@ -50,6 +50,8 @@ require('packer').startup(function()
   use 'vim-pandoc/vim-pandoc-syntax'
   -- Colors
   use 'Mofiqul/dracula.nvim'
+  use 'shaunsingh/nord.nvim'
+  use({ "catppuccin/nvim", as = "catppuccin" })
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
   -- File Tree
@@ -103,13 +105,34 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 
 vim.o.termguicolors = true
 
--- Remove foreground color from TODO: and NOTE:
-vim.cmd[[ autocmd ColorScheme * highlight TSWarning ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#e68183 gui=bold ]]
-vim.cmd[[ autocmd ColorScheme * highlight TSNote ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#d9bb80 gui=bold ]]
+local color='catppuccin'
 
-vim.cmd[[colorscheme dracula]]
-vim.g.dracula_show_end_of_buffer = false
-vim.g.dracula_transparent_bg = false
+if color == 'dracula' then
+  vim.cmd[[colorscheme dracula]]
+  vim.g.dracula_show_end_of_buffer = false
+  vim.g.dracula_transparent_bg = false
+  -- set color for: TODO: and NOTE:
+  vim.cmd[[ autocmd ColorScheme * highlight TSWarning ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#e68183 gui=bold ]]
+  vim.cmd[[ autocmd ColorScheme * highlight TSNote ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#d9bb80 gui=bold ]]
+elseif color == 'nord' then
+  vim.g.nord_italic = false
+  require('nord').set()
+elseif color == 'catppuccin' then
+  local catppuccin = require('catppuccin')
+  catppuccin.setup({
+    styles = {
+      comments = "NONE",
+      functions = "bold",
+      keywords = "NONE",
+      variables = "NONE",
+    }})
+
+  vim.cmd[[ autocmd ColorScheme * highlight commentTSWarning ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#e68183 gui=bold ]]
+  vim.cmd[[ autocmd ColorScheme * highlight commentTSNote ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#d9bb80 gui=bold ]]
+
+  vim.cmd[[ colorscheme catppuccin ]]
+end
+
 
 -- =============================================================================
 -- REMAPS
@@ -208,6 +231,7 @@ vim.g.slime_target = "tmux"
 -- tasks are defined the output is in a quickfix window or in a terminal. The
 -- keybinds are all behind `<leader>R`.
 vim.cmd[[ let g:asyncrun_open = 6 ]]
+vim.cmd[[ let g:asynctasks_term_pos = 'bottom' ]]
 
 vim.api.nvim_set_keymap('n', '<leader>RR', [[<cmd>AsyncTask run<cr>]], opts)
 vim.api.nvim_set_keymap('n', '<leader>Rb', [[<cmd>AsyncTask build<cr>]], opts)
@@ -254,6 +278,11 @@ end
 
 -- Keybind to create a new note
 vim.api.nvim_set_keymap('n', '<leader>NN', [[<cmd>lua T.new_note()<cr>]], opts)
+vim.api.nvim_set_keymap(
+  'n', 
+  '<leader>NT', 
+  [[<cmd>lua vim.api.nvim_command("edit ~/wiki/todo.md")<cr>]], 
+  opts)
 
 -- =============================================================================
 -- IMPORT CONFIGS
