@@ -105,34 +105,19 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 
 vim.o.termguicolors = true
 
-local color='catppuccin'
+local catppuccin = require('catppuccin')
+catppuccin.setup({
+  styles = {
+    comments = "NONE",
+    functions = "bold",
+    keywords = "NONE",
+    variables = "NONE",
+  }})
 
-if color == 'dracula' then
-  vim.cmd[[colorscheme dracula]]
-  vim.g.dracula_show_end_of_buffer = false
-  vim.g.dracula_transparent_bg = false
-  -- set color for: TODO: and NOTE:
-  vim.cmd[[ autocmd ColorScheme * highlight TSWarning ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#e68183 gui=bold ]]
-  vim.cmd[[ autocmd ColorScheme * highlight TSNote ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#d9bb80 gui=bold ]]
-elseif color == 'nord' then
-  vim.g.nord_italic = false
-  require('nord').set()
-elseif color == 'catppuccin' then
-  local catppuccin = require('catppuccin')
-  catppuccin.setup({
-    styles = {
-      comments = "NONE",
-      functions = "bold",
-      keywords = "NONE",
-      variables = "NONE",
-    }})
+vim.cmd[[ autocmd ColorScheme * highlight commentTSWarning ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#e68183 gui=bold ]]
+vim.cmd[[ autocmd ColorScheme * highlight commentTSNote ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#d9bb80 gui=bold ]]
 
-  vim.cmd[[ autocmd ColorScheme * highlight commentTSWarning ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#e68183 gui=bold ]]
-  vim.cmd[[ autocmd ColorScheme * highlight commentTSNote ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#d9bb80 gui=bold ]]
-
-  vim.cmd[[ colorscheme catppuccin ]]
-end
-
+vim.cmd[[ colorscheme catppuccin ]]
 
 -- =============================================================================
 -- REMAPS
@@ -191,7 +176,10 @@ require('gitsigns').setup()
 
 require('nvim-tree').setup({
   nvim_tree_gitignore = true,
-  nvim_tree_ignore = { '.git', 'node_modules', '.cache', '__pycache__/'}
+  nvim_tree_ignore = { '.git', 'node_modules', '.cache', '__pycache__/'},
+  view = {
+    side = 'right'
+  }
 })
 vim.cmd[[ nnoremap <C-n> :NvimTreeToggle<CR> ]]
 vim.cmd[[ nnoremap <leader>r :NvimTreeRefresh<CR> ]]
