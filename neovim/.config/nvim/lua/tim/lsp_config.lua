@@ -25,7 +25,7 @@ local on_attach = function(_client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n','<leader>=', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
@@ -87,31 +87,6 @@ require("null-ls").setup({
     require("null-ls").builtins.diagnostics.yamllint,
   },
 })
-
--- local sumneko_root_path = vim.fn.getenv("HOME").."/.local/bin/sumneko_lua" -- Change to your sumneko root installation
--- local sumneko_binary_path = "/bin/linux/lua-language-server" -- Change to your OS specific output folder
--- nvim_lsp.sumneko_lua.setup {
---   cmd = {sumneko_root_path .. sumneko_binary_path, "-E", sumneko_root_path.."/main.lua" };
---   on_attach = on_attach,
---   settings = {
---       Lua = {
---           runtime = {
---               version = 'LuaJIT',
---               path = vim.split(package.path, ';'),
---           },
---           diagnostics = {
---               globals = {'vim'},
---           },
---           workspace = {
---               library = {
---                   [vim.fn.expand('$VIMRUNTIME/lua')] = true,
---                   [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
---               },
---           },
---       },
---   },
---   capabilities = capabilities 
--- }
 
 -- Map :Format to vim.lsp.buf.formatting(), also mapped to <SPACE>=
 vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])

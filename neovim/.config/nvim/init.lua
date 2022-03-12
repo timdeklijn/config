@@ -19,6 +19,7 @@ require('packer').startup(function()
   use 'wbthomason/packer.nvim'       -- Package manager
   use 'tpope/vim-commentary'         -- "gc" to comment visual regions/lines
   use 'tpope/vim-fugitive'           --git
+  use 'ibhagwan/fzf-lua'
   -- Telescope to navigate and do some other cool search things
   use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/plenary.nvim'}}}
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
@@ -49,9 +50,7 @@ require('packer').startup(function()
   use 'plasticboy/vim-markdown'
   use 'vim-pandoc/vim-pandoc-syntax'
   -- Colors
-  use 'Mofiqul/dracula.nvim'
-  use 'shaunsingh/nord.nvim'
-  use({ "catppuccin/nvim", as = "catppuccin" })
+  use 'sainnhe/everforest'
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
   -- File Tree
@@ -105,19 +104,15 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 
 vim.o.termguicolors = true
 
-local catppuccin = require('catppuccin')
-catppuccin.setup({
-  styles = {
-    comments = "NONE",
-    functions = "bold",
-    keywords = "NONE",
-    variables = "NONE",
-  }})
-
-vim.cmd[[ autocmd ColorScheme * highlight commentTSWarning ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#e68183 gui=bold ]]
-vim.cmd[[ autocmd ColorScheme * highlight commentTSNote ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#d9bb80 gui=bold ]]
-
-vim.cmd[[ colorscheme catppuccin ]]
+vim.cmd[[ set background=dark ]]
+vim.cmd[[ let g:everforest_background = 'light' ]]
+vim.cmd[[ let g:everforest_enable_italic = 0 ]]
+vim.cmd[[ let g:everforest_disable_italic_comment = 1 ]]
+vim.cmd[[ let g:everforest_diagnostic_virtual_text = 'colored' ]]
+vim.cmd[[ let g:everforest_sign_column_background = 'none' ]]
+vim.cmd[[ autocmd ColorScheme * highlight TSWarning ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#e68183 gui=bold ]]
+  vim.cmd[[ autocmd ColorScheme * highlight TSNote ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#d9bb80 gui=bold ]]
+vim.cmd[[ colorscheme everforest ]]
 
 -- =============================================================================
 -- REMAPS
@@ -150,11 +145,9 @@ vim.api.nvim_exec([[
 --Add map to enter paste mode
 vim.o.pastetoggle="<F3>"
 
---Map blankline
-vim.g.indent_blankline_char = "┊"
-vim.g.indent_blankline_filetype_exclude = { 'help', 'packer' }
-vim.g.indent_blankline_buftype_exclude = { 'terminal', 'nofile'}
-vim.g.indent_blankline_char_highlight = 'LineNr'
+require("indent_blankline").setup {
+    show_current_context = true,
+}
 
 -- Highlight on yank
 vim.api.nvim_exec([[
@@ -278,7 +271,8 @@ vim.api.nvim_set_keymap(
 
 -- Load external configs
 require("tim.lualine")
-require("tim.telescope")
+-- require("tim.telescope")
 require("tim.lsp_config")
 require("tim.cmp")
 require("tim.vimwiki")
+require("tim.fzf")

@@ -84,6 +84,7 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -126,10 +127,6 @@ alias ctop='TERM="${TERM/#tmux/screen}" ctop'
 # Configs
 alias zshconfig="vim ~/.zshrc"
 
-# Change directory to vimconfig folder and open init.lua
-alias vimconfig="cd ~/.config/nvim/; vim init.lua"
-alias tmuxconfig="vim ~/.tmux.conf"
-
 # VIM
 alias vim="nvim"
 
@@ -143,6 +140,16 @@ alias gd="git diff"
 alias glog="git log --all --decorate --oneline --graph"
 
 alias n=notable
+
+# Functions ====================================================================
+
+# Search for projects (folders) for hbr projects.
+hbr () {
+  cd $({ \
+	 find ~/projects/hbr -type d -maxdepth 1 ; \
+	 find ~/go/src/dev.azure.com/PORDTS/machine-learning-inspector -type d -maxdepth 1 \
+  } | fzf)
+}
 
 # Paths =======================================================================
 
@@ -199,3 +206,8 @@ export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 
 export PROJECTFILE="/Users/timdeklijn/ps.json"
+export PROJECTS="/Users/timdeklijn/projects.json"
+
+
+# STARSHIP
+eval "$(starship init zsh)"
