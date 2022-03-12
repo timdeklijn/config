@@ -18,11 +18,8 @@ local use = require('packer').use
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'       -- Package manager
   use 'tpope/vim-commentary'         -- "gc" to comment visual regions/lines
-  use 'tpope/vim-fugitive'           --git
-  use 'ibhagwan/fzf-lua'
-  -- Telescope to navigate and do some other cool search things
-  use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/plenary.nvim'}}}
-  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+  use 'tpope/vim-fugitive'           -- git
+  use 'ibhagwan/fzf-lua'             -- search all the things
   -- Add indentation guides even on blank lines
   use { 'lukas-reineke/indent-blankline.nvim' }
   -- Add git related info in the signs columns and popups
@@ -41,9 +38,8 @@ require('packer').startup(function()
   -- Environment setup
   use 'direnv/direnv.vim' 
   use 'christoomey/vim-tmux-navigator'
-  -- REPL development
-  use 'jpalardy/vim-slime'
   -- Go:
+  -- TODO: at some point this should all simply be handled by LSP
   use 'fatih/vim-go'
   use 'buoto/gotests-vim'
   -- Markdown:
@@ -56,9 +52,6 @@ require('packer').startup(function()
   -- File Tree
   use 'kyazdani42/nvim-web-devicons'
   use 'kyazdani42/nvim-tree.lua'
-  -- Task runner
-  use 'skywind3000/asynctasks.vim'
-  use 'skywind3000/asyncrun.vim'
 end)
 
 -- =============================================================================
@@ -157,10 +150,10 @@ vim.api.nvim_exec([[
   augroup end
 ]], false)
 
--- Y yank until the end of line
-vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true})
+-- =============================================================================
+-- GIT SIGNS
+-- =============================================================================
 
--- Show git info in the gutter
 require('gitsigns').setup()
 
 -- =============================================================================
@@ -188,7 +181,7 @@ vim.api.nvim_set_keymap('n', '<leader>gp', [[:Git push<CR>]], opts)
 vim.api.nvim_set_keymap('n', '<leader>gP', [[:Git pull<CR>]], opts)
 
 -- =============================================================================
--- KEYMAPS
+-- QUICKFIX KEYMAPS
 -- =============================================================================
 
 -- useful quickfix keybinds
@@ -196,29 +189,6 @@ vim.api.nvim_set_keymap('n', '[q', [[:cp<cr>]], opts)
 vim.api.nvim_set_keymap('n', ']q', [[:cn<cr>]], opts)
 vim.api.nvim_set_keymap('n', '[-', [[:cclose<cr>]], opts)
 vim.api.nvim_set_keymap('n', '[+', [[:copen<cr>]], opts)
-
--- =============================================================================
--- SLIME
--- =============================================================================
-
--- slime, set the target to tmux to use tmux splits to send code to.
-vim.g.slime_target = "tmux"
-
--- =============================================================================
--- ASYNCTASKS
--- =============================================================================
-
--- Use asynctasks to run tasks defined in a `.tasks` file. Depending on how the
--- tasks are defined the output is in a quickfix window or in a terminal. The
--- keybinds are all behind `<leader>R`.
-vim.cmd[[ let g:asyncrun_open = 6 ]]
-vim.cmd[[ let g:asynctasks_term_pos = 'bottom' ]]
-
-vim.api.nvim_set_keymap('n', '<leader>RR', [[<cmd>AsyncTask run<cr>]], opts)
-vim.api.nvim_set_keymap('n', '<leader>Rb', [[<cmd>AsyncTask build<cr>]], opts)
-vim.api.nvim_set_keymap('n', '<leader>Rt', [[<cmd>AsyncTask test<cr>]], opts)
-vim.api.nvim_set_keymap('n', '<leader>Rc', [[<cmd>AsyncTask check<cr>]], opts)
-vim.api.nvim_set_keymap('n', '<leader>Rl', [[<cmd>AsyncTaskList<cr>]], opts)
 
 -- =============================================================================
 -- CUSTOM FUNCTIONS
@@ -271,8 +241,6 @@ vim.api.nvim_set_keymap(
 
 -- Load external configs
 require("tim.lualine")
--- require("tim.telescope")
 require("tim.lsp_config")
 require("tim.cmp")
-require("tim.vimwiki")
 require("tim.fzf")
