@@ -141,16 +141,6 @@ alias glog="git log --all --decorate --oneline --graph"
 
 alias n=notable
 
-# Functions ====================================================================
-
-# Search for projects (folders) for hbr projects.
-hbr () {
-  cd $({ \
-	 find ~/projects/hbr -type d -maxdepth 1 ; \
-	 find ~/go/src/dev.azure.com/PORDTS/machine-learning-inspector -type d -maxdepth 1 \
-  } | fzf)
-}
-
 # Paths =======================================================================
 
 # The next line updates PATH for the Google Cloud SDK.
