@@ -5,12 +5,10 @@
 -- Init and configure lualine
 require('lualine').setup{
   options = {
-    theme = 'everforest',
-    -- Unset separators, keep it simple
+    theme = 'dracula-nvim',
     section_separators = {'', ''},
-    component_separators = {'', ''}
-    -- section_separators = { left='', right='' },    
-    -- component_separators = { left = '', right = ''}
+    component_separators = {'', ''},
+    section_separators = { left = '', right = '' },
   },
 }
 

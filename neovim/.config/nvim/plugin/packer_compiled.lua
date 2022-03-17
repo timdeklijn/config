@@ -94,6 +94,11 @@ _G.packer_plugins = {
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/direnv.vim",
     url = "https://github.com/direnv/direnv.vim"
   },
+  ["dracula.nvim"] = {
+    loaded = true,
+    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/dracula.nvim",
+    url = "https://github.com/Mofiqul/dracula.nvim"
+  },
   everforest = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/everforest",
@@ -123,6 +128,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/hoob3rt/lualine.nvim"
+  },
+  ["nightfox.nvim"] = {
+    loaded = true,
+    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/nightfox.nvim",
+    url = "https://github.com/EdenEast/nightfox.nvim"
   },
   ["null-ls.nvim"] = {
     loaded = true,

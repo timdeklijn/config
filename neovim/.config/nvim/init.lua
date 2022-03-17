@@ -46,7 +46,9 @@ require('packer').startup(function()
   use 'plasticboy/vim-markdown'
   use 'vim-pandoc/vim-pandoc-syntax'
   -- Colors
+  use 'Mofiqul/dracula.nvim'
   use 'sainnhe/everforest'
+  use 'EdenEast/nightfox.nvim'
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
   -- File Tree
@@ -97,15 +99,8 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 
 vim.o.termguicolors = true
 
-vim.cmd[[ set background=dark ]]
-vim.cmd[[ let g:everforest_background = 'light' ]]
-vim.cmd[[ let g:everforest_enable_italic = 0 ]]
-vim.cmd[[ let g:everforest_disable_italic_comment = 1 ]]
-vim.cmd[[ let g:everforest_diagnostic_virtual_text = 'colored' ]]
-vim.cmd[[ let g:everforest_sign_column_background = 'none' ]]
-vim.cmd[[ autocmd ColorScheme * highlight TSWarning ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#e68183 gui=bold ]]
-  vim.cmd[[ autocmd ColorScheme * highlight TSNote ctermfg=NONE ctermbg=NONE guibg=NONE guifg=#d9bb80 gui=bold ]]
-vim.cmd[[ colorscheme everforest ]]
+vim.g.dracula_italic_comment = false
+vim.cmd[[ colorscheme dracula  ]]
 
 -- =============================================================================
 -- REMAPS
