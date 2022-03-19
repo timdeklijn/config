@@ -47,8 +47,6 @@ require('packer').startup(function()
   use 'vim-pandoc/vim-pandoc-syntax'
   -- Colors
   use 'Mofiqul/dracula.nvim'
-  use 'sainnhe/everforest'
-  use 'EdenEast/nightfox.nvim'
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
   -- File Tree
@@ -100,7 +98,7 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 vim.o.termguicolors = true
 
 vim.g.dracula_italic_comment = false
-vim.cmd[[ colorscheme dracula  ]]
+vim.cmd[[ colorscheme dracula ]]
 
 -- =============================================================================
 -- REMAPS
