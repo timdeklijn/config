@@ -46,6 +46,7 @@ require('packer').startup(function()
   use 'plasticboy/vim-markdown'
   use 'vim-pandoc/vim-pandoc-syntax'
   -- Colors
+  use "rebelot/kanagawa.nvim"
   use 'Mofiqul/dracula.nvim'
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
@@ -97,8 +98,22 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 
 vim.o.termguicolors = true
 
-vim.g.dracula_italic_comment = false
-vim.cmd[[ colorscheme dracula ]]
+-- Default options:
+require('kanagawa').setup({
+    undercurl = true,
+    commentStyle = "NONE",
+    functionStyle = "NONE",
+    keywordStyle = "bold",
+    statementStyle = "bold",
+    typeStyle = "NONE",
+    variablebuiltinStyle = "italic",
+    specialReturn = true,
+    specialException = true,
+    dimInactive = true,
+    globalStatus = true,
+})
+
+vim.cmd("colorscheme kanagawa")
 
 -- =============================================================================
 -- REMAPS
