@@ -47,7 +47,8 @@ require('packer').startup(function()
   use 'vim-pandoc/vim-pandoc-syntax'
   -- Colors
   use "rebelot/kanagawa.nvim"
-  use 'Mofiqul/dracula.nvim'
+  use 'lifepillar/vim-gruvbox8'
+  use 'sainnhe/gruvbox-material'
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
   -- File Tree
@@ -98,22 +99,16 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 
 vim.o.termguicolors = true
 
--- Default options:
-require('kanagawa').setup({
-    undercurl = true,
-    commentStyle = "NONE",
-    functionStyle = "NONE",
-    keywordStyle = "bold",
-    statementStyle = "bold",
-    typeStyle = "NONE",
-    variablebuiltinStyle = "italic",
-    specialReturn = true,
-    specialException = true,
-    dimInactive = true,
-    globalStatus = true,
-})
-
-vim.cmd("colorscheme kanagawa")
+vim.cmd[[ set background=dark ]]
+-- vim.cmd[[ set background=light ]]
+vim.cmd[[ let g:gruvbox_material_background = "medium" ]]
+vim.cmd[[ let g:gruvbox_material_disable_italic_comment = 1 ]]
+vim.cmd[[ let g:gruvbox_material_enable_bold = 1 ]]
+vim.cmd[[ let g:gruvbox_material_diagnostic_virtual_text = "colored" ]]
+vim.cmd[[ let g:gruvbox_material_transparent_background = 1 ]]
+vim.cmd[[ let g:gruvbox_material_palette = "original" ]]
+ 
+vim.cmd[[	colorscheme gruvbox-material ]]
 
 -- =============================================================================
 -- REMAPS

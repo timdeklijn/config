@@ -78,13 +78,18 @@ nvim_lsp.julials.setup{
   capabilities = capabilities 
 }
 
+nvim_lsp.yamlls.setup{
+  on_attach = on_attach, 
+  flags = { debounce_text_changes = 150 }, 
+  capabilities = capabilities 
+}
+
 require("null-ls").setup({
   sources = {
     require("null-ls").builtins.formatting.black,
     require("null-ls").builtins.diagnostics.flake8,
     require("null-ls").builtins.diagnostics.mypy,
     require("null-ls").builtins.formatting.markdownlint,
-    require("null-ls").builtins.diagnostics.yamllint,
   },
 })
 
