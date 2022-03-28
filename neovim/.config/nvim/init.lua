@@ -46,7 +46,7 @@ require('packer').startup(function()
   use 'plasticboy/vim-markdown'
   use 'vim-pandoc/vim-pandoc-syntax'
   -- Colors
-  use 'rose-pine/neovim'
+  use 'folke/tokyonight.nvim'
   use 'sainnhe/everforest'
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
@@ -100,27 +100,15 @@ vim.o.termguicolors = true
 
 vim.cmd[[ set background=dark ]]
 
-vim.cmd[[ let g:everforest_background = "medium" ]]
-vim.cmd[[ let g:everforest_enable_italic = 0 ]]
-vim.cmd[[ let g:everforest_disable_italic_comment = 1 ]]
-vim.cmd[[ let g:everforest_sign_column_background = "none" ]]
-vim.cmd[[ let g:everforest_diagnostic_virtual_text = "colored" ]]
-vim.cmd[[ colorscheme everforest ]]
+-- Example config in Lua
+vim.g.tokyonight_style = "night"
+vim.g.tokyonight_italic_functions = false
+vim.g.tokyonight_italic_comments = true
+vim.g.tokyonight_lualine_bold = true
+
+-- Load the colorscheme
+vim.cmd[[colorscheme tokyonight]]
  
-
---require('rose-pine').setup({
---	---@usage 'main'|'moon'
---	dark_variant = 'main',
---	bold_vert_split = false,
---	dim_nc_background = false,
---	disable_background = true,
---	disable_float_background = false,
---	disable_italics = true,
---})
-
----- set colorscheme after options
---vim.cmd('colorscheme rose-pine')
-
 -- =============================================================================
 -- REMAPS
 -- =============================================================================

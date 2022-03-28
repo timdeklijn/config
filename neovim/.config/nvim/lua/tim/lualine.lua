@@ -5,7 +5,7 @@
 -- Init and configure lualine
 require('lualine').setup{
   options = {
-    theme = 'everforest',
+    theme = 'tokionight',
     section_separators = {'', ''},
     component_separators = {'', ''},
     section_separators = { left = '', right = '' },
