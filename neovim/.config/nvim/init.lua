@@ -46,9 +46,8 @@ require('packer').startup(function()
   use 'plasticboy/vim-markdown'
   use 'vim-pandoc/vim-pandoc-syntax'
   -- Colors
-  use "rebelot/kanagawa.nvim"
-  use 'lifepillar/vim-gruvbox8'
-  use 'sainnhe/gruvbox-material'
+  use 'rose-pine/neovim'
+  use 'sainnhe/everforest'
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
   -- File Tree
@@ -100,15 +99,27 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 vim.o.termguicolors = true
 
 vim.cmd[[ set background=dark ]]
--- vim.cmd[[ set background=light ]]
-vim.cmd[[ let g:gruvbox_material_background = "medium" ]]
-vim.cmd[[ let g:gruvbox_material_disable_italic_comment = 1 ]]
-vim.cmd[[ let g:gruvbox_material_enable_bold = 1 ]]
-vim.cmd[[ let g:gruvbox_material_diagnostic_virtual_text = "colored" ]]
-vim.cmd[[ let g:gruvbox_material_transparent_background = 1 ]]
-vim.cmd[[ let g:gruvbox_material_palette = "original" ]]
+
+vim.cmd[[ let g:everforest_background = "medium" ]]
+vim.cmd[[ let g:everforest_enable_italic = 0 ]]
+vim.cmd[[ let g:everforest_disable_italic_comment = 1 ]]
+vim.cmd[[ let g:everforest_sign_column_background = "none" ]]
+vim.cmd[[ let g:everforest_diagnostic_virtual_text = "colored" ]]
+vim.cmd[[ colorscheme everforest ]]
  
-vim.cmd[[	colorscheme gruvbox-material ]]
+
+--require('rose-pine').setup({
+--	---@usage 'main'|'moon'
+--	dark_variant = 'main',
+--	bold_vert_split = false,
+--	dim_nc_background = false,
+--	disable_background = true,
+--	disable_float_background = false,
+--	disable_italics = true,
+--})
+
+---- set colorscheme after options
+--vim.cmd('colorscheme rose-pine')
 
 -- =============================================================================
 -- REMAPS
