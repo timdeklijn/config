@@ -47,6 +47,7 @@ require('packer').startup(function()
   use 'vim-pandoc/vim-pandoc-syntax'
   -- Colors
   use 'folke/tokyonight.nvim'
+  use "EdenEast/nightfox.nvim"
   use 'sainnhe/everforest'
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
@@ -100,14 +101,24 @@ vim.o.termguicolors = true
 
 vim.cmd[[ set background=dark ]]
 
--- Example config in Lua
-vim.g.tokyonight_style = "night"
-vim.g.tokyonight_italic_functions = false
-vim.g.tokyonight_italic_comments = true
-vim.g.tokyonight_lualine_bold = true
+-- Default options
+require('nightfox').setup({
+  options = {
+    -- Compiled file's destination location
+    compile_path = vim.fn.stdpath("cache") .. "/nightfox",
+    compile_file_suffix = "_compiled", -- Compiled file suffix
+    transparent = false,    -- Disable setting background
+    terminal_colors = true, -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
+    dim_inactive = false,   -- Non focused panes set to alternative background
+    styles = {              -- Style to be applied to different syntax groups
+      functions = "bold",
+      keywords = "bold",
+    },
+  }
+})
 
--- Load the colorscheme
-vim.cmd[[colorscheme tokyonight]]
+-- setup must be called before loading
+vim.cmd[[ colorscheme nordfox ]]
  
 -- =============================================================================
 -- REMAPS

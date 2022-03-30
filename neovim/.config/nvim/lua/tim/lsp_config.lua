@@ -84,6 +84,12 @@ nvim_lsp.yamlls.setup{
   capabilities = capabilities 
 }
 
+require'lspconfig'.terraformls.setup{
+  on_attach = on_attach, 
+  flags = { debounce_text_changes = 150 }, 
+  capabilities = capabilities 
+}
+
 require("null-ls").setup({
   sources = {
     require("null-ls").builtins.formatting.black,
