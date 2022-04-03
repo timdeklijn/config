@@ -46,9 +46,7 @@ require('packer').startup(function()
   use 'plasticboy/vim-markdown'
   use 'vim-pandoc/vim-pandoc-syntax'
   -- Colors
-  use 'folke/tokyonight.nvim'
-  use "EdenEast/nightfox.nvim"
-  use 'sainnhe/everforest'
+  use "projekt0n/github-nvim-theme"
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
   -- File Tree
@@ -101,25 +99,15 @@ vim.o.termguicolors = true
 
 vim.cmd[[ set background=dark ]]
 
--- Default options
-require('nightfox').setup({
-  options = {
-    -- Compiled file's destination location
-    compile_path = vim.fn.stdpath("cache") .. "/nightfox",
-    compile_file_suffix = "_compiled", -- Compiled file suffix
-    transparent = false,    -- Disable setting background
-    terminal_colors = true, -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
-    dim_inactive = false,   -- Non focused panes set to alternative background
-    styles = {              -- Style to be applied to different syntax groups
-      functions = "bold",
-      keywords = "bold",
-    },
-  }
+-- Example config in Lua
+require("github-theme").setup({
+  theme_style = "dark_default",
+  function_style = "bold",
+  comment_style	= "NONE", 
+  keyword_style	= "bold",
+  variable_style = "NONE",
 })
 
--- setup must be called before loading
-vim.cmd[[ colorscheme nordfox ]]
- 
 -- =============================================================================
 -- REMAPS
 -- =============================================================================

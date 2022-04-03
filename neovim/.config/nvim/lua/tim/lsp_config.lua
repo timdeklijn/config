@@ -96,6 +96,7 @@ require("null-ls").setup({
     require("null-ls").builtins.diagnostics.flake8,
     require("null-ls").builtins.diagnostics.mypy,
     require("null-ls").builtins.formatting.markdownlint,
+    require("null-ls").builtins.formatting.rustfmt,
   },
 })
 

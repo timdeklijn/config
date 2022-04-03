@@ -32,3 +32,7 @@ vim.api.nvim_set_keymap('n', '<leader><space>', "<cmd>lua require('fzf-lua').buf
 
 -- :Rg
 vim.api.nvim_set_keymap('n', '<leader>sg', "<cmd>lua require('fzf-lua').grep_project()<CR>", opts)
+
+-- Current buffer
+
+vim.api.nvim_set_keymap('n', '<leader>ss', "<cmd>lua require('fzf-lua').grep_curbuf	()<CR>", opts)

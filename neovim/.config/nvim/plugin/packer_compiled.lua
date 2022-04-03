@@ -94,10 +94,20 @@ _G.packer_plugins = {
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/direnv.vim",
     url = "https://github.com/direnv/direnv.vim"
   },
+  everforest = {
+    loaded = true,
+    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/everforest",
+    url = "https://github.com/sainnhe/everforest"
+  },
   ["fzf-lua"] = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/fzf-lua",
     url = "https://github.com/ibhagwan/fzf-lua"
+  },
+  ["github-nvim-theme"] = {
+    loaded = true,
+    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/github-nvim-theme",
+    url = "https://github.com/projekt0n/github-nvim-theme"
   },
   ["gitsigns.nvim"] = {
     loaded = true,
@@ -109,25 +119,20 @@ _G.packer_plugins = {
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/gotests-vim",
     url = "https://github.com/buoto/gotests-vim"
   },
-  ["gruvbox-material"] = {
-    loaded = true,
-    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/gruvbox-material",
-    url = "https://github.com/sainnhe/gruvbox-material"
-  },
   ["indent-blankline.nvim"] = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
     url = "https://github.com/lukas-reineke/indent-blankline.nvim"
   },
-  ["kanagawa.nvim"] = {
-    loaded = true,
-    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/kanagawa.nvim",
-    url = "https://github.com/rebelot/kanagawa.nvim"
-  },
   ["lualine.nvim"] = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/hoob3rt/lualine.nvim"
+  },
+  ["nightfox.nvim"] = {
+    loaded = true,
+    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/nightfox.nvim",
+    url = "https://github.com/EdenEast/nightfox.nvim"
   },
   ["null-ls.nvim"] = {
     loaded = true,
@@ -169,6 +174,11 @@ _G.packer_plugins = {
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
+  ["tokyonight.nvim"] = {
+    loaded = true,
+    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
+    url = "https://github.com/folke/tokyonight.nvim"
+  },
   ["vim-commentary"] = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/vim-commentary",
@@ -183,11 +193,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/vim-go",
     url = "https://github.com/fatih/vim-go"
-  },
-  ["vim-gruvbox8"] = {
-    loaded = true,
-    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/vim-gruvbox8",
-    url = "https://github.com/lifepillar/vim-gruvbox8"
   },
   ["vim-markdown"] = {
     loaded = true,

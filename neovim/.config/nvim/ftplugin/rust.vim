@@ -1,5 +1,8 @@
-autocmd BufWritePre *.rs :Format
-" autocmd BufWritePre *.rs :lua vim.lsp.buf.formatting()
+" autocmd BufWritePre * :Format
+" autocmd BufWritePre * :lua vim.lsp.buf.formatting()<CR>
+" autocmd BufWritePre * :lua vim.lsp.buf.formatting()
+" autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()
+
 
 setlocal expandtab
 setlocal autoindent

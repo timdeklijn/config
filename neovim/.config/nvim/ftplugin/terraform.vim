@@ -3,6 +3,5 @@ setlocal shiftwidth=2
 setlocal expandtab
 setlocal autoindent
 
-" Use this to autowrap text
-setlocal textwidth=80
-
+" auto format text on save using the LSP
+autocmd BufWritePre * :lua vim.lsp.buf.formatting()
