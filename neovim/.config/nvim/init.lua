@@ -42,11 +42,9 @@ require('packer').startup(function()
   -- TODO: at some point this should all simply be handled by LSP
   use 'fatih/vim-go'
   use 'buoto/gotests-vim'
-  -- Markdown:
-  use 'plasticboy/vim-markdown'
-  use 'vim-pandoc/vim-pandoc-syntax'
   -- Colors
-  use "projekt0n/github-nvim-theme"
+  use 'sainnhe/everforest'
+  use 'sainnhe/sonokai'
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
   -- File Tree
@@ -97,16 +95,23 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 
 vim.o.termguicolors = true
 
-vim.cmd[[ set background=dark ]]
+-- vim.cmd[[ set background=dark ]]
+-- vim.cmd[[ let g:everforest_background = 'medium' ]]
+-- vim.cmd[[ let g:everforest_enable_italic = 0 ]]
+-- vim.cmd[[ let g:everforest_disable_italic_comment = 1 ]]
+-- vim.cmd[[ let g:everforest_transparent_background = 1 ]]
+-- vim.cmd[[ let g:everforest_sign_column_background = 'none' ]]
+-- vim.cmd[[ let g:everforest_diagnostic_virtual_text='colored' ]]
+-- vim.cmd[[ colorscheme everforest ]]
 
--- Example config in Lua
-require("github-theme").setup({
-  theme_style = "dark_default",
-  function_style = "bold",
-  comment_style	= "NONE", 
-  keyword_style	= "bold",
-  variable_style = "NONE",
-})
+vim.cmd[[ set background=dark ]]
+vim.cmd[[ let g:sonokai_style = 'atlantis' ]]
+vim.cmd[[ let g:sonokai_enable_italic = 0 ]]
+vim.cmd[[ let g:sonokai_disable_italic_comment = 1 ]]
+vim.cmd[[ let g:sonokai_transparent_background = 1 ]]
+vim.cmd[[ let g:sonokai_sign_column_background = 'none' ]]
+vim.cmd[[ let g:sonokai_diagnostic_virtual_text='colored' ]]
+vim.cmd[[ colorscheme sonokai ]]
 
 -- =============================================================================
 -- REMAPS
