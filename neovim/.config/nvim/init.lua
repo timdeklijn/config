@@ -43,8 +43,7 @@ require('packer').startup(function()
   use 'fatih/vim-go'
   use 'buoto/gotests-vim'
   -- Colors
-  use 'sainnhe/everforest'
-  use 'sainnhe/sonokai'
+  use 'navarasu/onedark.nvim'
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
   -- File Tree
@@ -94,24 +93,23 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 -- =============================================================================
 
 vim.o.termguicolors = true
-
--- vim.cmd[[ set background=dark ]]
--- vim.cmd[[ let g:everforest_background = 'medium' ]]
--- vim.cmd[[ let g:everforest_enable_italic = 0 ]]
--- vim.cmd[[ let g:everforest_disable_italic_comment = 1 ]]
--- vim.cmd[[ let g:everforest_transparent_background = 1 ]]
--- vim.cmd[[ let g:everforest_sign_column_background = 'none' ]]
--- vim.cmd[[ let g:everforest_diagnostic_virtual_text='colored' ]]
--- vim.cmd[[ colorscheme everforest ]]
-
-vim.cmd[[ set background=dark ]]
-vim.cmd[[ let g:sonokai_style = 'atlantis' ]]
-vim.cmd[[ let g:sonokai_enable_italic = 0 ]]
-vim.cmd[[ let g:sonokai_disable_italic_comment = 1 ]]
-vim.cmd[[ let g:sonokai_transparent_background = 1 ]]
-vim.cmd[[ let g:sonokai_sign_column_background = 'none' ]]
-vim.cmd[[ let g:sonokai_diagnostic_virtual_text='colored' ]]
-vim.cmd[[ colorscheme sonokai ]]
+require('onedark').setup {
+    style = 'dark',
+    transparent = true,
+    code_style = {
+        comments = 'none',
+        keywords = 'bold',
+        functions = 'bold',
+        strings = 'none',
+        variables = 'none'
+    },
+    diagnostics = {
+        darker = false,
+        undercurl = false,
+        background = false,
+    },
+}
+vim.cmd[[ colorscheme onedark ]]
 
 -- =============================================================================
 -- REMAPS
