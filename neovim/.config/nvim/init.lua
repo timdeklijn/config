@@ -42,13 +42,23 @@ require('packer').startup(function()
   -- TODO: at some point this should all simply be handled by LSP
   use 'fatih/vim-go'
   use 'buoto/gotests-vim'
+  -- Tests
+  use 'vim-test/vim-test'
+  -- Terminal
+  use 'voldikss/vim-floaterm'
   -- Colors
   use 'navarasu/onedark.nvim'
+  use 'lifepillar/vim-gruvbox8'
+  use({
+    "catppuccin/nvim",
+    as = "catppuccin"
+  })
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
   -- File Tree
   use 'kyazdani42/nvim-web-devicons'
   use 'kyazdani42/nvim-tree.lua'
+  use {"nvim-neorg/neorg", requires = "nvim-lua/plenary.nvim"}
 end)
 
 -- =============================================================================
@@ -77,7 +87,7 @@ vim.g.splitbelow = true
 
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained",
+  ensure_installed = "all",
   highlight = {
     enable = true,
   }
@@ -91,25 +101,22 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 -- =============================================================================
 -- COLORS
 -- =============================================================================
-
 vim.o.termguicolors = true
-require('onedark').setup {
-    style = 'dark',
-    transparent = true,
-    code_style = {
-        comments = 'none',
-        keywords = 'bold',
-        functions = 'bold',
-        strings = 'none',
-        variables = 'none'
-    },
-    diagnostics = {
-        darker = false,
-        undercurl = false,
-        background = false,
-    },
-}
-vim.cmd[[ colorscheme onedark ]]
+-- vim.cmd[[ set background=light ]]
+vim.cmd[[ set background=dark ]]
+local catppuccin = require("catppuccin")
+
+-- configure it
+catppuccin.setup({
+  styles = {
+    comments = "NONE",
+    functions = "bold",
+    keywords = "bold",
+    strings = "NONE",
+    variables = "NONE",
+  }
+})
+vim.cmd[[colorscheme catppuccin]]
 
 -- =============================================================================
 -- REMAPS
@@ -195,6 +202,17 @@ vim.api.nvim_set_keymap('n', '[-', [[:cclose<cr>]], opts)
 vim.api.nvim_set_keymap('n', '[+', [[:copen<cr>]], opts)
 
 -- =============================================================================
+-- NEORG
+-- =============================================================================
+
+require('neorg').setup {
+    load = {
+        ["core.defaults"] = {},
+        ["core.norg.concealer"] = {}
+    }
+}
+
+-- =============================================================================
 -- CUSTOM FUNCTIONS
 -- =============================================================================
 
@@ -245,6 +263,7 @@ vim.api.nvim_set_keymap(
 
 -- Load external configs
 require("tim.lualine")
+require("tim.vim_test")
 require("tim.lsp_config")
 require("tim.cmp")
 require("tim.fzf")

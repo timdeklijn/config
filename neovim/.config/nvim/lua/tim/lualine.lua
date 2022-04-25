@@ -5,7 +5,7 @@
 -- Init and configure lualine
 require('lualine').setup{
   options = {
-    theme = 'onedark',
+    theme = 'catppuccin',
     section_separators = {'', ''},
     component_separators = {'', ''},
     section_separators = { left = '', right = '' },
