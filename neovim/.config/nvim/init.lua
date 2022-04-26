@@ -47,8 +47,6 @@ require('packer').startup(function()
   -- Terminal
   use 'voldikss/vim-floaterm'
   -- Colors
-  use 'navarasu/onedark.nvim'
-  use 'lifepillar/vim-gruvbox8'
   use({
     "catppuccin/nvim",
     as = "catppuccin"
