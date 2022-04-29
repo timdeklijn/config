@@ -119,6 +119,11 @@ _G.packer_plugins = {
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
     url = "https://github.com/lukas-reineke/indent-blankline.nvim"
   },
+  ["lsp_signature.nvim"] = {
+    loaded = true,
+    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim",
+    url = "https://github.com/ray-x/lsp_signature.nvim"
+  },
   ["lualine.nvim"] = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/lualine.nvim",
@@ -159,11 +164,6 @@ _G.packer_plugins = {
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
-  ["onedark.nvim"] = {
-    loaded = true,
-    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/onedark.nvim",
-    url = "https://github.com/navarasu/onedark.nvim"
-  },
   ["packer.nvim"] = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/packer.nvim",
@@ -193,11 +193,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/vim-go",
     url = "https://github.com/fatih/vim-go"
-  },
-  ["vim-gruvbox8"] = {
-    loaded = true,
-    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/vim-gruvbox8",
-    url = "https://github.com/lifepillar/vim-gruvbox8"
   },
   ["vim-test"] = {
     loaded = true,

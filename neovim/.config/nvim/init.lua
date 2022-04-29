@@ -27,6 +27,7 @@ require('packer').startup(function()
  -- Collection of configurations for built-in LSP client
   use 'neovim/nvim-lspconfig'        
   use 'jose-elias-alvarez/null-ls.nvim'
+  use "ray-x/lsp_signature.nvim"
   -- Autocomplete using cmp
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
@@ -56,6 +57,7 @@ require('packer').startup(function()
   -- File Tree
   use 'kyazdani42/nvim-web-devicons'
   use 'kyazdani42/nvim-tree.lua'
+  -- Neorg
   use {"nvim-neorg/neorg", requires = "nvim-lua/plenary.nvim"}
 end)
 
@@ -100,7 +102,6 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 -- COLORS
 -- =============================================================================
 vim.o.termguicolors = true
--- vim.cmd[[ set background=light ]]
 vim.cmd[[ set background=dark ]]
 local catppuccin = require("catppuccin")
 
@@ -135,18 +136,6 @@ vim.api.nvim_exec([[
 vim.api.nvim_set_keymap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
 vim.api.nvim_set_keymap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
 
---Remap escape to leave terminal mode
-vim.api.nvim_exec([[
-  augroup Terminal
-    autocmd!
-    au TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
-    au TermOpen * set nonu
-  augroup end
-]], false)
-
---Add map to enter paste mode
-vim.o.pastetoggle="<F3>"
-
 require("indent_blankline").setup {
     show_current_context = true,
 }
@@ -170,8 +159,11 @@ require('gitsigns').setup()
 -- =============================================================================
 
 require('nvim-tree').setup({
-  nvim_tree_gitignore = true,
-  nvim_tree_ignore = { '.git', 'node_modules', '.cache', '__pycache__/'},
+  git = {
+    enable = true,
+    ignore = true,
+    timeout = 400,
+  },
   view = {
     side = 'right'
   }
@@ -193,7 +185,6 @@ vim.api.nvim_set_keymap('n', '<leader>gP', [[:Git pull<CR>]], opts)
 -- QUICKFIX KEYMAPS
 -- =============================================================================
 
--- useful quickfix keybinds
 vim.api.nvim_set_keymap('n', '[q', [[:cp<cr>]], opts)
 vim.api.nvim_set_keymap('n', ']q', [[:cn<cr>]], opts)
 vim.api.nvim_set_keymap('n', '[-', [[:cclose<cr>]], opts)
@@ -254,6 +245,14 @@ vim.api.nvim_set_keymap(
   '<leader>NT', 
   [[<cmd>lua vim.api.nvim_command("edit ~/wiki/todo.md")<cr>]], 
   opts)
+
+-- =============================================================================
+-- LSP SIGNATURE
+-- =============================================================================
+
+require "lsp_signature".setup({
+  floating_window = true,
+})
 
 -- =============================================================================
 -- IMPORT CONFIGS
