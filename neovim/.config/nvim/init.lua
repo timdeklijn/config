@@ -48,10 +48,8 @@ require('packer').startup(function()
   -- Terminal
   use 'voldikss/vim-floaterm'
   -- Colors
-  use({
-    "catppuccin/nvim",
-    as = "catppuccin"
-  })
+  use 'rebelot/kanagawa.nvim'
+  use 'NLKNguyen/papercolor-theme'
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
   -- File Tree
@@ -102,20 +100,37 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 -- COLORS
 -- =============================================================================
 vim.o.termguicolors = true
-vim.cmd[[ set background=dark ]]
-local catppuccin = require("catppuccin")
 
--- configure it
-catppuccin.setup({
-  styles = {
-    comments = "NONE",
-    functions = "bold",
-    keywords = "bold",
-    strings = "NONE",
-    variables = "NONE",
-  }
-})
-vim.cmd[[colorscheme catppuccin]]
+dark = true
+
+if dark then
+  vim.cmd[[ set background=dark ]]
+
+  -- Default options:
+  require('kanagawa').setup({
+      undercurl = true,           -- enable undercurls
+      commentStyle = "none",
+      functionStyle = "bold",
+      keywordStyle = "bold",
+      statementStyle = "bold",
+      typeStyle = "bold",
+      variablebuiltinStyle = "italic",
+      specialReturn = true,
+      specialException = true,
+      dimInactive = true,
+  })
+
+  vim.cmd[[ colorscheme kanagawa ]]
+
+  LUALINE_THEME = "kanagawa"
+
+else
+  vim.cmd[[ set background=light ]]
+  vim.cmd[[ colorscheme PaperColor ]]
+
+  LUALINE_THEME = "papercolor_light"
+
+end
 
 -- =============================================================================
 -- REMAPS
