@@ -85,10 +85,17 @@ nvim_lsp.yamlls.setup{
 }
 
 require'lspconfig'.terraformls.setup{
+  on_attach = on_attach,
+  flags = { debounce_text_changes = 150 },
+  capabilities = capabilities
+}
+
+require'lspconfig'.svelte.setup{
   on_attach = on_attach, 
   flags = { debounce_text_changes = 150 }, 
   capabilities = capabilities 
 }
+
 
 require("null-ls").setup({
   sources = {

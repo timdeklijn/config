@@ -39,6 +39,10 @@ require('packer').startup(function()
   -- Environment setup
   use 'direnv/direnv.vim' 
   use 'christoomey/vim-tmux-navigator'
+  -- Debugging
+  use 'mfussenegger/nvim-dap'
+  use 'mfussenegger/nvim-dap-python'
+  use 'rcarriga/nvim-dap-ui'
   -- Go:
   -- TODO: at some point this should all simply be handled by LSP
   use 'fatih/vim-go'
@@ -48,8 +52,7 @@ require('packer').startup(function()
   -- Terminal
   use 'voldikss/vim-floaterm'
   -- Colors
-  use 'rebelot/kanagawa.nvim'
-  use 'NLKNguyen/papercolor-theme'
+  use 'EdenEast/nightfox.nvim'
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
   -- File Tree
@@ -101,36 +104,31 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 -- =============================================================================
 vim.o.termguicolors = true
 
-dark = true
+-- Default options
+require('nightfox').setup({
+  options = {
+    compile_path = vim.fn.stdpath("cache") .. "/nightfox",
+    compile_file_suffix = "_compiled",
+    transparent = false,
+    terminal_colors = true,
+    dim_inactive = false,
+    styles = {
+      comments = "NONE",
+      conditionals = "bold",
+      constants = "NONE",
+      functions = "bold",
+      keywords = "bold",
+      numbers = "NONE",
+      operators = "NONE",
+      strings = "NONE",
+      types = "bold",
+      variables = "NONE",
+    },
+  }
+})
 
-if dark then
-  vim.cmd[[ set background=dark ]]
-
-  -- Default options:
-  require('kanagawa').setup({
-      undercurl = true,           -- enable undercurls
-      commentStyle = "none",
-      functionStyle = "bold",
-      keywordStyle = "bold",
-      statementStyle = "bold",
-      typeStyle = "bold",
-      variablebuiltinStyle = "italic",
-      specialReturn = true,
-      specialException = true,
-      dimInactive = true,
-  })
-
-  vim.cmd[[ colorscheme kanagawa ]]
-
-  LUALINE_THEME = "kanagawa"
-
-else
-  vim.cmd[[ set background=light ]]
-  vim.cmd[[ colorscheme PaperColor ]]
-
-  LUALINE_THEME = "papercolor_light"
-
-end
+vim.cmd[[ colorscheme nordfox ]]
+-- vim.cmd[[ colorscheme dayfox ]]
 
 -- =============================================================================
 -- REMAPS
@@ -279,3 +277,4 @@ require("tim.vim_test")
 require("tim.lsp_config")
 require("tim.cmp")
 require("tim.fzf")
+require("tim.dap")
