@@ -52,14 +52,15 @@ require('packer').startup(function()
   -- Terminal
   use 'voldikss/vim-floaterm'
   -- Colors
-  use 'EdenEast/nightfox.nvim'
+  use 'folke/tokyonight.nvim'
+  use 'bluz71/vim-moonfly-colors'
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
   -- File Tree
   use 'kyazdani42/nvim-web-devicons'
   use 'kyazdani42/nvim-tree.lua'
-  -- Neorg
-  use {"nvim-neorg/neorg", requires = "nvim-lua/plenary.nvim"}
+  -- VimWiki
+  use 'vimwiki/vimwiki'
 end)
 
 -- =============================================================================
@@ -104,31 +105,15 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 -- =============================================================================
 vim.o.termguicolors = true
 
--- Default options
-require('nightfox').setup({
-  options = {
-    compile_path = vim.fn.stdpath("cache") .. "/nightfox",
-    compile_file_suffix = "_compiled",
-    transparent = false,
-    terminal_colors = true,
-    dim_inactive = false,
-    styles = {
-      comments = "NONE",
-      conditionals = "bold",
-      constants = "NONE",
-      functions = "bold",
-      keywords = "bold",
-      numbers = "NONE",
-      operators = "NONE",
-      strings = "NONE",
-      types = "bold",
-      variables = "NONE",
-    },
-  }
-})
+-- vim.cmd[[set background=light]]
+-- vim.g.tokyonight_style = "storm"
+-- vim.g.tokyonight_italic_comments = false
+-- vim.g.tokyonight_italic_keywords = false
+-- vim.g.tokyonight_lualine_bold = true
+-- vim.cmd[[ colorscheme tokyonight ]]
 
-vim.cmd[[ colorscheme nordfox ]]
--- vim.cmd[[ colorscheme dayfox ]]
+vim.g.moonflyItalics = 0
+vim.cmd[[ colorscheme moonfly ]]
 
 -- =============================================================================
 -- REMAPS
@@ -202,17 +187,6 @@ vim.api.nvim_set_keymap('n', '[q', [[:cp<cr>]], opts)
 vim.api.nvim_set_keymap('n', ']q', [[:cn<cr>]], opts)
 vim.api.nvim_set_keymap('n', '[-', [[:cclose<cr>]], opts)
 vim.api.nvim_set_keymap('n', '[+', [[:copen<cr>]], opts)
-
--- =============================================================================
--- NEORG
--- =============================================================================
-
-require('neorg').setup {
-    load = {
-        ["core.defaults"] = {},
-        ["core.norg.concealer"] = {}
-    }
-}
 
 -- =============================================================================
 -- CUSTOM FUNCTIONS
