@@ -52,8 +52,7 @@ require('packer').startup(function()
   -- Terminal
   use 'voldikss/vim-floaterm'
   -- Colors
-  use 'folke/tokyonight.nvim'
-  use 'bluz71/vim-moonfly-colors'
+  use 'sainnhe/gruvbox-material'
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
   -- File Tree
@@ -61,6 +60,8 @@ require('packer').startup(function()
   use 'kyazdani42/nvim-tree.lua'
   -- VimWiki
   use 'vimwiki/vimwiki'
+  -- Copilot
+  use 'github/copilot.vim'
 end)
 
 -- =============================================================================
@@ -105,15 +106,16 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 -- =============================================================================
 vim.o.termguicolors = true
 
--- vim.cmd[[set background=light]]
--- vim.g.tokyonight_style = "storm"
--- vim.g.tokyonight_italic_comments = false
--- vim.g.tokyonight_italic_keywords = false
--- vim.g.tokyonight_lualine_bold = true
--- vim.cmd[[ colorscheme tokyonight ]]
-
-vim.g.moonflyItalics = 0
-vim.cmd[[ colorscheme moonfly ]]
+vim.cmd[[
+set background=dark
+let g:gruvbox_material_foreground='material'
+let g:gruvbox_material_statusline_style='material'
+let g:gruvbox_material_disable_italic_comment=1
+let g:gruvbox_material_enable_bold=1
+let g:gruvbox_material_spell_foreground='colored'
+let g:gruvbox_material_enable_italic=0
+colorscheme gruvbox-material
+]]
 
 -- =============================================================================
 -- REMAPS
