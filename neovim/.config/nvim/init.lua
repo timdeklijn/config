@@ -47,6 +47,8 @@ require('packer').startup(function()
   -- TODO: at some point this should all simply be handled by LSP
   use 'fatih/vim-go'
   use 'buoto/gotests-vim'
+  -- Scala
+  use({'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" }})
   -- Tests
   use 'vim-test/vim-test'
   -- Terminal
@@ -107,11 +109,13 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 vim.o.termguicolors = true
 
 vim.cmd[[
+" set background=light
 set background=dark
 let g:gruvbox_material_foreground='material'
 let g:gruvbox_material_statusline_style='material'
 let g:gruvbox_material_disable_italic_comment=1
 let g:gruvbox_material_enable_bold=1
+" let g:gruvbox_material_transparent_background=1
 let g:gruvbox_material_spell_foreground='colored'
 let g:gruvbox_material_enable_italic=0
 colorscheme gruvbox-material
@@ -242,6 +246,23 @@ vim.api.nvim_set_keymap(
 require "lsp_signature".setup({
   floating_window = true,
 })
+
+
+-- =============================================================================
+-- METALS
+-- =============================================================================
+
+local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "scala", "sbt", "java" },
+  callback = function()
+    require("metals").initialize_or_attach({})
+  end,
+  group = nvim_metals_group,
+})
+
+metals_config = require("metals").bare_config()
+metals_config.init_options.statusBarProvider = "on"
 
 -- =============================================================================
 -- IMPORT CONFIGS

@@ -201,3 +201,6 @@ export PROJECTS="/Users/timdeklijn/projects.json"
 
 # STARSHIP
 eval "$(starship init zsh)"
+
+# asdf
+. /usr/local/opt/asdf/libexec/asdf.sh

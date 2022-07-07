@@ -96,6 +96,12 @@ require'lspconfig'.svelte.setup{
   capabilities = capabilities 
 }
 
+require'lspconfig'.metals.setup{
+  on_attach = on_attach, 
+  flags = { debounce_text_changes = 150 }, 
+  capabilities = capabilities 
+}
+
 
 require("null-ls").setup({
   sources = {
