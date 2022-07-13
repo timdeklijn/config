@@ -99,6 +99,11 @@ _G.packer_plugins = {
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/direnv.vim",
     url = "https://github.com/direnv/direnv.vim"
   },
+  ["dracula.nvim"] = {
+    loaded = true,
+    path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/dracula.nvim",
+    url = "https://github.com/Mofiqul/dracula.nvim"
+  },
   ["fzf-lua"] = {
     loaded = true,
     path = "/Users/timdeklijn/.local/share/nvim/site/pack/packer/start/fzf-lua",

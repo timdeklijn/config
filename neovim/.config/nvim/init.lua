@@ -55,6 +55,7 @@ require('packer').startup(function()
   use 'voldikss/vim-floaterm'
   -- Colors
   use 'sainnhe/gruvbox-material'
+  use 'shaunsingh/nord.nvim'
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
   -- File Tree
@@ -108,18 +109,13 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 -- =============================================================================
 vim.o.termguicolors = true
 
-vim.cmd[[
-" set background=light
-set background=dark
-let g:gruvbox_material_foreground='material'
-let g:gruvbox_material_statusline_style='material'
-let g:gruvbox_material_disable_italic_comment=1
-let g:gruvbox_material_enable_bold=1
-" let g:gruvbox_material_transparent_background=1
-let g:gruvbox_material_spell_foreground='colored'
-let g:gruvbox_material_enable_italic=0
-colorscheme gruvbox-material
-]]
+-- Example config in lua
+vim.g.nord_contrast = true
+vim.g.nord_borders = false
+vim.g.nord_disable_background = false
+vim.g.nord_italic = false
+
+vim.cmd[[ colorscheme nord ]]
 
 -- =============================================================================
 -- REMAPS
