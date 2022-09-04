@@ -24,6 +24,8 @@ table.insert(require("dap").configurations.python, {
   cwd = '/Users/timdeklijn/projects/jax',
 })
 
+-- require("config.dap.rust").setup()
+
 vim.api.nvim_set_keymap('n', '<leader>dn', [[<cmd>lua require('dap-python').test_method()<CR>]], opts)
 vim.api.nvim_set_keymap('n', '<leader>df', [[<cmd>lua require('dap-python').test_class()<CR>]], opts)
 
@@ -33,3 +35,5 @@ require("dapui").setup()
 vim.api.nvim_set_keymap('n', '<leader>duo', [[<cmd>lua require("dapui").open()<CR>]], opts)
 vim.api.nvim_set_keymap('n', '<leader>duc', [[<cmd>lua require("dapui").close()<CR>]], opts)
 vim.api.nvim_set_keymap('n', '<leader>dut', [[<cmd>lua require("dapui").toggle()<CR>]], opts)
+
+require('dap.ext.vscode').load_launchjs()

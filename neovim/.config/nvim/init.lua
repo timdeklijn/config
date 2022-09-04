@@ -19,6 +19,8 @@ require('packer').startup(function()
   use 'wbthomason/packer.nvim'       -- Package manager
   use 'tpope/vim-commentary'         -- "gc" to comment visual regions/lines
   use 'tpope/vim-fugitive'           -- git
+  use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/plenary.nvim'}}}
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use 'ibhagwan/fzf-lua'             -- search all the things
   -- Add indentation guides even on blank lines
   use { 'lukas-reineke/indent-blankline.nvim' }
@@ -47,6 +49,8 @@ require('packer').startup(function()
   -- TODO: at some point this should all simply be handled by LSP
   use 'fatih/vim-go'
   use 'buoto/gotests-vim'
+  -- Rust
+  use 'simrat39/rust-tools.nvim'
   -- Scala
   use({'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" }})
   -- Tests
@@ -56,6 +60,7 @@ require('packer').startup(function()
   -- Colors
   use 'sainnhe/gruvbox-material'
   use 'shaunsingh/nord.nvim'
+  use({"catppuccin/nvim", as = "catppuccin"})
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
   -- File Tree
@@ -63,8 +68,6 @@ require('packer').startup(function()
   use 'kyazdani42/nvim-tree.lua'
   -- VimWiki
   use 'vimwiki/vimwiki'
-  -- Copilot
-  use 'github/copilot.vim'
 end)
 
 -- =============================================================================
@@ -109,13 +112,41 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 -- =============================================================================
 vim.o.termguicolors = true
 
--- Example config in lua
-vim.g.nord_contrast = true
-vim.g.nord_borders = false
-vim.g.nord_disable_background = false
-vim.g.nord_italic = false
+local catppuccin = require("catppuccin")
 
-vim.cmd[[ colorscheme nord ]]
+catppuccin.setup({
+  styles = {
+    comments = {},
+    conditionals = {},
+    loops = { "bold" },
+    functions = { "bold" },
+    keywords = { "bold" },
+    strings = {},
+    variables = {},
+    numbers = {},
+    booleans = { "bold" },
+    properties = {},
+    types = { "bold" },
+    operators = {},
+  },
+  integrations = {
+    treesitter = true,
+    native_lsp = {
+      enabled = true,
+      virtual_text = {
+        errors = {},
+        hints = {},
+        warnings = {},
+        information = {},
+      },
+    },
+  },
+})
+
+vim.g.catppuccin_flavour = "frappe"
+-- vim.g.catppuccin_flavour = "latte"
+-- require("catppuccin").setup()
+vim.cmd[[ colorscheme catppuccin ]]
 
 -- =============================================================================
 -- REMAPS
@@ -261,6 +292,22 @@ metals_config = require("metals").bare_config()
 metals_config.init_options.statusBarProvider = "on"
 
 -- =============================================================================
+-- Rust
+-- =============================================================================
+
+local opts = {
+    dap = {
+      adapter = {
+        type = "executable",
+        command = "lldb-vscode",
+        name = "rt_lldb",
+    },
+  },
+}
+require('rust-tools').setup(opts)
+
+
+-- =============================================================================
 -- IMPORT CONFIGS
 -- =============================================================================
 
@@ -269,5 +316,6 @@ require("tim.lualine")
 require("tim.vim_test")
 require("tim.lsp_config")
 require("tim.cmp")
-require("tim.fzf")
+-- require("tim.fzf")
+require("tim.telescope")
 require("tim.dap")

@@ -96,7 +96,7 @@ require'lspconfig'.svelte.setup{
   capabilities = capabilities 
 }
 
-require'lspconfig'.metals.setup{
+nvim_lsp.metals.setup{
   on_attach = on_attach, 
   flags = { debounce_text_changes = 150 }, 
   capabilities = capabilities 
