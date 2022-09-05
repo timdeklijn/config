@@ -46,7 +46,6 @@ require('packer').startup(function()
   use 'mfussenegger/nvim-dap-python'
   use 'rcarriga/nvim-dap-ui'
   -- Go:
-  -- TODO: at some point this should all simply be handled by LSP
   use 'fatih/vim-go'
   use 'buoto/gotests-vim'
   -- Rust
@@ -58,9 +57,8 @@ require('packer').startup(function()
   -- Terminal
   use 'voldikss/vim-floaterm'
   -- Colors
-  use 'sainnhe/gruvbox-material'
-  use 'shaunsingh/nord.nvim'
-  use({"catppuccin/nvim", as = "catppuccin"})
+  use 'sainnhe/everforest'
+  use 'projekt0n/github-nvim-theme'
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
   -- File Tree
@@ -110,43 +108,15 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 -- =============================================================================
 -- COLORS
 -- =============================================================================
+
 vim.o.termguicolors = true
 
-local catppuccin = require("catppuccin")
-
-catppuccin.setup({
-  styles = {
-    comments = {},
-    conditionals = {},
-    loops = { "bold" },
-    functions = { "bold" },
-    keywords = { "bold" },
-    strings = {},
-    variables = {},
-    numbers = {},
-    booleans = { "bold" },
-    properties = {},
-    types = { "bold" },
-    operators = {},
-  },
-  integrations = {
-    treesitter = true,
-    native_lsp = {
-      enabled = true,
-      virtual_text = {
-        errors = {},
-        hints = {},
-        warnings = {},
-        information = {},
-      },
-    },
-  },
+require('github-theme').setup({
+  theme_style = "dark_default",
+  function_style = "bold",
+  comment_style = "NONE",
+  keyword_style = "NONE",
 })
-
-vim.g.catppuccin_flavour = "frappe"
--- vim.g.catppuccin_flavour = "latte"
--- require("catppuccin").setup()
-vim.cmd[[ colorscheme catppuccin ]]
 
 -- =============================================================================
 -- REMAPS
@@ -222,58 +192,12 @@ vim.api.nvim_set_keymap('n', '[-', [[:cclose<cr>]], opts)
 vim.api.nvim_set_keymap('n', '[+', [[:copen<cr>]], opts)
 
 -- =============================================================================
--- CUSTOM FUNCTIONS
--- =============================================================================
-
-T = {}
-
--- new_note creates a not in my notes folder with an id based on datetime and a
--- title prompted from the user. The id and title are used in the filename as
--- well as the header written to the file.
-T.new_note = function()
-  -- where to save the note
-  local notes_dir = "/Users/timdeklijn/wiki/"
-
-  -- create ID for current datetime: YYYYMMDDHHMM
-  local c = os.date("*t")
-  local id = (tostring(c.year) .. tostring(c.month) .. 
-              tostring(c.day) .. tostring(c.hour) .. 
-              tostring(c.min))
-
-  -- get title from user prompt
-  local raw_title = vim.fn.input("Title: ")
-
-  -- filename from id and title
-  file_title = string.lower(string.gsub(raw_title, " ", "_"))
-  local filename = notes_dir .. id .. "_" .. file_title .. ".md"
-  
-  -- file title from id and title
-  local header_title = "# " .. raw_title
-
-  -- create an empty buffer, and focus the current window to it. Write the
-  -- title to it and save the file to the notes folder
-  local buf = vim.api.nvim_create_buf(false, false)
-  vim.api.nvim_win_set_buf(0, buf)
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, {header_title})
-  vim.api.nvim_command("write" .. " " .. filename)
-end
-
--- Keybind to create a new note
-vim.api.nvim_set_keymap('n', '<leader>NN', [[<cmd>lua T.new_note()<cr>]], opts)
-vim.api.nvim_set_keymap(
-  'n', 
-  '<leader>NT', 
-  [[<cmd>lua vim.api.nvim_command("edit ~/wiki/todo.md")<cr>]], 
-  opts)
-
--- =============================================================================
 -- LSP SIGNATURE
 -- =============================================================================
 
 require "lsp_signature".setup({
   floating_window = true,
 })
-
 
 -- =============================================================================
 -- METALS
@@ -306,7 +230,6 @@ local opts = {
 }
 require('rust-tools').setup(opts)
 
-
 -- =============================================================================
 -- IMPORT CONFIGS
 -- =============================================================================
@@ -316,6 +239,5 @@ require("tim.lualine")
 require("tim.vim_test")
 require("tim.lsp_config")
 require("tim.cmp")
--- require("tim.fzf")
 require("tim.telescope")
 require("tim.dap")

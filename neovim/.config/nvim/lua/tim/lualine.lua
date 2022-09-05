@@ -6,7 +6,7 @@
 require('lualine').setup{
   options = {
     -- theme = LUALINE_THEME,
-    theme = 'catppuccin',
+    theme = 'github',
     section_separators = {'', ''},
     component_separators = {'', ''},
     section_separators = { left = '', right = '' },
