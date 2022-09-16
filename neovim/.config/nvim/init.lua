@@ -19,13 +19,22 @@ require('packer').startup(function()
   use 'wbthomason/packer.nvim'       -- Package manager
   use 'tpope/vim-commentary'         -- "gc" to comment visual regions/lines
   use 'tpope/vim-fugitive'           -- git
-  use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/plenary.nvim'}}}
-  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-  use 'ibhagwan/fzf-lua'             -- search all the things
+  -- Search
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = {{'nvim-lua/plenary.nvim'}}
+  }
+  use {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    run = 'make' 
+  }
   -- Add indentation guides even on blank lines
   use { 'lukas-reineke/indent-blankline.nvim' }
   -- Add git related info in the signs columns and popups
-  use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'} }
+  use {
+    'lewis6991/gitsigns.nvim',
+    requires = {'nvim-lua/plenary.nvim'} 
+  }
  -- Collection of configurations for built-in LSP client
   use 'neovim/nvim-lspconfig'        
   use 'jose-elias-alvarez/null-ls.nvim'
@@ -57,8 +66,8 @@ require('packer').startup(function()
   -- Terminal
   use 'voldikss/vim-floaterm'
   -- Colors
+  use 'bluz71/vim-moonfly-colors'
   use 'sainnhe/everforest'
-  use 'projekt0n/github-nvim-theme'
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
   -- File Tree
@@ -111,12 +120,12 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 
 vim.o.termguicolors = true
 
-require('github-theme').setup({
-  theme_style = "dark_default",
-  function_style = "bold",
-  comment_style = "NONE",
-  keyword_style = "NONE",
-})
+vim.cmd[[ 
+  let g:everforest_enable_italic=0
+  let g:everforest_disable_italic_comment=1
+  let g:everforest_transparent_background=1
+  colorscheme everforest 
+]]
 
 -- =============================================================================
 -- REMAPS
@@ -241,3 +250,4 @@ require("tim.lsp_config")
 require("tim.cmp")
 require("tim.telescope")
 require("tim.dap")
+require("tim.vimwiki")
