@@ -50,15 +50,9 @@ require('packer').startup(function()
   -- Environment setup
   use 'direnv/direnv.vim' 
   use 'christoomey/vim-tmux-navigator'
-  -- Debugging
-  use 'mfussenegger/nvim-dap'
-  use 'mfussenegger/nvim-dap-python'
-  use 'rcarriga/nvim-dap-ui'
   -- Go:
   use 'fatih/vim-go'
   use 'buoto/gotests-vim'
-  -- Rust
-  use 'simrat39/rust-tools.nvim'
   -- Scala
   use({'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" }})
   -- Tests
@@ -66,7 +60,6 @@ require('packer').startup(function()
   -- Terminal
   use 'voldikss/vim-floaterm'
   -- Colors
-  use 'bluz71/vim-moonfly-colors'
   use 'sainnhe/everforest'
   -- LuaLine
   use 'hoob3rt/lualine.nvim'
@@ -98,6 +91,22 @@ vim.cmd[[set cursorline]]
 vim.g.splitbelow = true
 
 -- =============================================================================
+-- Cursorline
+-- =============================================================================
+
+-- Create autocommands to show cursorlines in active windows/buffers, but hide
+-- them when leaving the window.
+
+vim.api.nvim_create_autocmd(
+  {"VimEnter", "WinEnter", "BufWinEnter" }, 
+  { command = "setlocal cursorline" }
+)
+vim.api.nvim_create_autocmd(
+  "WinLeave",
+  { command = "setlocal nocursorline" }
+)
+
+-- =============================================================================
 -- TREESITTER
 -- =============================================================================
 
@@ -120,11 +129,11 @@ vim.o.foldexpr='nvim_treesitter#foldexpr()'
 
 vim.o.termguicolors = true
 
-vim.cmd[[ 
+vim.cmd[[
+  let g:everforest_transparent_background=1
   let g:everforest_enable_italic=0
   let g:everforest_disable_italic_comment=1
-  let g:everforest_transparent_background=1
-  colorscheme everforest 
+  colorscheme everforest
 ]]
 
 -- =============================================================================
@@ -225,21 +234,6 @@ metals_config = require("metals").bare_config()
 metals_config.init_options.statusBarProvider = "on"
 
 -- =============================================================================
--- Rust
--- =============================================================================
-
-local opts = {
-    dap = {
-      adapter = {
-        type = "executable",
-        command = "lldb-vscode",
-        name = "rt_lldb",
-    },
-  },
-}
-require('rust-tools').setup(opts)
-
--- =============================================================================
 -- IMPORT CONFIGS
 -- =============================================================================
 
@@ -249,5 +243,4 @@ require("tim.vim_test")
 require("tim.lsp_config")
 require("tim.cmp")
 require("tim.telescope")
-require("tim.dap")
 require("tim.vimwiki")

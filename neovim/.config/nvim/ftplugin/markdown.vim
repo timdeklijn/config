@@ -6,6 +6,7 @@ setlocal expandtab
 setlocal autoindent
 
 setlocal textwidth=88
+setlocal colorcolumn=88
 
 " Conceal on to hide some boilerplate
 setlocal conceallevel=3
@@ -22,4 +23,4 @@ setlocal formatlistpat=^\\s*\\d\\+[.\)]\\s\\+\\\|^\\s*[*+~-]\\s\\+\\\|^\\(\\\|[*
 setlocal comments=fb:>,fb:*,fb:+,fb:-
 setlocal formatoptions+=cn
 
-nnoremap <silent> <leader>m :Format<CR>
+nnoremap <silent> <leader>= :Format<CR>

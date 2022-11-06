@@ -1,4 +1,8 @@
 -- Add some shortcuts for vimwiki
+vim.cmd[[
+  let g:vimwiki_syntax = 'markdown'
+  let g:vimwiki_ext = '.md'
+]]
 
 -- Custom function that will go create a diary not for the current day. Then go
 -- to the diary index and generate all links to the different diary entries.

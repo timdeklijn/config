@@ -8,6 +8,12 @@ require('telescope').setup{
       override_file_sorder = true,
       case_mode = "smart_case",
     }
+  },
+  pickers = {
+    buffers = {
+      ignore_current_buffer = true,
+      sort_lastused = true,
+    },
   }
 }
 

@@ -32,7 +32,7 @@ local on_attach = function(_client, bufnr)
 end
 
 -- Add lsp to nvim-cmp
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 nvim_lsp.rust_analyzer.setup { 
   on_attach = on_attach, 
@@ -102,6 +102,11 @@ nvim_lsp.metals.setup{
   capabilities = capabilities 
 }
 
+nvim_lsp.clangd.setup{
+  on_attach = on_attach, 
+  flags = { debounce_text_changes = 150 }, 
+  capabilities = capabilities 
+}
 
 require("null-ls").setup({
   sources = {
@@ -114,4 +119,4 @@ require("null-ls").setup({
 })
 
 -- Map :Format to vim.lsp.buf.formatting(), also mapped to <SPACE>=
-vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
+vim.cmd([[ command! Format execute 'lua vim.lsp.buf.format()' ]])
