@@ -1,4 +1,4 @@
- -- Install packer
+-- Install packer
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 local is_bootstrap = false
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
@@ -137,6 +137,11 @@ vim.o.cursorline = true
 -- Set colorscheme
 vim.o.termguicolors = true
 vim.o.background = "dark"
+
+-- Set completeopt to have a better completion experience
+vim.o.completeopt = 'menuone,noselect'
+
+-- [[ Set Colorscheme ]]
 require("gruvbox").setup({
   undercurl = true,
   underline = true,
@@ -147,15 +152,14 @@ require("gruvbox").setup({
   invert_signs = false,
   invert_tabline = false,
   invert_intend_guides = false,
-  inverse = false, -- invert background for search, diffs, statuslines and errors
+  inverse = true, -- invert background for search, diffs, statuslines and errors
   contrast = "hard", -- can be "hard", "soft" or empty string
+  palette_overrides = {},
+  overrides = {},
   dim_inactive = false,
   transparent_mode = false,
 })
-vim.cmd [[colorschem gruvbox]]
-
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
+vim.cmd[[ colorscheme gruvbox ]]
 
 -- [[ Basic Keymaps ]]
 -- Set <space> as the leader key
@@ -348,7 +352,7 @@ local on_attach = function(_, bufnr)
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+  nmap('<leader>ls', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap
@@ -425,13 +429,33 @@ require('mason-nvim-dap').setup({
 
 require('mason-nvim-dap').setup_handlers()
 
-local dapping = function()
+-- [[ Debugging COnfiguration ]]
+
+-- to start debugging using a breakpoint run this function.
+local start_debug_with_breakpoint = function ()
   require('dapui').setup()
-  vim.cmd[[:lua DapToggleBreakPoint<CR>]]
+  require('dap').toggle_breakpoint()
+  require('dap.ext.vscode').load_launchjs()
+  require('dap').continue()
   require('dapui').toggle()
 end
 
-vim.keymap.set('n', '<leader>du', dapping, { desc = '[D]ap [U]I' })
+-- stop debugging
+local end_debugging = function ()
+  require('dap').terminate()
+  require('dapui').toggle({})
+end
+
+-- Call defined function
+vim.keymap.set('n', '<leader>ds', start_debug_with_breakpoint, { desc = '[D]ap [S]start' })
+vim.keymap.set('n', '<leader>dS', end_debugging, { desc = '[D]ap [S]stop' })
+
+-- Keybinds for dap functions
+vim.keymap.set('n', '<leader>db', require("dap").toggle_breakpoint, { desc = '[D]ap [B]reakpoint' })
+vim.keymap.set('n', '<leader>dc', require('dap').continue, { desc = '[D]ap [C]ontinue' })
+vim.keymap.set('n', '<leader>do', require('dap').step_over, { desc = '[D]ap step [O]ver' })
+vim.keymap.set('n', '<leader>dd', require('dap').step_into, { desc = '[D]ap step [D]own (into)' })
+vim.keymap.set('n', '<leader>du', require('dap').step_out, { desc = '[D]ap step [U]p (out)' })
 
 -- Turn on lsp status information
 require('fidget').setup()
