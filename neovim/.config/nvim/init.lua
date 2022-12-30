@@ -106,6 +106,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 })
 
 -- [[ Setting options ]]
+--
 -- See `:help vim.o`
 
 -- Set highlight on search
@@ -134,14 +135,14 @@ vim.wo.signcolumn = 'yes'
 -- Highlight current line
 vim.o.cursorline = true
 
--- Set colorscheme
-vim.o.termguicolors = true
-vim.o.background = "dark"
-
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
 -- [[ Set Colorscheme ]]
+--
+vim.o.termguicolors = true
+vim.o.background = "dark"
+
 require("gruvbox").setup({
   undercurl = true,
   underline = true,
@@ -153,7 +154,7 @@ require("gruvbox").setup({
   invert_tabline = false,
   invert_intend_guides = false,
   inverse = true, -- invert background for search, diffs, statuslines and errors
-  contrast = "hard", -- can be "hard", "soft" or empty string
+  contrast = "", -- can be "hard", "soft" or empty string
   palette_overrides = {},
   overrides = {},
   dim_inactive = false,
@@ -162,6 +163,7 @@ require("gruvbox").setup({
 vim.cmd[[ colorscheme gruvbox ]]
 
 -- [[ Basic Keymaps ]]
+--
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -177,6 +179,7 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- [[ Highlight on yank ]]
+--
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -187,6 +190,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+-- [[ lualine ]]
+--
 -- Set lualine as statusline
 -- See `:help lualine.txt`
 require('lualine').setup {
@@ -198,9 +203,13 @@ require('lualine').setup {
   },
 }
 
+-- [[ Comment.nvim ]]
+--
 -- Enable Comment.nvim
 require('Comment').setup()
 
+-- [[ indend-blankline ]]
+--
 -- Enable `lukas-reineke/indent-blankline.nvim`
 -- See `:help indent_blankline.txt`
 require('indent_blankline').setup {
@@ -208,7 +217,8 @@ require('indent_blankline').setup {
   show_trailing_blankline_indent = false,
 }
 
--- Gitsigns
+-- [[ Gitsigns ]]
+--
 -- See `:help gitsigns.txt`
 require('gitsigns').setup {
   signs = {
@@ -221,6 +231,7 @@ require('gitsigns').setup {
 }
 
 -- [[ Configure Telescope ]]
+--
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
   pickers = {
@@ -260,6 +271,7 @@ vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
 -- [[ Configure Treesitter ]]
+--
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
@@ -322,12 +334,16 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
+-- [[ Additional keybindings ]]
+--
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
+-- [[ LSP ]]
+--
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
@@ -382,7 +398,7 @@ local servers = {
   gopls = {},
   pyright = {},
   rust_analyzer = {},
-  -- tsserver = {},
+  bashls = {},
 
   sumneko_lua = {
     Lua = {
@@ -392,9 +408,6 @@ local servers = {
   },
 }
 
--- Setup neovim lua configuration
-require('neodev').setup()
---
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
@@ -419,8 +432,20 @@ mason_lspconfig.setup_handlers {
   end,
 }
 
+-- [[ LSP Signature ]]
+--
+-- Show a function signature when in insert mode and the function is called.
+require "lsp_signature".setup({
+  floating_window = true,
+})
 
--- require('mason').setup()
+-- [[ NeoDev ]]
+--
+-- Setup neovim lua configuration
+require('neodev').setup()
+
+-- [[ Debugging ]]
+--
 require('mason-nvim-dap').setup({
   ensure_installed = {'stylua', 'jq', 'python', 'delve', 'codelldb'},
   automatic_installation = true,
@@ -429,15 +454,13 @@ require('mason-nvim-dap').setup({
 
 require('mason-nvim-dap').setup_handlers()
 
--- [[ Debugging COnfiguration ]]
-
 -- to start debugging using a breakpoint run this function.
 local start_debug_with_breakpoint = function ()
   require('dapui').setup()
   require('dap').toggle_breakpoint()
   require('dap.ext.vscode').load_launchjs()
   require('dap').continue()
-  require('dapui').toggle()
+  require('dapui').toggle({})
 end
 
 -- stop debugging
@@ -457,9 +480,12 @@ vim.keymap.set('n', '<leader>do', require('dap').step_over, { desc = '[D]ap step
 vim.keymap.set('n', '<leader>dd', require('dap').step_into, { desc = '[D]ap step [D]own (into)' })
 vim.keymap.set('n', '<leader>du', require('dap').step_out, { desc = '[D]ap step [U]p (out)' })
 
+-- [[ LSP fidget ]]
+--
 -- Turn on lsp status information
 require('fidget').setup()
 
+-- [[ Autocomplete (cmp) ]]
 -- nvim-cmp setup
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
@@ -554,6 +580,8 @@ cmp.setup {
   },
 }
 
+-- [[ Filetree ]]
+--
 -- Toggle a filetree
 local nvimTree = require("nvim-tree")
 nvimTree.setup {
@@ -569,6 +597,8 @@ nvimTree.setup {
 
 vim.keymap.set("n", "<C-n>", require("nvim-tree.api").tree.toggle, {})
 
+-- [[ Cursorline autocommands ]]
+--
 -- Create autocommands to show cursorlines in active windows/buffers, but hide
 -- them when leaving the window.
 vim.api.nvim_create_autocmd(
@@ -579,11 +609,6 @@ vim.api.nvim_create_autocmd(
   "WinLeave",
   { command = "setlocal nocursorline" }
 )
-
--- Show a function signature when in insert mode and the function is called.
-require "lsp_signature".setup({
-  floating_window = true,
-})
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
