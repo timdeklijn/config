@@ -110,7 +110,13 @@ fi
 
 set -o vi
 
-# START USING DIRENV ==========================================================
+# use zsh functions ============================================================
+
+fpath=(~/dotfiles/zsh/functions/ $fpath)
+# one function per file so far...
+autoload -Uz ~/dotfiles/zsh/functions/f
+
+# START USING DIRENV ===========================================================
 
 eval "$(direnv hook zsh)"
 
@@ -142,8 +148,6 @@ alias gc="git commit"
 alias gs="git status"
 alias gd="git diff"
 alias glog="git log --all --decorate --oneline --graph"
-
-alias n=notable
 
 # Paths =======================================================================
 
@@ -199,12 +203,9 @@ export PATH="/usr/local/opt/libarchive/bin:$PATH"
 export LC_ALL=en_GB.UTF-8  
 export LANG=en_GB.UTF-8
 
-export PROJECTFILE="/Users/timdeklijn/ps.json"
-export PROJECTS="/Users/timdeklijn/projects.json"
-
-
 # STARSHIP
 eval "$(starship init zsh)"
 
 # asdf
 . /usr/local/opt/asdf/libexec/asdf.sh
+export PATH="/usr/local/opt/llvm/bin:$PATH"
