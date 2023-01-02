@@ -144,6 +144,7 @@ alias vim="nvim"
 alias k="kubectl"
 
 # Git
+alias lg="lazygit"
 alias gc="git commit"
 alias gs="git status"
 alias gd="git diff"
