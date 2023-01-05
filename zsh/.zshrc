@@ -154,8 +154,8 @@ alias gd="git diff"
 alias glog="git log --all --decorate --oneline --graph"
 
 # exa
-alias ls="exa"
-alias ll="exa -lah"
+alias ls="exa --icons"
+alias ll="exa -lah --icons"
 
 # Paths =======================================================================
 
