@@ -8,9 +8,6 @@ setlocal autoindent
 setlocal textwidth=88
 setlocal colorcolumn=88
 
-" Conceal on to hide some boilerplate
-setlocal conceallevel=3
-
 " No line numbers
 setlocal nonumber
 " Turn on spell check
@@ -23,4 +20,3 @@ setlocal formatlistpat=^\\s*\\d\\+[.\)]\\s\\+\\\|^\\s*[*+~-]\\s\\+\\\|^\\(\\\|[*
 setlocal comments=fb:>,fb:*,fb:+,fb:-
 setlocal formatoptions+=cn
 
-nnoremap <silent> <leader>= :Format<CR>
