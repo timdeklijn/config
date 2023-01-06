@@ -54,6 +54,7 @@ require('packer').startup(function(use)
   use 'tpope/vim-rhubarb'
   use 'lewis6991/gitsigns.nvim'
 
+  use { "catppuccin/nvim", as = "catppuccin" }
   use "ellisonleao/gruvbox.nvim"
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
@@ -146,24 +147,48 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
-require("gruvbox").setup({
-  undercurl = true,
-  underline = true,
-  bold = true,
-  italic = false,
-  strikethrough = true,
-  invert_selection = false,
-  invert_signs = false,
-  invert_tabline = false,
-  invert_intend_guides = false,
-  inverse = true, -- invert background for search, diffs, statuslines and errors
-  contrast = "", -- can be "hard", "soft" or empty string
-  palette_overrides = {},
-  overrides = {},
-  dim_inactive = false,
-  transparent_mode = false,
+
+require("catppuccin").setup({
+    flavour = "mocha", -- latte, frappe, macchiato, mocha
+    background = { -- :h background
+        light = "latte",
+        dark = "mocha",
+    },
+    transparent_background = false,
+    term_colors = false,
+    dim_inactive = {
+        enabled = true,
+        shade = "dark",
+        percentage = 0.15,
+    },
+    no_italic = true, -- Force no italic
+    no_bold = false, -- Force no bold
+    styles = {
+        comments = {},
+        conditionals = { "bold" },
+        loops = {},
+        functions = { "bold" },
+        keywords = { "bold" },
+        strings = {},
+        variables = {},
+        numbers = {},
+        booleans = { "bold" },
+        properties = {},
+        types = {},
+        operators = {},
+    },
+    integrations = {
+        cmp = true,
+        gitsigns = true,
+        nvimtree = true,
+        telescope = true,
+        notify = false,
+        mini = false,
+    },
 })
-vim.cmd[[ colorscheme gruvbox ]]
+
+-- setup must be called before loading
+vim.cmd.colorscheme "catppuccin"
 
 -- [[ Basic Keymaps ]]
 --
@@ -200,7 +225,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 require('lualine').setup {
   options = {
     icons_enabled = false,
-    theme = 'gruvbox',
+    theme = 'catppuccin',
     component_separators = '|',
     section_separators = '',
   },
@@ -438,6 +463,7 @@ mason_lspconfig.setup_handlers {
   end,
 }
 
+-- Auto format imports on save (used for Golang)
 function OrgImports(wait_ms)
   local params = vim.lsp.util.make_range_params()
   params.context = {only = {"source.organizeImports"}}
@@ -563,24 +589,6 @@ cmp.setup {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    -- ['<Tab>'] = cmp.mapping(function(fallback)
-    --   if cmp.visible() then
-    --     cmp.select_next_item()
-    --   elseif luasnip.expand_or_jumpable() then
-    --     luasnip.expand_or_jump()
-    --   else
-    --     fallback()
-    --   end
-    -- end, { 'i', 's' }),
-    -- ['<S-Tab>'] = cmp.mapping(function(fallback)
-    --   if cmp.visible() then
-    --     cmp.select_prev_item()
-    --   elseif luasnip.jumpable(-1) then
-    --     luasnip.jump(-1)
-    --   else
-    --     fallback()
-    --   end
-    -- end, { 'i', 's' }),
   },
   sources = {
     { name = 'nvim_lsp' },
