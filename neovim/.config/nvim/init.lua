@@ -28,7 +28,10 @@ require('packer').startup(function(use)
       'folke/neodev.nvim',
 
       -- Show signature of function while typing
-      'ray-x/lsp_signature.nvim'
+      'ray-x/lsp_signature.nvim',
+
+      -- formatters and stuff
+      'jose-elias-alvarez/null-ls.nvim',
     },
   }
 
@@ -414,6 +417,9 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
+
+  -- Bind format to a keymap
+  nmap('<leader>=', ':Format<CR>', 'Format buffer')
 end
 
 -- Enable the following language servers
@@ -482,8 +488,16 @@ end
 -- [[ LSP Signature ]]
 --
 -- Show a function signature when in insert mode and the function is called.
-require "lsp_signature".setup({
+require('lsp_signature').setup({
   floating_window = true,
+})
+
+local null_ls = require('null-ls')
+null_ls.setup({
+  sources = {
+    null_ls.builtins.formatting.isort,
+    null_ls.builtins.formatting.black,
+  },
 })
 
 -- [[ NeoDev ]]
