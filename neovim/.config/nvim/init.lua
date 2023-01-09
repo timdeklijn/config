@@ -113,47 +113,25 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 })
 
 -- [[ Setting options ]]
---
--- See `:help vim.o`
-
--- Set highlight on search
 vim.o.hlsearch = false
-
--- Make line numbers default
 vim.wo.number = true
-
--- Enable mouse mode
 vim.o.mouse = 'a'
-
--- Enable break indent
 vim.o.breakindent = true
-
--- Save undo history
 vim.o.undofile = true
-
--- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
-
--- Decrease update time
 vim.o.updatetime = 250
 vim.wo.signcolumn = 'yes'
-
--- Highlight current line
 vim.o.cursorline = true
-
--- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
 -- [[ Set Colorscheme ]]
---
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
-
 require("catppuccin").setup({
-    flavour = "mocha", -- latte, frappe, macchiato, mocha
-    background = { -- :h background
+    flavour = "mocha",
+    background = {
         light = "latte",
         dark = "mocha",
     },
@@ -164,8 +142,8 @@ require("catppuccin").setup({
         shade = "dark",
         percentage = 0.15,
     },
-    no_italic = true, -- Force no italic
-    no_bold = false, -- Force no bold
+    no_italic = true,
+    no_bold = false,
     styles = {
         comments = {},
         conditionals = { "bold" },
@@ -194,15 +172,10 @@ require("catppuccin").setup({
 vim.cmd.colorscheme "catppuccin"
 
 -- [[ Basic Keymaps ]]
---
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Keymaps for better default experience
--- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Remap for dealing with word wrap
@@ -210,8 +183,6 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- [[ Highlight on yank ]]
---
--- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
@@ -222,9 +193,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- [[ lualine ]]
---
--- Set lualine as statusline
--- See `:help lualine.txt`
 require('lualine').setup {
   options = {
     icons_enabled = false,
@@ -235,22 +203,15 @@ require('lualine').setup {
 }
 
 -- [[ Comment.nvim ]]
---
--- Enable Comment.nvim
 require('Comment').setup()
 
 -- [[ indend-blankline ]]
---
--- Enable `lukas-reineke/indent-blankline.nvim`
--- See `:help indent_blankline.txt`
 require('indent_blankline').setup {
   char = '┊',
   show_trailing_blankline_indent = false,
 }
 
 -- [[ Gitsigns ]]
---
--- See `:help gitsigns.txt`
 require('gitsigns').setup {
   signs = {
     add = { text = '+' },
@@ -262,8 +223,6 @@ require('gitsigns').setup {
 }
 
 -- [[ Configure Telescope ]]
---
--- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
   pickers = {
     find_files = {
@@ -292,7 +251,6 @@ pcall(require('telescope').load_extension, 'fzf')
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
 vim.keymap.set('n', '<leader>/', function()
-  -- You can pass additional configuration to telescope to change theme, layout, etc.
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
     winblend = 10,
     previewer = false,
@@ -306,8 +264,6 @@ vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
 -- [[ Configure Treesitter ]]
---
--- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help' },
@@ -370,24 +326,13 @@ require('nvim-treesitter.configs').setup {
 }
 
 -- [[ Additional keybindings ]]
---
--- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 -- [[ LSP ]]
---
--- LSP settings.
---  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
-  -- NOTE: Remember that lua is a real programming language, and as such it is possible
-  -- to define small helper and utility functions so you don't have to repeat yourself
-  -- many times.
-  --
-  -- In this case, we create a function that lets us more easily define mappings specific
-  -- for LSP related items. It sets the mode, buffer and description for us each time.
   local nmap = function(keys, func, desc)
     if desc then
       desc = 'LSP: ' .. desc
@@ -406,7 +351,6 @@ local on_attach = function(_, bufnr)
   nmap('<leader>ls', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
-  -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
 
   -- Lesser used LSP functionality
@@ -426,15 +370,16 @@ local on_attach = function(_, bufnr)
   nmap('<leader>=', ':Format<CR>', 'Format buffer')
 end
 
--- Enable the following language servers
---  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
---
---  Add any additional override configuration in the following tables. They will be passed to
---  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
-  -- clangd = {},
   gopls = {},
-  pyright = {},
+  pyright = {
+    -- use local python virtual environment
+    python = {
+      venv = {
+        path = '.',
+      },
+    }
+  },
   rust_analyzer = {},
   bashls = {},
   marksman = {},
@@ -490,12 +435,12 @@ function OrgImports(wait_ms)
 end
 
 -- [[ LSP Signature ]]
---
 -- Show a function signature when in insert mode and the function is called.
 require('lsp_signature').setup({
   floating_window = true,
 })
 
+-- [[ Add linters / formatters to LSP]]
 local null_ls = require('null-ls')
 null_ls.setup({
   sources = {
@@ -505,12 +450,9 @@ null_ls.setup({
 })
 
 -- [[ NeoDev ]]
---
--- Setup neovim lua configuration
 require('neodev').setup()
 
 -- [[ Debugging ]]
---
 require('mason-nvim-dap').setup({
   ensure_installed = {'stylua', 'jq', 'python', 'delve', 'codelldb'},
   automatic_installation = true,
@@ -546,8 +488,6 @@ vim.keymap.set('n', '<leader>dd', require('dap').step_into, { desc = '[D]ap step
 vim.keymap.set('n', '<leader>du', require('dap').step_out, { desc = '[D]ap step [U]p (out)' })
 
 -- [[ LSP fidget ]]
---
--- Turn on lsp status information
 require('fidget').setup()
 
 -- [[ Autocomplete (cmp) ]]
@@ -628,8 +568,6 @@ cmp.setup {
 }
 
 -- [[ Filetree ]]
---
--- Toggle a filetree
 local nvimTree = require("nvim-tree")
 nvimTree.setup {
   git = {
