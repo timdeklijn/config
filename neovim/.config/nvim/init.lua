@@ -385,6 +385,7 @@ local servers = {
   marksman = {},
   yamlls = {},
   dockerls = {},
+  terraformls = {},
 
   sumneko_lua = {
     Lua = {
