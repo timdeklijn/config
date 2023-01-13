@@ -130,42 +130,42 @@ vim.o.termguicolors = true
 vim.o.background = "dark"
 
 require("catppuccin").setup({
-    flavour = "mocha",
-    background = {
-        light = "latte",
-        dark = "mocha",
-    },
-    transparent_background = false,
-    term_colors = false,
-    dim_inactive = {
-        enabled = true,
-        shade = "dark",
-        percentage = 0.15,
-    },
-    no_italic = true,
-    no_bold = false,
-    styles = {
-        comments = {},
-        conditionals = { "bold" },
-        loops = {},
-        functions = { "bold" },
-        keywords = { "bold" },
-        strings = {},
-        variables = {},
-        numbers = {},
-        booleans = { "bold" },
-        properties = {},
-        types = {},
-        operators = {},
-    },
-    integrations = {
-        cmp = true,
-        gitsigns = true,
-        nvimtree = true,
-        telescope = true,
-        notify = false,
-        mini = false,
-    },
+  flavour = "mocha",
+  background = {
+    light = "latte",
+    dark = "mocha",
+  },
+  transparent_background = false,
+  term_colors = false,
+  dim_inactive = {
+    enabled = true,
+    shade = "dark",
+    percentage = 0.15,
+  },
+  no_italic = true,
+  no_bold = false,
+  styles = {
+    comments = {},
+    conditionals = { "bold" },
+    loops = {},
+    functions = { "bold" },
+    keywords = { "bold" },
+    strings = {},
+    variables = {},
+    numbers = {},
+    booleans = { "bold" },
+    properties = {},
+    types = {},
+    operators = {},
+  },
+  integrations = {
+    cmp = true,
+    gitsigns = true,
+    nvimtree = true,
+    telescope = true,
+    notify = false,
+    mini = false,
+  },
 })
 
 -- setup must be called before loading
@@ -234,7 +234,7 @@ require('telescope').setup {
     },
   },
   defaults = {
-    file_ignore_patterns = {'.git'},
+    file_ignore_patterns = { '.git' },
     mappings = {
       i = {
         ['<C-u>'] = false,
@@ -266,7 +266,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- [[ Configure Treesitter ]]
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help' },
+  ensure_installed = { 'bash', 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'yaml' },
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
@@ -420,9 +420,9 @@ mason_lspconfig.setup_handlers {
 }
 
 -- Auto format imports on save (used for Golang)
-function OrgImports(wait_ms)
+function OrganizeImports(wait_ms)
   local params = vim.lsp.util.make_range_params()
-  params.context = {only = {"source.organizeImports"}}
+  params.context = { only = { "source.organizeImports" } }
   local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
   for _, res in pairs(result or {}) do
     for _, r in pairs(res.result or {}) do
@@ -455,7 +455,7 @@ require('neodev').setup()
 
 -- [[ Debugging ]]
 require('mason-nvim-dap').setup({
-  ensure_installed = {'stylua', 'jq', 'python', 'delve', 'codelldb'},
+  ensure_installed = { 'stylua', 'jq', 'python', 'delve', 'codelldb' },
   automatic_installation = true,
   automatic_setup = true,
 })
@@ -463,7 +463,7 @@ require('mason-nvim-dap').setup({
 require('mason-nvim-dap').setup_handlers()
 
 -- to start debugging using a breakpoint run this function.
-local start_debug_with_breakpoint = function ()
+local start_debug_with_breakpoint = function()
   require('dapui').setup()
   require('dap').toggle_breakpoint()
   require('dap.ext.vscode').load_launchjs()
@@ -472,7 +472,7 @@ local start_debug_with_breakpoint = function ()
 end
 
 -- stop debugging
-local end_debugging = function ()
+local end_debugging = function()
   require('dap').terminate()
   require('dapui').toggle({})
 end
@@ -492,7 +492,6 @@ vim.keymap.set('n', '<leader>du', require('dap').step_out, { desc = '[D]ap step 
 require('fidget').setup()
 
 -- [[ Autocomplete (cmp) ]]
--- nvim-cmp setup
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 
@@ -543,7 +542,7 @@ cmp.setup {
   mapping = cmp.mapping.preset.insert {
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-Space>'] = cmp.mapping.complete({}),
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
@@ -584,7 +583,6 @@ nvimTree.setup {
 vim.keymap.set("n", "<C-n>", require("nvim-tree.api").tree.toggle, {})
 
 -- [[ Cursorline autocommands ]]
---
 -- Create autocommands to show cursorlines in active windows/buffers, but hide
 -- them when leaving the window.
 vim.api.nvim_create_autocmd(
