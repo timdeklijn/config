@@ -57,8 +57,7 @@ require('packer').startup(function(use)
   use 'tpope/vim-rhubarb'
   use 'lewis6991/gitsigns.nvim'
 
-  use { "catppuccin/nvim", as = "catppuccin" }
-  use "ellisonleao/gruvbox.nvim"
+  use { "catppuccin/nvim", as = "catppuccin" } -- colorscheme
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
