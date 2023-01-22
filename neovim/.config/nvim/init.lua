@@ -124,15 +124,6 @@ vim.wo.signcolumn = 'yes'
 vim.o.cursorline = true
 vim.o.completeopt = 'menuone,noselect'
 
--- [[ Aliasses because I can not type ]]
-vim.cmd[[
-  command! W w
-  command! Q q
-  command! WQ wq
-  command! Wq wq
-  command! Qa qa
-]]
-
 -- [[ Set Colorscheme ]]
 vim.o.termguicolors = true
 vim.o.background = "dark"
