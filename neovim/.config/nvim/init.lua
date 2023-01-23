@@ -57,7 +57,7 @@ require('packer').startup(function(use)
   use 'tpope/vim-rhubarb'
   use 'lewis6991/gitsigns.nvim'
 
-  use { "catppuccin/nvim", as = "catppuccin" } -- colorscheme
+  use 'folke/tokyonight.nvim'
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
@@ -128,47 +128,27 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
-require("catppuccin").setup({
-  flavour = "mocha",
-  background = {
-    light = "latte",
-    dark = "mocha",
-  },
-  transparent_background = false,
-  term_colors = false,
-  dim_inactive = {
-    enabled = true,
-    shade = "dark",
-    percentage = 0.15,
-  },
-  no_italic = true,
-  no_bold = false,
+require("tokyonight").setup({
+  style = "night",
+  light_style = "day",
+  transparent = false,
+  terminal_colors = true,
   styles = {
-    comments = {},
-    conditionals = { "bold" },
-    loops = {},
-    functions = { "bold" },
-    keywords = { "bold" },
-    strings = {},
-    variables = {},
-    numbers = {},
-    booleans = { "bold" },
-    properties = {},
-    types = {},
-    operators = {},
+    comments = { italic = false },
+    keywords = { bold = true },
+    functions = { bold = true },
+    variables = { bold = false },
+    sidebars = "dark",
+    floats = "dark",
   },
-  integrations = {
-    cmp = true,
-    gitsigns = true,
-    nvimtree = true,
-    telescope = true,
-    notify = false,
-    mini = false,
-  },
+  day_brightness = 0.3,
+  hide_inactive_statusline = true,
+  dim_inactive = true,
+  lualine_bold = true,
 })
 
 -- setup must be called before loading
-vim.cmd.colorscheme "catppuccin"
+vim.cmd.colorscheme "tokyonight"
 
 -- [[ Basic Keymaps ]]
 vim.g.mapleader = ' '
@@ -195,7 +175,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 require('lualine').setup {
   options = {
     icons_enabled = false,
-    theme = 'catppuccin',
+    theme = 'tokyonight',
     component_separators = '|',
     section_separators = '',
   },
