@@ -17,9 +17,6 @@ require('packer').startup(function(use)
       -- Automatically install LSPs to stdpath for neovim
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
-      "mfussenegger/nvim-dap",
-      "jayp0521/mason-nvim-dap.nvim",
-      "rcarriga/nvim-dap-ui",
 
       -- Useful status updates for LSP
       'j-hui/fidget.nvim',
@@ -52,12 +49,14 @@ require('packer').startup(function(use)
     after = 'nvim-treesitter',
   }
 
+  use 'nvim-treesitter/playground'
+
   -- Git related plugins
   use 'tpope/vim-fugitive'
   use 'tpope/vim-rhubarb'
   use 'lewis6991/gitsigns.nvim'
 
-  use 'folke/tokyonight.nvim'
+  use 'projekt0n/github-nvim-theme'
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
@@ -128,27 +127,17 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
-require("tokyonight").setup({
-  style = "night",
-  light_style = "day",
-  transparent = true,
-  terminal_colors = true,
-  styles = {
-    comments = { italic = false },
-    keywords = { bold = true },
-    functions = { bold = true },
-    variables = { bold = false },
-    sidebars = "transparent",
-    floats = "transparent",
-  },
-  day_brightness = 0.3,
+require("github-theme").setup({
+  theme_style = "dark_default",
+  function_style = "bold",
+  keyword_style = "bold",
   hide_inactive_statusline = true,
-  dim_inactive = true,
-  lualine_bold = true,
+  comment_style = "NONE",
+  transparent = false,
 })
 
 -- setup must be called before loading
-vim.cmd.colorscheme "tokyonight"
+-- vim.cmd.colorscheme "github_dark"
 
 -- [[ Basic Keymaps ]]
 vim.g.mapleader = ' '
@@ -175,7 +164,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 require('lualine').setup {
   options = {
     icons_enabled = false,
-    theme = 'tokyonight',
+    theme = 'auto',
     component_separators = '|',
     section_separators = '',
   },
@@ -454,41 +443,6 @@ null_ls.setup({
 
 -- [[ NeoDev ]]
 require('neodev').setup()
-
--- [[ Debugging ]]
-require('mason-nvim-dap').setup({
-  ensure_installed = { 'stylua', 'jq', 'python', 'delve', 'codelldb' },
-  automatic_installation = true,
-  automatic_setup = true,
-})
-
-require('mason-nvim-dap').setup_handlers()
-
--- to start debugging using a breakpoint run this function.
-local start_debug_with_breakpoint = function()
-  require('dapui').setup()
-  require('dap').toggle_breakpoint()
-  require('dap.ext.vscode').load_launchjs()
-  require('dap').continue()
-  require('dapui').toggle({})
-end
-
--- stop debugging
-local end_debugging = function()
-  require('dap').terminate()
-  require('dapui').toggle({})
-end
-
--- Call defined function
-vim.keymap.set('n', '<leader>ds', start_debug_with_breakpoint, { desc = '[D]ap [S]start' })
-vim.keymap.set('n', '<leader>dS', end_debugging, { desc = '[D]ap [S]stop' })
-
--- Keybinds for dap functions
-vim.keymap.set('n', '<leader>db', require("dap").toggle_breakpoint, { desc = '[D]ap [B]reakpoint' })
-vim.keymap.set('n', '<leader>dc', require('dap').continue, { desc = '[D]ap [C]ontinue' })
-vim.keymap.set('n', '<leader>do', require('dap').step_over, { desc = '[D]ap step [O]ver' })
-vim.keymap.set('n', '<leader>dd', require('dap').step_into, { desc = '[D]ap step [D]own (into)' })
-vim.keymap.set('n', '<leader>du', require('dap').step_out, { desc = '[D]ap step [U]p (out)' })
 
 -- [[ LSP fidget ]]
 require('fidget').setup()
