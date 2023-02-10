@@ -6,7 +6,6 @@ setlocal expandtab
 setlocal autoindent
 
 setlocal textwidth=88
-setlocal colorcolumn=88
 
 " No line numbers
 setlocal nonumber

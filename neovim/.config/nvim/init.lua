@@ -54,9 +54,10 @@ require('packer').startup(function(use)
   -- Git related plugins
   use 'tpope/vim-fugitive'
   use 'tpope/vim-rhubarb'
+  use 'kylechui/nvim-surround'
   use 'lewis6991/gitsigns.nvim'
 
-  use 'projekt0n/github-nvim-theme'
+  use 'Mofiqul/dracula.nvim' -- color scheme
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
@@ -127,14 +128,11 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
-require("github-theme").setup({
-  theme_style = "dark_default",
-  function_style = "bold",
-  keyword_style = "bold",
-  hide_inactive_statusline = true,
-  comment_style = "NONE",
-  transparent = false,
+local dracula = require("dracula")
+dracula.setup({
+  italic_comment = false,
 })
+vim.cmd.colorscheme "dracula"
 
 -- setup must be called before loading
 -- vim.cmd.colorscheme "github_dark"
@@ -164,7 +162,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 require('lualine').setup {
   options = {
     icons_enabled = false,
-    theme = 'auto',
+    theme = 'dracula-nvim',
     component_separators = '|',
     section_separators = '',
   },
@@ -537,6 +535,10 @@ nvimTree.setup {
 }
 
 vim.keymap.set("n", "<C-n>", require("nvim-tree.api").tree.toggle, {})
+
+-- [[ Surround ]]
+-- Add motions to manipulate surrounding characters of motions.
+ require("nvim-surround").setup({})
 
 -- [[ Cursorline autocommands ]]
 -- Create autocommands to show cursorlines in active windows/buffers, but hide
