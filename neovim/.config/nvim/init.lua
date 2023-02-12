@@ -57,7 +57,7 @@ require('packer').startup(function(use)
   use 'kylechui/nvim-surround'
   use 'lewis6991/gitsigns.nvim'
 
-  use 'Mofiqul/dracula.nvim' -- color scheme
+  use "ellisonleao/gruvbox.nvim"
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
@@ -128,11 +128,24 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
-local dracula = require("dracula")
-dracula.setup({
-  italic_comment = false,
+-- setup must be called before loading the colorscheme
+-- Default options:
+require("gruvbox").setup({
+  undercurl = true,
+  underline = true,
+  bold = true,
+  italic = false,
+  strikethrough = true,
+  invert_selection = false,
+  invert_signs = false,
+  invert_tabline = false,
+  invert_intend_guides = false,
+  inverse = true, -- invert background for search, diffs, statuslines and errors
+  contrast = "hard", -- can be "hard", "soft" or empty string
+  dim_inactive = false,
+  transparent_mode = true,
 })
-vim.cmd.colorscheme "dracula"
+vim.cmd("colorscheme gruvbox")
 
 -- setup must be called before loading
 -- vim.cmd.colorscheme "github_dark"
@@ -162,7 +175,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 require('lualine').setup {
   options = {
     icons_enabled = false,
-    theme = 'dracula-nvim',
+    theme = 'auto',
     component_separators = '|',
     section_separators = '',
   },
