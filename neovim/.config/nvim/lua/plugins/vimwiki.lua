@@ -1,4 +1,5 @@
 -- <Leader>ww -- Open default wiki index file.
+-- <Leader>w<leader>w -- dairy file
 -- <Leader>wt -- Open default wiki index file in a new tab.
 -- <Leader>ws -- Select and open wiki index file.
 -- <Leader>wd -- Delete wiki file you are in.

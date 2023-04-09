@@ -115,6 +115,7 @@ set -o vi
 fpath=(~/dotfiles/zsh/functions/ $fpath)
 # one function per file so far...
 autoload -Uz ~/dotfiles/zsh/functions/f
+autoload -Uz ~/dotfiles/zsh/functions/tm
 
 # START USING DIRENV ===========================================================
 
@@ -133,9 +134,6 @@ PS1='$(show_virtual_env)'$PS1
 
 # fix ctop
 alias ctop='TERM="${TERM/#tmux/screen}" ctop'
-
-# Configs
-alias zshconfig="vim ~/.zshrc"
 
 # VIM
 alias vim="nvim"
@@ -183,7 +181,6 @@ alias up_disp='export DISPLAY=`cat ~/.display.txt`'
 # Go bin
 export GOPATH="$HOME/go"
 export PATH=$PATH:$(go env GOPATH)/bin
-# export PATH="$GOPATH/bin:$PATH"
 export PATH="/usr/local/opt/libarchive/bin:$PATH"
 
 # TMUX in kitty
