@@ -1,4 +1,4 @@
-vim.cmd [[autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync()]]
+vim.cmd [[autocmd BufWritePre *.go lua vim.lsp.buf.format()]]
 vim.cmd [[autocmd BufWritePre *.go lua OrganizeImports(1000)]]
 
 -- Fix golang ugly 8 space tab:

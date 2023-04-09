@@ -1,16 +1,21 @@
 return {
 
 	-- color scheme
-	{
-		"bluz71/vim-nightfly-colors",
-		name = "nightfly",
-		lazy = false,
-		priority = 1000,
-		config = function()
-      vim.g.nightflyItalics = false
-			vim.cmd [[ colorscheme nightfly ]]
-		end,
-	},
+  {
+    'Mofiqul/dracula.nvim',
+    name = "dracula",
+    lazy = false,
+    priority = 1000,
+    config = function ()
+      local dracula = require("dracula")
+      dracula.setup({
+        show_end_of_buffer = true,
+        transparent_bg = false,
+        italic_comment = false,
+      })
+      vim.cmd [[ colorscheme dracula ]]
+    end
+  },
 
 	-- nicer modeline
 	{
@@ -65,7 +70,7 @@ return {
 	-- Show git changes in the sign column
 	{
 		"lewis6991/gitsigns.nvim",
-    lazy = true,
+    event = "BufEnter",
 		config = function()
 			require("gitsigns").setup()
 		end,

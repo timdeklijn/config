@@ -2,22 +2,25 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
-    build = function()
-      pcall(require('nvim-treesitter.install').update { with_sync = true })
-    end,
+    build = ":TSUpdate",
+    event = { "BufReadPost", "BufNewFile" },
     opts = {
       -- Add languages to be installed here that you want installed for
       -- treesitter
       ensure_installed = {
         'bash',
         'c',
-        'cpp',
         'go',
+        "html",
+        "javascript",
+        "json",
         'lua',
+        "markdown",
+        "markdown_inline",
         'python',
+        "query",
         'rust',
         'typescript',
-        'help',
         'yaml'
       },
       highlight = { enable = true },
@@ -75,6 +78,9 @@ return {
           },
         },
       },
-    }
+    },
+    config = function (_, opts)
+      require("nvim-treesitter.configs").setup(opts)
+    end
   },
 }
