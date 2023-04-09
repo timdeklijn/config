@@ -153,9 +153,9 @@ alias gs="git status"
 alias gd="git diff"
 alias glog="git log --all --decorate --oneline --graph"
 
-# exa
+# nicer ls
 alias ls="exa --icons"
-alias ll="exa -lah --icons"
+alias "ls -l"="exa -l --icons"
 
 # Paths =======================================================================
 
