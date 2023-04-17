@@ -1,21 +1,17 @@
 return {
 
 	-- color scheme
-  {
-    'Mofiqul/dracula.nvim',
-    name = "dracula",
-    lazy = false,
-    priority = 1000,
-    config = function ()
-      local dracula = require("dracula")
-      dracula.setup({
-        show_end_of_buffer = true,
-        transparent_bg = false,
-        italic_comment = false,
-      })
-      vim.cmd [[ colorscheme dracula ]]
+	{
+		"bluz71/vim-moonfly-colors",
+		name = "moonfly",
+		lazy = false,
+		priority = 1000,
+    config = function()
+      vim.g.moonflyCursorColor = true
+      vim.g.moonflyItalics = false
+      vim.cmd [[ colorscheme moonfly ]]
     end
-  },
+	},
 
 	-- nicer modeline
 	{
@@ -24,8 +20,8 @@ return {
 			options = {
 				icons_enabled = false,
 				theme = "auto",
-				component_separators = "|",
-				section_separators = "",
+        component_separators = { left = '', right = ''},
+        section_separators = { left = '', right = ''},
 			},
 		},
 	},
@@ -70,16 +66,19 @@ return {
 	-- Show git changes in the sign column
 	{
 		"lewis6991/gitsigns.nvim",
-    event = "BufEnter",
+		event = "BufEnter",
 		config = function()
 			require("gitsigns").setup()
 		end,
 	},
 
   {
-    "github/copilot.vim",
-    name = "copilot",
-    event = "InsertEnter",
-    lazy = true,
+    "tpope/vim-fugitive",
+    name = "figutive",
+    keys = {
+      { "<leader>gg", ":Git<CR>", desc = "Open Fugitive" },
+      { "<leader>gp", ":Git push<CR>", desc = "Open Fugitive" },
+    },
   },
+
 }

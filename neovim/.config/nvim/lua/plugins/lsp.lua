@@ -21,6 +21,7 @@ local servers = {
   yamlls = {},
   terraformls = {},
   marksman = {},
+  zls = {},
 }
 
 
@@ -161,6 +162,7 @@ return {
           "rust_analyzer",
           "terraformls",
           "yamlls",
+          "zls",
         },
         automatic_installation = false,
       })

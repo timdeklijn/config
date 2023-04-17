@@ -16,7 +16,7 @@ return {
 		"vimwiki/vimwiki",
 		name = "vimwiki",
 		lazy = true,
-		keys = { "<leader>ww" },
+		keys = { "<leader>ww", '<leader>w<leader>w' },
 		init = function()
 			vim.g.vimwiki_list = {
 				{
@@ -25,6 +25,11 @@ return {
 					ext = ".md",
 				},
 			}
+      vim.g.vimwiki_ext2syntax = {
+          [".md"] = "markdown",
+          [".markdown"] = "markdown",
+          [".mdown"] = "markdown",
+      }
 		end,
 	},
 }

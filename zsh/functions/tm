@@ -1,0 +1,7 @@
+# Open tmux with a cool session symbol
+tm() {
+  cd ~
+  tmux new-session '-s 😎'
+}
+
+tm
