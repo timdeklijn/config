@@ -2,7 +2,6 @@
 local servers = {
   jsonls = {},
   lua_ls = {
-    settings = {
       Lua = {
         workspace = {
           checkThirdParty = false,
@@ -11,14 +10,17 @@ local servers = {
           callSnippet = "Replace",
         },
       },
-    },
   },
   pyright = {},
   gopls = {},
   rust_analyzer = {},
   dockerls = {},
   bashls = {},
-  yamlls = {},
+  yamlls = {
+      yaml = {
+        keyOrdering = false
+      }
+  },
   terraformls = {},
   marksman = {},
   zls = {},
