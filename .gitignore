@@ -1,3 +1,4 @@
 neovim/.config/nvim/spell/
 packer_compiled.lua
 neovim/.config/nvim/plugin/packer_compiled.lua
+DS_Store

@@ -1,9 +1,5 @@
 -- examples:
 -- - https://github.com/LazyVim/LazyVim/tree/main/lua/lazyvim/plugins
---
--- TODO:
---  - copilot in cmp
---  - vimwiki
 
 -- =============================================================================
 -- Bootsrap Lazy nvim
@@ -36,7 +32,7 @@ vim.o.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.updatetime = 250
-vim.wo.signcolumn = 'yes'
+vim.wo.signcolumn = 'no'
 vim.o.cursorline = true
 vim.o.completeopt = 'menuone,noselect'
 

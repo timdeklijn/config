@@ -167,7 +167,7 @@ return {
           "yamlls",
           "zls",
         },
-        automatic_installation = false,
+        automatic_installation = true,
       })
     end,
   },

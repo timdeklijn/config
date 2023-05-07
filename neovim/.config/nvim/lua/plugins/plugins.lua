@@ -1,17 +1,35 @@
 return {
 
 	-- color scheme
-	{
-		"bluz71/vim-moonfly-colors",
-		name = "moonfly",
-		lazy = false,
-		priority = 1000,
-    config = function()
-      vim.g.moonflyCursorColor = true
-      vim.g.moonflyItalics = false
-      vim.cmd [[ colorscheme moonfly ]]
+  {
+    "EdenEast/nightfox.nvim",
+    name = "nightfox",
+    lazy = false,
+    priority = 1000,
+    options = {
+      compile_path = vim.fn.stdpath("cache") .. "/nightfox",
+      compile_file_suffix = "_compiled",
+      transparent = false,
+      terminal_colors = true,
+      dim_inactive = true,
+      module_default = true,
+      styles = {
+        comments = "NONE",
+        conditionals = "bold",
+        constants = "bold",
+        functions = "bold",
+        keywords = "bold",
+        numbers = "NONE",
+        operators = "NONE",
+        strings = "NONE",
+        types = "bold",
+        variables = "NONE",
+      },
+    },
+    config = function ()
+      vim.cmd [[ colorscheme nightfox ]]
     end
-	},
+  },
 
 	-- nicer modeline
 	{
@@ -67,9 +85,12 @@ return {
 	{
 		"lewis6991/gitsigns.nvim",
 		event = "BufEnter",
-		config = function()
-			require("gitsigns").setup()
-		end,
+    config = function()
+      require("gitsigns").setup({
+        signcolumn = false,
+        numhl = true,
+      })
+    end,
 	},
 
   {
