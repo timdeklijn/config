@@ -68,11 +68,11 @@ vim.api.nvim_create_autocmd(
   { command = "setlocal nocursorline" }
 )
 
--- Recognize terraform files as a `hcl` file
-vim.api.nvim_create_autocmd("VimEnter", {
-  pattern = 'tf',
-  command = 'set filetype=hcl',
-})
+vim.cmd([[silent! autocmd! filetypedetect BufRead,BufNewFile *.tf]])
+vim.cmd([[autocmd BufRead,BufNewFile *.hcl set filetype=hcl]])
+vim.cmd([[autocmd BufRead,BufNewFile .terraformrc,terraform.rc set filetype=hcl]])
+vim.cmd([[autocmd BufRead,BufNewFile *.tf,*.tfvars set filetype=terraform]])
+vim.cmd([[autocmd BufRead,BufNewFile *.tfstate,*.tfstate.backup set filetype=json]])
 
 -- Use system clipboard
 vim.api.nvim_set_option("clipboard", "unnamed")

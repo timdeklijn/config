@@ -1,3 +1,5 @@
+au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
+
 setlocal tabstop=2
 setlocal shiftwidth=2
 setlocal expandtab
