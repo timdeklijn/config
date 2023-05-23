@@ -143,6 +143,7 @@ alias k="kubectl"
 
 # Working directory
 alias w="cd ~/workspace"
+alias n="cd ~/TimDocs/notes"
 
 # Git
 alias lg="lazygit"

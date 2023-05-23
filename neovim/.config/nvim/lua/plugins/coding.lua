@@ -82,11 +82,6 @@ return {
 		end,
 	},
 
-	{
-		"kylechui/nvim-surround",
-		opts = {},
-	},
-
 	-- Show indents
 	{
 		"lukas-reineke/indent-blankline.nvim",
