@@ -137,6 +137,7 @@ alias ctop='TERM="${TERM/#tmux/screen}" ctop'
 
 # VIM
 alias vim="nvim"
+alias h="hx"
 
 # Kubernetes
 alias k="kubectl"
@@ -153,8 +154,11 @@ alias gd="git diff"
 alias glog="git log --all --decorate --oneline --graph"
 
 # nicer ls
-alias ls="exa --icons"
-alias "ls -l"="exa -l --icons"
+# alias ls="exa --icons"
+# alias "ls -l"="exa -l --icons"
+
+# ns aliases
+alias ns_lsof="lsof -t -i:7071"
 
 # Paths =======================================================================
 

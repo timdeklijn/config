@@ -90,7 +90,6 @@ function OrganizeImports(wait_ms)
 end
 
 return {
-
   -- lspconfig
   {
     "neovim/nvim-lspconfig",
@@ -148,6 +147,7 @@ return {
   -- auto install stuff
   {
     "williamboman/mason.nvim",
+		event = { "BufReadPost", "BufNewFile" },
     cmd = "Mason",
     config = function()
       require("mason").setup({})
@@ -186,7 +186,8 @@ return {
         debounce = 150,
         save_after_format = false,
         sources = {
-          nls.builtins.diagnostics.flake8,
+          -- nls.builtins.diagnostics.flake8,
+          nls.builtins.diagnostics.pylint,
           nls.builtins.formatting.black,
           nls.builtins.formatting.isort,
           nls.builtins.formatting.shfmt,

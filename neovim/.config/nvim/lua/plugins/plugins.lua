@@ -1,41 +1,55 @@
 return {
 
 	-- color scheme
-	{
-		"rebelot/kanagawa.nvim",
-		name = "kanagawa",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			require("kanagawa").setup({
-				options = {
-					compile = true, -- enable compiling the colorscheme
-					undercurl = true, -- enable undercurls
-					commentStyle = { italic = false },
-					functionStyle = { bold = true },
-					keywordStyle = { italic = false },
-					statementStyle = { bold = true },
-					typeStyle = { bold = true },
-					transparent = false, -- do not set background color
-					dimInactive = true, -- dim inactive window `:h hl-NormalNC`
-					terminalColors = false, -- define vim.g.terminal_color_{0,17}
-				},
-        -- use this to make sure the gutter background is the same as
-        -- the text background.
-				colors = {
-					theme = {
-						all = {
-							ui = {
-								bg_gutter = "none",
-							},
-						},
-					},
-				},
-			})
+	-- {
+	-- 	"catppuccin/nvim",
+	-- 	name = "catppuccin",
+	-- 	priority = 1000,
+	-- 	lazy = false,
+	-- 	config = function()
+	-- 		require("catppuccin").setup({
+	-- 			flavour = "mocha",
+	-- 			background = {
+	-- 				light = "latte",
+	-- 				dark = "mocha",
+	-- 			},
+	-- 			transparent_background = false, -- disables setting the background color.
+	-- 			dim_inactive = {
+	-- 				enabled = true, -- dims the background color of inactive window
+	-- 				shade = "dark",
+	-- 				percentage = 0.15, -- percentage of the shade to apply to the inactive window
+	-- 			},
+	-- 			styles = {
+	-- 				comments = {},
+	-- 				conditionals = {},
+	-- 				loops = {},
+	-- 				functions = { "bold" },
+	-- 				keywords = {},
+	-- 				strings = {},
+	-- 				variables = {},
+	-- 				numbers = {},
+	-- 				booleans = {},
+	-- 				properties = { "bold" },
+	-- 				types = { "bold" },
+	-- 				operators = {},
+	-- 			},
+	-- 			color_overrides = {},
+	-- 			custom_highlights = {},
+	-- 		})
+	-- 		vim.cmd([[ colorscheme catppuccin ]])
+	-- 	end,
+	-- },
 
-			vim.cmd([[ colorscheme kanagawa-wave ]])
-		end,
-	},
+	-- {
+	-- 	"rose-pine/neovim",
+	-- 	name = "rose-pine",
+	-- 	lazy = false,
+	-- 	priority = 1000,
+	-- 	config = function()
+	-- 		vim.cmd([[ colorscheme rose-pine ]])
+	-- 		-- vim.cmd([[ colorscheme rose-pine-dawn ]])
+	-- 	end,
+	-- },
 
 	-- nicer modeline
 	{
@@ -44,8 +58,6 @@ return {
 			options = {
 				icons_enabled = false,
 				theme = "auto",
-				component_separators = { left = "", right = "" },
-				section_separators = { left = "", right = "" },
 			},
 		},
 	},
