@@ -1,8 +1,3 @@
-[language-server.pyright]
-command = "pyright-langserver"
-args = ["--stdio"]
-config = {}
-
 [[language]]
 name = "html"
 formatter = { command = 'prettier', args = ["--parser", "html"] }
@@ -13,9 +8,7 @@ rulers = [88]
 formatter = { command = 'prettier', args = ["--parser", "markdown"] }
 
 [[language]]
-
-
 name = "python"
-language-servers = [ "pyright" ]
+language-server = { command = "pyright" }
 formatter = { command = "black", args = ["--quiet", "-"] }
 auto-format = true
