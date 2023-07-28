@@ -263,7 +263,7 @@
 ;; =============================================================================
 ;; Open config file
 (global-set-key (kbd "C-c o o")
-		(lambda () (interactive)(find-file "~/.config/emacs/init.el")))
+		(lambda () (interactive)(find-file "~/dotfiles/emacs/.config/emacs/init.el")))
 
 ;; ns notes
 (global-set-key (kbd "C-c o n")
