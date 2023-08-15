@@ -131,18 +131,18 @@
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
 ;; Color theme
-(use-package solarized-theme
+(use-package ef-themes
   :ensure t
   :config
-  (setq solarized-use-variable-pitch nil
-        solarized-scale-org-headlines t
-	solarized-scale-markdown-headlines t)
-  (load-theme 'solarized-dark t))
+  (setq ef-themes-mixed-fonts nil
+	ef-themes-to-toggle '(ef-bio ef-elea-light))
+  (load-theme 'ef-bio t)
+  (define-key global-map (kbd "C-c t t") #'ef-themes-toggle))
 
 ;; Set Emacs font: family, size and weight.
 (set-face-attribute 'default nil
-		    :font "ComicShannsMono Nerd Font"
-		    :height 230)
+		    :font "ComicShannsMono Nerd Font Mono"
+		    :height 220)
 
 ;; Highlight the folowing:
 ;; TODO:, FIXME:, NOTE:, etc.
@@ -283,10 +283,6 @@
 ;; =============================================================================
 ;; Treesitter
 ;; =============================================================================
-;; use treesitter grammar to parse code
-(use-package tree-sitter
-  :ensure t)
-
 ;; activate tree-sitter for relevant languages
 (add-hook 'python-mode-hook #'tree-sitter-mode)
 (add-hook 'go-mode-hook #'tree-sitter-mode)
