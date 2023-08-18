@@ -22,7 +22,9 @@
 ;; =============================================================================
 ;; Install
 ;; =============================================================================
-;; Emacs (on mac) is installed with te following command:
+;; Emacs is installed with te following command:
+;;
+;; Mac:
 ;;
 ;; brew install emacs-plus@29 \
 ;;       --with-dbus \
@@ -31,12 +33,12 @@
 ;;       --with-native-comp \
 ;;       --with-memeplex-wide-icon
 ;;
-;; Then create an Automation script with the following:
-;; 'open /usr/local/opt/emacs-plus@29/Emacs.app $@'
+;; Ubuntu:
+;;
+;; TODO: add the build commands
 ;; =============================================================================
 ;; Improvements
 ;; =============================================================================
-;; - move to straight to be able to install copilot
 ;; - Look into linting (flycheck/flymake)?
 ;; - emacs client
 ;; =============================================================================
@@ -141,11 +143,12 @@
 
 ;; Set Emacs font: family, size and weight.
 (set-face-attribute 'default nil
-		    :font "ComicShannsMono Nerd Font Mono"
+		    :font "UbuntuMono Nerd Font Mono"
 		    :height 220)
 
 ;; Highlight the folowing:
 ;; TODO:, FIXME:, NOTE:, etc.
+;; TODO: this can be done from inside the theme I think
 (use-package hl-todo
   :config (global-hl-todo-mode))
 
@@ -203,6 +206,7 @@
 	 ("M-s l" . consult-line)))
 
 ;; completion, get completions from LSP (eglot)
+;; TODO: try out coffe or something smaller/faster
 (use-package company
   :bind ("C-;" . company-complete)
   :config (setq company-idle-delay nil))
@@ -222,10 +226,8 @@
 ;; git client
 ;; TODO: how do I checkout branches?
 (use-package magit
-  :ensure t)
-
-;; This is quite cool, it shows changes for the current file (or something)
-(global-set-key (kbd "C-c g") 'magit-file-dispatch)
+  :ensure t
+  :bind ("C-c g" . magit-file-dispatch))
 
 ;; =============================================================================
 ;; vterm
@@ -245,7 +247,8 @@
 ;; language
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
-	       '(python-mode . ("pyright" "--stdio"))
+	       ;; '(python-mode . ("pyright" "--stdio"))
+	       '(python-mode . ("pylsp" "--stdio"))
 	       '(yaml-mode . ("yaml-language-server" "--stdio"))))
 ;; TODO: rust
 
@@ -261,6 +264,13 @@
 ;; =============================================================================
 ;; Custom Keybinds
 ;; =============================================================================
+;; Not all commands have keybinds. Also, some custom commands may also
+;; be assigned to a custom keybind
+
+;; -----------------------------------------------------------------------------
+;; Open file shortcuts
+;; -----------------------------------------------------------------------------
+
 ;; Open config file
 (global-set-key (kbd "C-c o o")
 		(lambda () (interactive)(find-file "~/dotfiles/emacs/.config/emacs/init.el")))
@@ -277,8 +287,17 @@
 (global-set-key (kbd "C-c o t")
 		(lambda() (interactive)(find-file "~/TimDocs/notes/todo.org")))
 
+;; -----------------------------------------------------------------------------
+;; Custom keybinds
+;; -----------------------------------------------------------------------------
+
 ;; Shortcut to Emacs org-agenda
-(global-set-key (kbd "\C-c a") 'org-agenda)
+(global-set-key (kbd "C-c a") 'org-agenda)
+;; Rerun last compilation command
+(global-set-key (kbd "C-c r r") 'recompile)
+(global-set-key (kbd "C-c f") 'project-find-file)
+(global-set-key (kbd "C-c e f") 'eglot-format-buffer)
+(global-set-key (kbd "C-c e r n") 'eglot-rename)
 
 ;; =============================================================================
 ;; Treesitter
@@ -290,6 +309,7 @@
 (add-hook 'org-mode-hook #'tree-sitter-mode)
 (add-hook 'yaml-mode-hook #'tree-sitter-mode)
 (add-hook 'json-mode-hook #'tree-sitter-mode)
+(add-hook 'markdown-mode-hook #'tree-sitter-mode)
 
 ;; download tree-sitter grammars
 (use-package treesit-auto
@@ -333,6 +353,7 @@
 ;; =============================================================================
 ;; Simple go mode does not add LSP by default, this is done later.
 ;; TODO: go-mode has quite some nice functionality that I need to look into.
+;; TODO: add auto import functionality
 (use-package go-mode
   :ensure t)
 
@@ -342,6 +363,8 @@
 ;; Python mode is mostly loaded for simple syntax highlighting. The LSP takes
 ;; care of most of the IDE like features. We add the debugger config in this
 ;; mode as well.
+
+;; TODO: experiment with python-lsp-server and its functions
 (use-package python-mode
   :ensure t)
 
@@ -360,6 +383,9 @@
 ;; Make sure there is no weird indenting
 (add-hook 'rust-mode-hook '(lambda () (setq indent-tabs-mode nil)))
 
+;; =============================================================================
+;; terraform
+;; =============================================================================
 (use-package terraform-mode
   :ensure t
   :custom
@@ -384,8 +410,9 @@
 ;; =============================================================================
 ;; Configuration modes
 ;; =============================================================================
-;; TODO: linters for both json and yaml
+;; TODO: linters or formatters for both json and yaml
 (use-package json-mode
   :ensure t)
+(add-hook 'json-mode-hook (lambda () (setq tab-width 2)))
 (use-package yaml-mode
   :ensure t)
