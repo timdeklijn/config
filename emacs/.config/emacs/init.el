@@ -101,6 +101,8 @@
     (ansi-color-apply-on-region (point-min) (point-max))))
 (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
 
+(setq compilation-scroll-output t)
+
 ;; =============================================================================
 ;; Basic Configuration
 ;; =============================================================================
@@ -137,14 +139,14 @@
   :ensure t
   :config
   (setq ef-themes-mixed-fonts nil
-	ef-themes-to-toggle '(ef-bio ef-elea-light))
+	ef-themes-to-toggle '(ef-bio ef-spring))
   (load-theme 'ef-bio t)
   (define-key global-map (kbd "C-c t t") #'ef-themes-toggle))
 
 ;; Set Emacs font: family, size and weight.
 (set-face-attribute 'default nil
-		    :font "UbuntuMono Nerd Font Mono"
-		    :height 220)
+		    :font "ComicShannsMono Nerd Font Mono"
+		    :height 180)
 
 ;; Highlight the folowing:
 ;; TODO:, FIXME:, NOTE:, etc.
@@ -310,6 +312,7 @@
 (add-hook 'yaml-mode-hook #'tree-sitter-mode)
 (add-hook 'json-mode-hook #'tree-sitter-mode)
 (add-hook 'markdown-mode-hook #'tree-sitter-mode)
+(add-hook 'zig-mode-hook #'tree-sitter-mode)
 
 ;; download tree-sitter grammars
 (use-package treesit-auto
@@ -366,7 +369,10 @@
 
 ;; TODO: experiment with python-lsp-server and its functions
 (use-package python-mode
+  :config (setq truncate-lines 0)
   :ensure t)
+
+(setq-default python-indent-offset 4)
 
 ;; TODO: function to run 'black' and 'isort' on current buffer
 ;; TODO: function to run 'pylint' and 'mypy' on current buffer
@@ -382,6 +388,11 @@
 
 ;; Make sure there is no weird indenting
 (add-hook 'rust-mode-hook '(lambda () (setq indent-tabs-mode nil)))
+
+;; =============================================================================
+;; Zig
+;; =============================================================================
+(use-package zig-mode)
 
 ;; =============================================================================
 ;; terraform

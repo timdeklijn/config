@@ -106,10 +106,6 @@ fi
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
-# Use vi bindings in terminal =================================================
-
-set -o vi
-
 # use zsh functions ============================================================
 
 fpath=(~/dotfiles/zsh/functions/ $fpath)
