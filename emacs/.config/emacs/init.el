@@ -134,19 +134,22 @@
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
-;; Color theme
-(use-package ef-themes
+(use-package solarized-theme
   :ensure t
   :config
-  (setq ef-themes-mixed-fonts nil
-	ef-themes-to-toggle '(ef-bio ef-spring))
-  (load-theme 'ef-bio t)
-  (define-key global-map (kbd "C-c t t") #'ef-themes-toggle))
+  (setq solarized-use-variable-pitch nil
+	solarized-high-contrast-mode-line nil
+	solarized-use-less-bold nil
+	solarized-use-more-italic t
+	solarized-emphasize-indicators nil
+	solarized-scale-org-headlines t
+	solarized-scale-markdown-headlines t)
+  (load-theme 'solarized-dark t))
 
 ;; Set Emacs font: family, size and weight.
 (set-face-attribute 'default nil
 		    :font "ComicShannsMono Nerd Font Mono"
-		    :height 180)
+		    :height 220)
 
 ;; Highlight the folowing:
 ;; TODO:, FIXME:, NOTE:, etc.
