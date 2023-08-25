@@ -135,16 +135,15 @@
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
 (use-package solarized-theme
-  :ensure t
-  :config
-  (setq solarized-use-variable-pitch nil
-	solarized-high-contrast-mode-line nil
-	solarized-use-less-bold nil
-	solarized-use-more-italic t
-	solarized-emphasize-indicators nil
-	solarized-scale-org-headlines t
-	solarized-scale-markdown-headlines t)
-  (load-theme 'solarized-dark t))
+   :config
+   (setq solarized-use-variable-pitch nil
+ 	solarized-high-contrast-mode-line nil
+ 	solarized-use-less-bold nil
+ 	solarized-use-more-italic t
+ 	solarized-emphasize-indicators nil
+ 	solarized-scale-org-headlines t
+ 	solarized-scale-markdown-headlines t)
+   (load-theme 'solarized-dark-high-contrast t))
 
 ;; Set Emacs font: family, size and weight.
 (set-face-attribute 'default nil
