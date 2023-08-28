@@ -2,3 +2,10 @@ neovim/.config/nvim/spell/
 packer_compiled.lua
 neovim/.config/nvim/plugin/packer_compiled.lua
 DS_Store
+emacs/.config/emacs/auto-save-list/
+emacs/.config/emacs/elpa/
+emacs/.config/emacs/eshell/
+emacs/.config/emacs/history
+emacs/.config/emacs/projects
+emacs/.config/emacs/transient/
+emacs/.config/emacs/tree-sitter/
