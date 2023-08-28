@@ -75,18 +75,7 @@ vim.cmd([[autocmd BufRead,BufNewFile *.tf,*.tfvars set filetype=terraform]])
 vim.cmd([[autocmd BufRead,BufNewFile *.tfstate,*.tfstate.backup set filetype=json]])
 
 -- Use system clipboard
--- vim.api.nvim_set_option("clipboard", "unnamed")
+vim.api.nvim_set_option("clipboard", "unnamed")
 
--- =============================================================================
--- Load plugin + configuration
--- =============================================================================
-
-if vim.g.vscode then
-  -- VSCode extension
-  vim.cmd[[set clipboard=unnamedplus]]
-  require("lazy").setup("plugins.vscode_only")
-else
-  -- ordinary Neovim
-  vim.api.nvim_set_option("clipboard", "unnamed")
-  require("lazy").setup("plugins")
-end
+-- Load additional config
+require("lazy").setup("plugins")

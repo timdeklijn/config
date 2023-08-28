@@ -25,6 +25,7 @@ return {
 				"rust",
 				"typescript",
 				"yaml",
+        "zig",
 			},
 			highlight = { enable = true },
 			indent = { enable = true },
