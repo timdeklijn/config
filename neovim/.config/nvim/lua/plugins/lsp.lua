@@ -48,7 +48,7 @@ return {
         desc = 'Signature Help',
       },
       {
-        '<leader>=', 
+        '<leader>=',
         vim.lsp.buf.format,
         desc = 'Format',
       },
@@ -56,7 +56,7 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
       local lspconfig = require('lspconfig')
-      capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+      local capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
       lspconfig.pylsp.setup({ capabilities = capabilities })
       lspconfig.lua_ls.setup({ capabilities = capabilities })
       lspconfig.marksman.setup({ capabilities = capabilities })
@@ -109,6 +109,7 @@ return {
     'mfussenegger/nvim-dap',
     dependencies = {
       -- Virtual text for nvim-dap
+      'mfussenegger/nvim-dap-python',
       { 'theHamsta/nvim-dap-virtual-text', config = true },
 
       -- UI for nvim-dap
@@ -263,6 +264,18 @@ return {
     },
     config = function()
       vim.api.nvim_set_hl(0, 'DapStoppedLine', { default = true, link = 'Visual' })
+
+      require('dap').configurations.python = {
+          {
+            type = 'python',
+            request = 'launch',
+            name = "Launch file",
+            program = "${file}",
+            -- pythonPath = function()
+            --   return '/usr/bin/python'
+            -- end;
+          },
+      }
     end,
   },
 }
@@ -298,21 +311,21 @@ return {
 --   marksman = {},
 --   zls = {},
 -- }
--- 
+--
 -- -- Global mappings.
 -- -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 -- vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 -- vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
--- 
+--
 -- -- [[ LSP ]]
 -- -- Use LspAttach autocommand to only map the following keys
 -- -- after the language server attaches to the current buffer
 -- vim.api.nvim_create_autocmd('LspAttach', {
 --   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
 --   callback = function(ev)
--- 
+--
 --     -- Buffer local mappings.
 --     -- See `:help vim.lsp.*` for documentation on any of the below functions
 --     local opts = { buffer = ev.buf }
@@ -335,18 +348,18 @@ return {
 --     end, opts)
 --   end,
 -- })
--- 
+--
 -- -- Create a command `:Format` local to the LSP buffer
 -- vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
 --   vim.lsp.buf.format()
 -- end, { desc = 'Format current buffer with LSP' })
--- 
+--
 -- -- Bind format to a keymap
 -- vim.keymap.set('n', '<leader>=', ':Format<CR>', opts)
--- 
+--
 -- -- prevent lsp coloring
 -- client.server_capabilities.semanticTokensProvider = nil
--- 
+--
 -- -- Auto format imports on save (used for Golang)
 -- function OrganizeImports(wait_ms)
 --   local params = vim.lsp.util.make_range_params()
@@ -362,7 +375,7 @@ return {
 --     end
 --   end
 -- end
--- 
+--
 -- return {
 --   -- lspconfig
 --   {
@@ -395,15 +408,15 @@ return {
 --       end
 --     end,
 --   },
--- 
+--
 --   "simrat39/inlay-hints.nvim",
 --   "j-hui/fidget.nvim",
 --   "jose-elias-alvarez/nvim-lsp-ts-utils",
 --   "hrsh7th/cmp-nvim-lsp",
--- 
+--
 --   {
 --     'ray-x/lsp_signature.nvim',
 --     opts = { floating_window = true }
 --   },
--- 
+--
 -- }
