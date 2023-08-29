@@ -101,9 +101,6 @@ return {
     },
   },
 
-  -- nvim-lightbulb
-  { 'kosayoda/nvim-lightbulb', event = 'LspAttach', opts = { autocmd = { enabled = true } } },
-
   -- nvim-dap
   {
     'mfussenegger/nvim-dap',
