@@ -2,22 +2,43 @@ return {
 
 	-- color scheme
   {
-    "sainnhe/gruvbox-material",
-    name="gruvbox-material",
-    priority = 1000,
-    lazy = false,
-    config = function()
-      vim.cmd([[
-        let g:gruvbox_material_background = 'hard'
-        let g:gruvbox_material_foreground = 'material'
-        let g:gruvbox_material_enable_bold = 1
-        let g:gruvbox_material_dim_inactive_windows = 1
-        let g:gruvbox_material_diagnostic_virtual_text = 'colored'
-        let g:gruvbox_material_better_performance = 1
-        colorscheme gruvbox-material
-      ]])
-    end,
-  },
+		"catppuccin/nvim",
+		name = "catppuccin",
+		priority = 1000,
+		lazy = false,
+		config = function()
+			require("catppuccin").setup({
+				flavour = "mocha",
+				background = {
+					light = "latte",
+					dark = "mocha",
+				},
+				transparent_background = false, -- disables setting the background color.
+				dim_inactive = {
+					enabled = true, -- dims the background color of inactive window
+					shade = "dark",
+					percentage = 0.15, -- percentage of the shade to apply to the inactive window
+				},
+				styles = {
+					comments = {},
+					conditionals = {},
+					loops = {},
+					functions = { "bold" },
+					keywords = {},
+					strings = {},
+					variables = {},
+					numbers = {},
+					booleans = {},
+					properties = { "bold" },
+					types = { "bold" },
+					operators = {},
+				},
+				color_overrides = {},
+				custom_highlights = {},
+			})
+			vim.cmd([[ colorscheme catppuccin ]])
+		end,
+	},
 
 	-- nicer modeline
 	{
