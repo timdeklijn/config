@@ -52,6 +52,12 @@ return {
         vim.lsp.buf.format,
         desc = 'Format',
       },
+      {
+        "<leader>e",
+        vim.diagnostic.open_float,
+        desc = "Open diagnostics float"
+      },
+
     },
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
@@ -263,15 +269,15 @@ return {
       vim.api.nvim_set_hl(0, 'DapStoppedLine', { default = true, link = 'Visual' })
 
       require('dap').configurations.python = {
-          {
-            type = 'python',
-            request = 'launch',
-            name = "Launch file",
-            program = "${file}",
-            -- pythonPath = function()
-            --   return '/usr/bin/python'
-            -- end;
-          },
+        {
+          type = 'python',
+          request = 'launch',
+          name = "Launch file",
+          program = "${file}",
+          -- pythonPath = function()
+          --   return '/usr/bin/python'
+          -- end;
+        },
       }
     end,
   },
