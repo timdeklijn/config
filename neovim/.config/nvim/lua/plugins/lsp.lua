@@ -66,6 +66,7 @@ return {
       lspconfig.pylsp.setup({ capabilities = capabilities })
       lspconfig.lua_ls.setup({ capabilities = capabilities })
       lspconfig.marksman.setup({ capabilities = capabilities })
+      lspconfig.rust_analyzer.setup({ capabilities = capabilities })
     end,
   },
 
