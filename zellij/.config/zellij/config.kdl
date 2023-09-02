@@ -219,12 +219,26 @@ themes {
         black "#181825"
         white "#cdd6f4"
     }
+
+    github-dark-default {
+        bg "#000000"
+        fg "#b3b1ad"
+        red "#ff7b72"
+        green "#3fb950"
+        blue "#58a6ff"
+        yellow "#d29922"
+        magenta "#bc8cff"
+        orange "#ffa198"
+        cyan "#39c5cf"
+        black "#000000"
+        white "#b3b1ad"
+    }
 }
 
 // Choose the theme that is specified in the themes section.
 // Default: default
 
-theme "catppuccin-mocha"
+theme "github-dark-default"
 
 // The name of the default layout to load on startup
 // Default: "default"

@@ -9,7 +9,7 @@
 # All imports must either be absolute paths starting with `/`, or paths relative
 # to the user's home directory starting with `~/`.
 import:
-  - ~/.config/alacritty/catppuccin-mocha.yml
+  - ~/.config/alacritty/github-dark-default.yml
 
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
@@ -116,11 +116,13 @@ font:
   normal:
     # Font family
     #
+    # Default: JetBrainsMono Nerd Font Mono
     Default: ComicShannsMono Nerd Font
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
     family: ComicShannsMono Nerd Font
+    # family: JetBrainsMono Nerd Font Mono
 
     # The `style` can be specified to pick a specific face.
     #style: Regular

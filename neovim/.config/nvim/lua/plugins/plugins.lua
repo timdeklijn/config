@@ -1,102 +1,119 @@
 return {
 
-	-- color scheme
   {
-		"catppuccin/nvim",
-		name = "catppuccin",
-		priority = 1000,
-		lazy = false,
-		config = function()
-			require("catppuccin").setup({
-				flavour = "mocha",
-				background = {
-					light = "latte",
-					dark = "mocha",
-				},
-				transparent_background = false, -- disables setting the background color.
-				dim_inactive = {
-					enabled = true, -- dims the background color of inactive window
-					shade = "dark",
-					percentage = 0.15, -- percentage of the shade to apply to the inactive window
-				},
-				styles = {
-					comments = {},
-					conditionals = {},
-					loops = {},
-					functions = { "bold" },
-					keywords = {},
-					strings = {},
-					variables = {},
-					numbers = {},
-					booleans = {},
-					properties = { "bold" },
-					types = { "bold" },
-					operators = {},
-				},
-				color_overrides = {},
-				custom_highlights = {},
-			})
-			vim.cmd([[ colorscheme catppuccin ]])
-		end,
-	},
+    "projekt0n/github-nvim-theme",
+    name = "github theme",
+    priority = 1000,
+    lazy = false,
+    config = function()
+      require('github-theme').setup({
+        options = {
+          -- Compiled file's destination location
+          compile_path = vim.fn.stdpath('cache') .. '/github-theme',
+          compile_file_suffix = '_compiled', -- Compiled file suffix
+          hide_end_of_buffer = true,   -- Hide the '~' character at the end of the buffer for a cleaner look
+          hide_nc_statusline = true,   -- Override the underline style for non-active statuslines
+          transparent = false,         -- Disable setting background
+          terminal_colors = true,      -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
+          dim_inactive = true,        -- Non focused panes set to alternative background
+          module_default = true,       -- Default enable value for modules
+          styles = {
+                                       -- Style to be applied to different syntax groups
+            comments = 'italic',         -- Value is any valid attr-list value `:help attr-list`
+            functions = 'bold',
+            keywords = 'NONE',
+            variables = 'NONE',
+            conditionals = 'bold',
+            constants = 'NONE',
+            numbers = 'NONE',
+            operators = 'NONE',
+            strings = 'italic',
+            types = 'bold',
+          },
+          inverse = {
+                -- Inverse highlight for different types
+            match_paren = false,
+            visual = false,
+            search = false,
+          },
+          darken = {
+               -- Darken floating windows and sidebar-like windows
+            floats = false,
+            sidebars = {
+              enabled = true,
+              list = {}, -- Apply dark background to specific windows
+            },
+          },
+          modules = { -- List of various plugins and additional options
+            -- ...
+          },
+        },
+        palettes = {
+        },
+        specs = {},
+        groups = {},
+      })
+      vim.cmd('colorscheme github_dark_high_contrast')
+    end,
+  },
 
-	-- nicer modeline
-	{
-		"nvim-lualine/lualine.nvim",
-		opts = {
-			options = {
-				icons_enabled = true,
-				theme = "auto",
-			},
-		},
-	},
-	-- Integrate nicely with tmux
-	{
-		"christoomey/vim-tmux-navigator",
-	},
+  -- nicer modeline
+  {
+    "nvim-lualine/lualine.nvim",
+    opts = {
+      options = {
+        icons_enabled = true,
+        theme = "auto",
+      },
+    },
+  },
+  -- Integrate nicely with tmux
+  {
+    "christoomey/vim-tmux-navigator",
+  },
 
-	-- File tree
-	{
-		"nvim-tree/nvim-tree.lua",
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-		},
-		opts = {
-			git = {
-				enable = true,
-				ignore = false,
-				timeout = 400,
-			},
-			view = {
-				side = "right",
-			},
-		},
-		keys = {
-			{ "<C-n>", ":NvimTreeToggle<CR>", desc = "Neotree" },
-		},
-	},
+  -- File tree
+  {
+    "nvim-tree/nvim-tree.lua",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
+    opts = {
+      git = {
+        enable = true,
+        ignore = false,
+        timeout = 400,
+      },
+      view = {
+        side = "right",
+      },
+    },
+    keys = {
+      { "<C-n>", ":NvimTreeToggle<CR>", desc = "Neotree" },
+    },
+  },
 
-	-- library used by other plugins
-	{ "nvim-lua/plenary.nvim", lazy = true },
+  -- library used by other plugins
+  { "nvim-lua/plenary.nvim", lazy = true },
 
-	-- Show git changes in the sign column
-	{
-		"lewis6991/gitsigns.nvim",
-		event = "BufEnter",
-		config = function()
-			require("gitsigns").setup({
-				signcolumn = false,
-				numhl = true,
-			})
-		end,
-	},
+  -- Show git changes in the sign column
+  {
+    "lewis6991/gitsigns.nvim",
+    event = "BufEnter",
+    config = function()
+      require("gitsigns").setup({
+        signcolumn = false,
+        numhl = true,
+      })
+    end,
+  },
 
-	{
-		"tpope/vim-fugitive",
-		name = "figutive",
-		keys = {
-			{ "<leader>gg", ":Git<CR>", desc = "Open Fugitive" },
-			{ "<leader>gp", ":Git push<CR>", desc = "Open Fugitive" },
-		},
-	},
+  {
+    "tpope/vim-fugitive",
+    name = "figutive",
+    keys = {
+      { "<leader>gg", ":Git<CR>",      desc = "Open Fugitive" },
+      { "<leader>gp", ":Git push<CR>", desc = "Open Fugitive" },
+    },
+  },
 }
