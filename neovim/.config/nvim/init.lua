@@ -22,7 +22,6 @@ vim.opt.rtp:prepend(lazypath)
 -- Basic config
 -- =============================================================================
 
-
 -- sane defaults
 vim.o.hlsearch = false
 vim.wo.number = true
@@ -76,6 +75,9 @@ vim.cmd([[autocmd BufRead,BufNewFile *.tfstate,*.tfstate.backup set filetype=jso
 
 -- Use system clipboard
 vim.api.nvim_set_option("clipboard", "unnamed")
+
+-- fillchars to better show whitespace
+vim.cmd[[ set list listchars=eol:↲,tab:>·,trail:~,extends:▶,precedes:◀,space:·]]
 
 -- Load additional config
 require("lazy").setup("plugins")
