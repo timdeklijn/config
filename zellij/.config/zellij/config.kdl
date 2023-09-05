@@ -206,37 +206,9 @@ simplified_ui true
 // Once these themes are defined, one of them should to be selected in the "theme" section of this file
 
 themes {
-    catppuccin-mocha {
+    nightfly {
         bg "#585b70"
         fg "#cdd6f4"
-        red "#f38ba8"
-        green "#a6e3a1"
-        blue "#89b4fa"
-        yellow "#f9e2af"
-        magenta "#f5c2e7"
-        orange "#fab387"
-        cyan "#89dceb"
-        black "#181825"
-        white "#cdd6f4"
-    }
-
-    github-dark-default {
-        bg "#000000"
-        fg "#b3b1ad"
-        red "#ff7b72"
-        green "#3fb950"
-        blue "#58a6ff"
-        yellow "#d29922"
-        magenta "#bc8cff"
-        orange "#ffa198"
-        cyan "#39c5cf"
-        black "#000000"
-        white "#b3b1ad"
-    }
-
-    nightfly {
-        bg "#011627"
-        fg "#bdc1c6"
         red "#fc514e"
         green "#a1cd5e"
         blue "#82aaff"
