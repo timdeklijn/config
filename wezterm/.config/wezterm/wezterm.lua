@@ -1,41 +1,38 @@
 local wezterm = require("wezterm")
 local config = {}
 
+-- shell to start in
 config.default_prog = { "bash" }
 
+-- font config
 config.font = wezterm.font "ComicShannsMono Nerd Font"
 config.font_size = 25.0
 config.line_height = 1.25
 
-config.color_scheme = 'nord'
-config.window_background_opacity = 1.0
-
+-- Simple tabs: looks more terminal like
 config.use_fancy_tab_bar = false
 
+-- Colors
+config.color_scheme = 'nord'
 config.colors = {
   tab_bar = {
     background = '#2e3440',
-
     active_tab = {
       bg_color = '#5e81ac',
       fg_color = '#eceff4',
     },
-
     inactive_tab = {
       bg_color = '#4c566a',
       fg_color = '#eceff4',
     },
-
     inactive_tab_hover = {
       bg_color = '#81a1c1',
       fg_color = '#eceff4',
     },
-
     new_tab = {
       bg_color = '#a3be8c',
       fg_color = '#eceff4',
     },
-
     new_tab_hover = {
       bg_color = '#81a1c1',
       fg_color = '#eceff4',
@@ -61,11 +58,21 @@ config.keys = {
     mods = 'LEADER|CTRL',
     action = wezterm.action.SendKey { key = 'a', mods = 'CTRL' },
   },
-
+  -- Enter copy mode
+  {
+    key = 'x',
+    mods = 'LEADER|CTRL',
+    action = wezterm.action.ActivateCopyMode
+  },
+  -- Quickselect: copy using shortcuts
+  {
+    key = 's',
+    mods = 'LEADER|CTRL',
+    action = wezterm.action.QuickSelect
+  },
   -- ==========================================================================
   -- PANES
   -- ==========================================================================
-
   -- Horizontal pane split
   {
     key = '|',
@@ -119,12 +126,9 @@ config.keys = {
     mods = 'LEADER|CTRL',
     action = wezterm.action.ToggleFullScreen,
   },
-
-
   -- ==========================================================================
   -- TABS
   -- ==========================================================================
-
   -- Create tab
   {
     key = 't',
