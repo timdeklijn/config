@@ -126,6 +126,26 @@ config.keys = {
     mods = 'LEADER|CTRL',
     action = wezterm.action.ToggleFullScreen,
   },
+  {
+    key = 'H',
+    mods = 'LEADER',
+    action = wezterm.action.AdjustPaneSize { 'Left', 10 },
+  },
+  {
+    key = 'J',
+    mods = 'LEADER',
+    action = wezterm.action.AdjustPaneSize { 'Down', 10 },
+  },
+  {
+    key = 'K',
+    mods = 'LEADER',
+    action = wezterm.action.AdjustPaneSize { 'Up', 10 }
+  },
+  {
+    key = 'L',
+    mods = 'LEADER',
+    action = wezterm.action.AdjustPaneSize { 'Right', 10 },
+  },
   -- ==========================================================================
   -- TABS
   -- ==========================================================================
