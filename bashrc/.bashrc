@@ -18,6 +18,7 @@ alias gd="git diff"
 
 # I do not want to type nvim
 alias vim="nvim"
+alias h="helix"
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
