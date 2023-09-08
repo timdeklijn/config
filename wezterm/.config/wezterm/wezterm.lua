@@ -1,8 +1,15 @@
 local wezterm = require("wezterm")
 local config = {}
 
--- shell to start in
-config.default_prog = { "bash" }
+-- shell to start is based on the os we are running
+if wezterm.target_triple == 'x86_64-apple-darwin' then
+  -- load fish from brew install
+  config.default_prog = { "/usr/local/bin/fish" }
+else
+  -- TODO: fish in linux?
+  config.default_prog = { "bash" }
+end
+
 
 -- font config
 config.font = wezterm.font "ComicShannsMono Nerd Font"
@@ -11,6 +18,12 @@ config.line_height = 1.25
 
 -- Simple tabs: looks more terminal like
 config.use_fancy_tab_bar = false
+config.tab_bar_at_bottom = true
+
+config.window_padding = {
+  bottom = 2,
+  top= 2,
+}
 
 -- Colors
 config.color_scheme = 'nord'
