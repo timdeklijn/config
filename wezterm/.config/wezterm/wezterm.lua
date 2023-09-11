@@ -3,18 +3,16 @@ local config = {}
 
 -- shell to start is based on the os we are running
 if wezterm.target_triple == 'x86_64-apple-darwin' then
-  -- load fish from brew install
   config.default_prog = { "/usr/local/bin/fish" }
 else
-  -- TODO: fish in linux?
-  config.default_prog = { "bash" }
+  config.default_prog = { "/usr/bin/fish" }
 end
 
 
 -- font config
 config.font = wezterm.font "CaskaydiaCove Nerd Font"
 config.font_size = 25.0
-config.line_height = 1.25
+config.line_height = 1.5
 
 -- Simple tabs: looks more terminal like
 config.use_fancy_tab_bar = false
