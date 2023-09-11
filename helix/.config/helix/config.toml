@@ -1,7 +1,7 @@
 theme = "nord"
 
 [editor]
-line-number = "absolute"
+line-number = "relative"
 mouse = true
 
 [editor.cursor-shape]
@@ -15,3 +15,6 @@ hidden = false
 [editor.indent-guides]
 render = true
 character = "╎"
+
+[editor.soft-wrap]
+enable = true
