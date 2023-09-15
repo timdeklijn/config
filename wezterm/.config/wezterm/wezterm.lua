@@ -10,7 +10,7 @@ end
 
 
 -- font config
-config.font = wezterm.font "CaskaydiaCove Nerd Font"
+config.font = wezterm.font "ComicShannsMono Nerd Font"
 config.font_size = 25.0
 config.line_height = 1.5
 
