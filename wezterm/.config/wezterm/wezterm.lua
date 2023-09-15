@@ -24,29 +24,37 @@ config.window_padding = {
 }
 
 -- Colors
-config.color_scheme = 'nord'
+config.color_scheme = 'Everblush (Gogh)'
+
+-- Put colors in variables to plug them into the tab colors.
+local background = "#141B1E"
+local foreground = "#DADADA"
+local active_background = background
+local passive_background = "#2D3437"
+local hover = "#8CCF7E"
+
 config.colors = {
   tab_bar = {
-    background = '#2e3440',
+    background = background,
     active_tab = {
-      bg_color = '#2e3440',
-      fg_color = '#eceff4',
+      bg_color = active_background,
+      fg_color = foreground,
     },
     inactive_tab = {
-      bg_color = '#3b4252',
-      fg_color = '#eceff4',
+      bg_color = passive_background,
+      fg_color = foreground,
     },
     inactive_tab_hover = {
-      bg_color = '#81a1c1',
-      fg_color = '#eceff4',
+      bg_color = hover,
+      fg_color = foreground,
     },
     new_tab = {
-      bg_color = '#3b4252',
-      fg_color = '#eceff4',
+      bg_color = passive_background,
+      fg_color = foreground,
     },
     new_tab_hover = {
-      bg_color = '#81a1c1',
-      fg_color = '#eceff4',
+      bg_color = hover,
+      fg_color = foreground,
     },
   },
 }
