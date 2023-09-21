@@ -36,6 +36,7 @@ exec --no-startup-id nm-applet
 
 # I want to have my wallpaper when I log in.
 exec --no-startup-id nitrogen --restore
+exec --no-startup-id dropbox
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -167,12 +168,9 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# class                 border  backgr. text    indicator child_border
-client.focused          #16161D #16161D #C8C093 #2e9ef4   #285577
-
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-	position top
+	position bottom
 	status_command i3status-rs 
 }
