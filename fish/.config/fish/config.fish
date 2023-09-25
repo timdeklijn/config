@@ -19,6 +19,7 @@ switch (uname)
         echo OS is not Linux or Mac
 end
 
+alias vim="nvim"
 
 # git --------------------------------------------------------------------------
 alias gs="git status"

@@ -67,6 +67,7 @@ vim.api.nvim_create_autocmd(
   { command = "setlocal nocursorline" }
 )
 
+-- Make sure terraform files are acturally interpreted as terraform files.
 vim.cmd([[silent! autocmd! filetypedetect BufRead,BufNewFile *.tf]])
 vim.cmd([[autocmd BufRead,BufNewFile *.hcl set filetype=hcl]])
 vim.cmd([[autocmd BufRead,BufNewFile .terraformrc,terraform.rc set filetype=hcl]])
@@ -75,9 +76,6 @@ vim.cmd([[autocmd BufRead,BufNewFile *.tfstate,*.tfstate.backup set filetype=jso
 
 -- Use system clipboard
 vim.api.nvim_set_option("clipboard", "unnamed")
-
--- fillchars to better show whitespace
-vim.cmd[[ set list listchars=eol:↲,tab:>·,trail:~,extends:▶,precedes:◀,space:·]]
 
 -- Load additional config
 require("lazy").setup("plugins")
