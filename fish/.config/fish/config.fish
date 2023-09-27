@@ -34,6 +34,7 @@ alias ll="exa --icons -l"
 # paths ========================================================================
 fish_add_path /usr/local/bin
 fish_add_path ~/bin
+fish_add_path ~/.cargo/bin
 
 # pyenv ========================================================================
 pyenv init - | source
