@@ -62,7 +62,7 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
       local lspconfig = require('lspconfig')
-      local capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
       lspconfig.pylsp.setup({ capabilities = capabilities })
       lspconfig.lua_ls.setup({ capabilities = capabilities })
       lspconfig.marksman.setup({ capabilities = capabilities })

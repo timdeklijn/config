@@ -85,11 +85,12 @@ return {
   -- Show indents
   {
     "lukas-reineke/indent-blankline.nvim",
-    opts = {
-      char = "┊",
-      show_trailing_blankline_indent = false,
-    },
- },
+    name = "indent-blankline",
+    lazy = false,
+    config = function()
+      require("ibl").setup()
+    end
+  },
 
   -- Comment plugin, comment with motions
   {
@@ -97,5 +98,12 @@ return {
     name = "Comment",
     opts = {},
     lazy = false,
+  },
+
+  {
+    "hashivim/vim-terraform",
+    name = "terraform",
+    ft = { "tf", "tfvars" },
+    opts = {},
   }
 }
