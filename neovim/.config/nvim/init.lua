@@ -22,10 +22,14 @@ vim.opt.rtp:prepend(lazypath)
 --  You can also configure plugins after the setup call,
 --    as they will be available in your neovim runtime.
 require('lazy').setup({
-  -- NOTE: First, some plugins that don't require any configuration
-
   -- Git related plugins
-  'tpope/vim-fugitive',
+  {
+    'tpope/vim-fugitive',
+    keys = {
+      { "<leader>gg", "<cmd>Git<cr>",      desc = "[G]it" },
+      { "<leader>gp", "<cmd>Git push<cr>", desc = "[G]it" },
+    },
+  },
   'tpope/vim-rhubarb',
 
   -- Detect tabstop and shiftwidth automatically
@@ -225,6 +229,10 @@ vim.o.timeoutlen = 300
 vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
+-- Scroll offset: do not move cursor to the bottom of the of the screen
+vim.o.scrolloff = 5
+-- relative linenumbers
+vim.wo.relativenumber = true
 
 -- [[ Basic Keymaps ]]
 -- Keymaps for better default experience
