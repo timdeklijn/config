@@ -116,29 +116,19 @@ require('lazy').setup({
   },
 
   {
-    "folke/tokyonight.nvim",
+    "bluz71/vim-moonfly-colors",
+    name = "moonfly",
     lazy = false,
     priority = 1000,
-    opts = {},
     config = function()
-      require("tokyonight").setup({
-        style = "storm",
-        light_style = "day",
-        terminal_colors = true,
-        styles = {
-          comments = { italic = false },
-          keywords = { italic = false, bold = true },
-          functions = { bold = true },
-          variables = {},
-          sidebars = "dark",
-          floats = "dark",
-        },
-        sidebars = { "qf", "help" },
-        hide_inactive_statusline = true,
-        dim_inactive = true,
-        lualine_bold = true,
-      })
-      vim.cmd [[colorscheme tokyonight]]
+      vim.g.moonflyCursorColor = true
+      vim.g.moonflyItalics = false
+      vim.g.moonflyNormalFloat = true
+      vim.g.moonflyUndercurls = false
+      vim.g.moonflyUnderlineMatchParen = true
+      vim.g.moonflyVirtualTextColor = true
+      vim.g.moonflyWinSeparator = 2
+      vim.cmd [[colorscheme moonfly]]
     end
   },
 
@@ -146,8 +136,7 @@ require('lazy').setup({
     'nvim-lualine/lualine.nvim',
     opts = {
       options = {
-        icons_enabled = false,
-        theme = 'tokyonight',
+        icons_enabled = true,
         component_separators = '|',
         section_separators = '',
       },
