@@ -134,24 +134,24 @@
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
-;; (use-package color-theme-sanityinc-tomorrow
-;;   :config (load-theme 'sanityinc-tomorrow-night t))
+(use-package color-theme-sanityinc-tomorrow
+  :config (load-theme 'sanityinc-tomorrow-night t))
 
-(use-package solarized-theme
-   :config
-   (setq solarized-use-variable-pitch nil
- 	solarized-high-contrast-mode-line nil
- 	solarized-use-less-bold nil
- 	solarized-use-more-italic t
- 	solarized-emphasize-indicators nil
- 	solarized-scale-org-headlines t
- 	solarized-scale-markdown-headlines t)
-   (load-theme 'solarized-dark-high-contrast t))
+;; (use-package solarized-theme
+;;    :config
+;;    (setq solarized-use-variable-pitch nil
+;;  	solarized-high-contrast-mode-line nil
+;;  	solarized-use-less-bold nil
+;;  	solarized-use-more-italic t
+;;  	solarized-emphasize-indicators nil
+;;  	solarized-scale-org-headlines t
+;;  	solarized-scale-markdown-headlines t)
+;;    (load-theme 'solarized-dark-high-contrast t))
 
 ;; Set Emacs font: family, size and weight.
 (set-face-attribute 'default nil
 		    :font "ComicShannsMono Nerd Font Mono"
-		    :height 220)
+		    :height 175)
 
 ;; Highlight the folowing:
 ;; TODO:, FIXME:, NOTE:, etc.
