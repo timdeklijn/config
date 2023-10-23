@@ -5,42 +5,8 @@
 ;; ██      ██  ██  ██ ██   ██ ██           ██ 
 ;; ███████ ██      ██ ██   ██  ██████ ███████ 
 ;; ==========================================
-;; Configuration file
 ;; Tim de Klijn
-;; =============================================================================
-;; Goals
-;; =============================================================================
-;; - Can be used for most languages
-;; - All lsp bindings are the same for each language
-;; - Bindings similar to Emacs bindings (as few changes as possible)
-;; - Stable
-;; - Use-package (straight?) to isolate configuration for packages
-;; =============================================================================
-;; Improvements
-;; =============================================================================
-;; Just look at the todo's in the file.
-;; =============================================================================
-;; Install
-;; =============================================================================
-;; Emacs is installed with te following command:
-;;
-;; Mac:
-;;
-;; brew install emacs-plus@29 \
-;;       --with-dbus \
-;;       --with-xwidgets \
-;;       --with-imagemagick \
-;;       --with-native-comp \
-;;       --with-memeplex-wide-icon
-;;
-;; Ubuntu:
-;;
-;; TODO: add the build commands
-;; =============================================================================
-;; Improvements
-;; =============================================================================
-;; - Look into linting (flycheck/flymake)?
-;; - emacs client
+
 ;; =============================================================================
 ;; Setup
 ;; =============================================================================
@@ -134,28 +100,18 @@
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
-(use-package color-theme-sanityinc-tomorrow
-  :config (load-theme 'sanityinc-tomorrow-night t))
-
-;; (use-package solarized-theme
-;;    :config
-;;    (setq solarized-use-variable-pitch nil
-;;  	solarized-high-contrast-mode-line nil
-;;  	solarized-use-less-bold nil
-;;  	solarized-use-more-italic t
-;;  	solarized-emphasize-indicators nil
-;;  	solarized-scale-org-headlines t
-;;  	solarized-scale-markdown-headlines t)
-;;    (load-theme 'solarized-dark-high-contrast t))
+(use-package dracula-theme
+  :ensure t
+  :config
+  (load-theme 'dracula t))
 
 ;; Set Emacs font: family, size and weight.
 (set-face-attribute 'default nil
 		    :font "ComicShannsMono Nerd Font Mono"
-		    :height 175)
+		    :height 190)
 
 ;; Highlight the folowing:
 ;; TODO:, FIXME:, NOTE:, etc.
-;; TODO: this can be done from inside the theme I think
 (use-package hl-todo
   :config (global-hl-todo-mode))
 
@@ -169,51 +125,20 @@
 ;; =============================================================================
 ;; Search and Completion
 ;; =============================================================================
-;; search everything
-(use-package vertico
-  :init (vertico-mode)
-  (setq vertico-cycle t))
+(use-package helm
+  :bind (("M-x" . helm-M-x)
+         ("C-x b" . helm-mini)
+         ("C-x C-f" . helm-find-files)
+         ("C-x C-d" . helm-browse-project)
+         ("M-y" . helm-show-kill-ring)))
 
-;; Make the completions behave a bit more like a fuzzy finder.
-(use-package orderless
-  :init (setq completion-styles '(orderless)
-	      completion-category-defaults nil
-	      completion-category-overrides '((file
-					       (styles partial-completion)))))
+(helm-mode 1)
+(setq helm-M-x-fuzzy-match 1)
+(setq helm-buffers-fuzzy-matching 1)
+(setq helm-recentf-fuzzy-match    1)
 
-;; Remember searches and stuff
-(use-package savehist
- :init (savehist-mode))
-
-;; show help for stuff in search bar
-(use-package marginalia
-  :after vertico
-  :custom (marginalia-annotators '(marginalia-annotators-heavy
-				   marginalia-annotators-light
-				   nil))
-  :init (marginalia-mode))
-
-;; search stuff
-(use-package consult
-  :ensure t
-  :bind (
-	 ("C-c b" . consult-buffer)
-	 ("C-c r b" . consult-bookmark)
-	 ("C-c p b" . consult-project-buffer)
-	 ("M-g e" . consult-compile-error)
-	 ("M-g f" . consult-flymake)
-	 ("M-g g" . consult-goto-line)
-	 ("M-g o" . consult-outline)
-	 ("M-g m" . consult-mark)
-	 ("M-g k" . consult-global-mark)
-	 ("M-g i" . consult-imenu)
-	 ("M-s d" . consult-find)
-	 ("M-s D" . consult-locate)
-	 ("M-s r" . consult-ripgrep)
-	 ("M-s l" . consult-line)))
-
-;; completion, get completions from LSP (eglot)
-;; TODO: try out coffe or something smaller/faster
+;; Completion, get completions from LSP (eglot)
+;; TODO: try out corfu or something smaller/faster
 (use-package company
   :bind ("C-;" . company-complete)
   :config (setq company-idle-delay nil))
@@ -257,16 +182,7 @@
 	       ;; '(python-mode . ("pyright" "--stdio"))
 	       '(python-mode . ("pylsp" "--stdio"))
 	       '(yaml-mode . ("yaml-language-server" "--stdio"))))
-;; TODO: rust
-
-;; =============================================================================
-;; Key Help
-;; =============================================================================
-;; show completion for keycords
-(use-package which-key
-  :ensure t
-  :init (which-key-mode)
-  :config (which-key-setup-minibuffer))
+;; TODO: rust, go, json, markdown
 
 ;; =============================================================================
 ;; Custom Keybinds
@@ -319,13 +235,11 @@
 (add-hook 'markdown-mode-hook #'tree-sitter-mode)
 (add-hook 'zig-mode-hook #'tree-sitter-mode)
 
-;; download tree-sitter grammars
+;; Download tree-sitter grammars
 (use-package treesit-auto
   :ensure t
   :config
   (global-treesit-auto-mode))
-
-;; TODO: package combobulate for treesiter based code operations
 
 ;; =============================================================================
 ;; Org Mode
@@ -393,11 +307,6 @@
 
 ;; Make sure there is no weird indenting
 (add-hook 'rust-mode-hook '(lambda () (setq indent-tabs-mode nil)))
-
-;; =============================================================================
-;; Zig
-;; =============================================================================
-(use-package zig-mode)
 
 ;; =============================================================================
 ;; terraform
