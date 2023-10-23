@@ -1,7 +1,7 @@
 icons_format = "{icon}"
 
 [theme]
-theme = "plain"
+theme = "dracula"
 
 [icons]
 icons = "material-nf"
