@@ -241,6 +241,9 @@
   :config
   (global-treesit-auto-mode))
 
+;; Force emacs to use more of the treesitter highlight groups when highlighting
+(customize-set-variable 'treesit-font-lock-levetreesit-font-lock-level 5)
+
 ;; =============================================================================
 ;; Org Mode
 ;; =============================================================================
