@@ -36,6 +36,9 @@ fish_add_path /usr/local/bin
 fish_add_path ~/bin
 fish_add_path ~/.cargo/bin
 
+set -x GOPATH $HOME/go
+set -x PATH $PATH $GOPATH/bin
+
 # pyenv ========================================================================
 pyenv init - | source
 
