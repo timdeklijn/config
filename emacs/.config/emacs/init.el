@@ -100,14 +100,20 @@
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
-(use-package dracula-theme
+(use-package ef-themes
   :config
-  (load-theme 'dracula t))
+  (setq ef-themes-mixed-fonts nil
+	ef-themes-to-toggle '(ef-bio ef-cyprus))
+  (load-theme 'ef-bio t)
+  (define-key global-map (kbd "C-c o p") #'ef-themes-toggle))
 
 ;; Set Emacs font: family, size and weight.
 (set-face-attribute 'default nil
 		    :font "ComicShannsMono Nerd Font Mono"
-		    :height 190)
+		    :height 180)
+
+;; Set line height and spacing
+(setq default-text-properties '(line-spacing 0.2 line-height 1.2))
 
 ;; Highlight the folowing:
 ;; TODO:, FIXME:, NOTE:, etc.
@@ -131,12 +137,12 @@
          ("C-x b" . helm-mini)
          ("C-x C-f" . helm-find-files)
          ("C-x C-d" . helm-browse-project)
-         ("M-y" . helm-show-kill-ring)))
-
-(helm-mode 1)
-(setq helm-M-x-fuzzy-match 1)
-(setq helm-buffers-fuzzy-matching 1)
-(setq helm-recentf-fuzzy-match    1)
+         ("M-y" . helm-show-kill-ring))
+  :config
+  (helm-mode 1)
+  (setq helm-M-x-fuzzy-match 1
+	helm-buffers-fuzzy-matching 1
+	helm-recentf-fuzzy-match    1))
 
 ;; Completion, get completions from LSP (eglot)
 ;; TODO: try out corfu or something smaller/faster
