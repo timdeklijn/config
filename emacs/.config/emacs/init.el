@@ -101,7 +101,6 @@
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
 (use-package dracula-theme
-  :ensure t
   :config
   (load-theme 'dracula t))
 
@@ -125,6 +124,8 @@
 ;; =============================================================================
 ;; Search and Completion
 ;; =============================================================================
+(use-package wfnames)
+
 (use-package helm
   :bind (("M-x" . helm-M-x)
          ("C-x b" . helm-mini)
@@ -149,7 +150,6 @@
 ;; =============================================================================
 ;; project manager, builtin package
 (use-package project
-  :ensure t
   :commands (project-root))
 
 ;; =============================================================================
@@ -158,22 +158,19 @@
 ;; git client
 ;; TODO: how do I checkout branches?
 (use-package magit
-  :ensure t
   :bind ("C-c g" . magit-file-dispatch))
 
 ;; =============================================================================
 ;; vterm
 ;; =============================================================================
 ;; terminal emulator
-(use-package vterm
-  :ensure t)
+(use-package vterm)
 
 ;; =============================================================================
 ;; Language Servers
 ;; =============================================================================
 ;; eglot is used as an lsp client for programming languages
-(use-package eglot
-  :ensure t)
+(use-package eglot)
 
 ;; Add lsp servers to list, should be started when eglot runs for a specific
 ;; language
@@ -237,7 +234,6 @@
 
 ;; Download tree-sitter grammars
 (use-package treesit-auto
-  :ensure t
   :config
   (global-treesit-auto-mode))
 
@@ -249,7 +245,6 @@
 ;; =============================================================================
 ;; Create fancy headline symbols to org header lines.
 (use-package org-superstar
-  :ensure t
   :config
   (setq org-superstar-special-todo-items 1))
 
@@ -279,8 +274,7 @@
 ;; Simple go mode does not add LSP by default, this is done later.
 ;; TODO: go-mode has quite some nice functionality that I need to look into.
 ;; TODO: add auto import functionality
-(use-package go-mode
-  :ensure t)
+(use-package go-mode)
 
 ;; =============================================================================
 ;; Python
@@ -291,8 +285,7 @@
 
 ;; TODO: experiment with python-lsp-server and its functions
 (use-package python-mode
-  :config (setq truncate-lines 0)
-  :ensure t)
+  :config (setq truncate-lines 0))
 
 (setq-default python-indent-offset 4)
 
@@ -305,7 +298,6 @@
 ;; =============================================================================
 ;; Rust highlighting and other stuff.
 (use-package rust-mode
-  :ensure t
   :custom (setq rust-format-on-save 1))
 
 ;; Make sure there is no weird indenting
@@ -315,7 +307,6 @@
 ;; terraform
 ;; =============================================================================
 (use-package terraform-mode
-  :ensure t
   :custom
   (terraform-indent-level 2)
   (terraform-format-on-save 1)
@@ -332,15 +323,12 @@
 ;; TODO: Dive into this package and learn more about what can be done with
 ;;       it.
 ;; TODO: Maybe add either a Markdown Language server or a Markdown linter.
-(use-package markdown-mode
-  :ensure t)
+(use-package markdown-mode)
 
 ;; =============================================================================
 ;; Configuration modes
 ;; =============================================================================
 ;; TODO: linters or formatters for both json and yaml
-(use-package json-mode
-  :ensure t)
+(use-package json-mode)
 (add-hook 'json-mode-hook (lambda () (setq tab-width 2)))
-(use-package yaml-mode
-  :ensure t)
+(use-package yaml-mode)
