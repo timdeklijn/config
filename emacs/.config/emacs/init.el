@@ -118,7 +118,7 @@
 ;; Set Emacs font: family, size and weight.
 (set-face-attribute 'default nil
 		    :font "UbuntuMono Nerd Font Mono"
-		    :height 190)
+		    :height 260)
 
 ;; Highlight the folowing:
 ;; TODO:, FIXME:, NOTE:, etc.
@@ -135,19 +135,30 @@
 ;; =============================================================================
 ;; Search and Completion
 ;; =============================================================================
-(use-package wfnames)
-
-(use-package helm
-  :bind (("M-x" . helm-M-x)
-         ("C-x b" . helm-mini)
-         ("C-x C-f" . helm-find-files)
-         ("C-x C-d" . helm-browse-project)
-         ("M-y" . helm-show-kill-ring))
+(use-package counsel)
+(use-package swiper)
+(use-package ivy
+  :bind (("C-s" . swiper)
+	 ("C-c C-r" . ivy-resume)
+	 ("<f6>" . ivy-resume)
+	 ("M-x" . counsel-M-x)
+	 ("C-x C-f" . counsel-find-file)
+	 ("<f1> f" . counsel-describe-function)
+	 ("<f1> v" . counsel-describe-variable)
+	 ("<f1> o" . counsel-describe-symbol)
+	 ("<f1> l" . counsel-find-library)
+	 ("<f2> i" . counsel-info-lookup-symbol)
+	 ("<f2> u" . counsel-unicode-char)
+	 ("C-c g" . counsel-git)
+	 ("C-c j" . counsel-git-grep)
+	 ("C-c k" . counsel-rg)
+	 ("C-x l" . counsel-locate))
   :config
-  (helm-mode 1)
-  (setq helm-M-x-fuzzy-match 1
-	helm-buffers-fuzzy-matching 1
-	helm-recentf-fuzzy-match    1))
+  (setq ivy-use-virtual-buffers t
+	enable-recursive-minibuffers t
+	ivy-re-builders-alist
+	'((t . ivy--regex-plus)))
+  (ivy-mode 1))
 
 ;; Completion, get completions from LSP (eglot)
 ;; TODO: try out corfu or something smaller/faster
@@ -247,9 +258,6 @@
 (use-package treesit-auto
   :config
   (global-treesit-auto-mode))
-
-;; Force emacs to use more of the treesitter highlight groups when highlighting
-(customize-set-variable 'treesit-font-lock-levetreesit-font-lock-level 5)
 
 ;; =============================================================================
 ;; Org Mode
