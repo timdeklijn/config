@@ -100,6 +100,7 @@
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
+;; NOTE: Try to keep this for over a week: 2023-10-30
 (use-package ef-themes
   :config
   (setq ef-themes-mixed-fonts nil
@@ -107,6 +108,7 @@
   (load-theme 'ef-winter t)
   (define-key global-map (kbd "C-c o p") #'ef-themes-toggle))
 
+;; NOTE: Try to keep this for over a week: 2023-10-30
 ;; Set Emacs font: family, size and weight.
 (set-face-attribute 'default nil
 		    :font "NotoMono Nerd Font Mono"
