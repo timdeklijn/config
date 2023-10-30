@@ -103,17 +103,14 @@
 (use-package ef-themes
   :config
   (setq ef-themes-mixed-fonts nil
-	ef-themes-to-toggle '(ef-bio ef-cyprus))
-  (load-theme 'ef-bio t)
+	ef-themes-to-toggle '(ef-winter ef-cyprus))
+  (load-theme 'ef-winter t)
   (define-key global-map (kbd "C-c o p") #'ef-themes-toggle))
 
 ;; Set Emacs font: family, size and weight.
 (set-face-attribute 'default nil
-		    :font "ComicShannsMono Nerd Font Mono"
+		    :font "NotoMono Nerd Font Mono"
 		    :height 180)
-
-;; Set line height and spacing
-(setq default-text-properties '(line-spacing 0.2 line-height 1.2))
 
 ;; Highlight the folowing:
 ;; TODO:, FIXME:, NOTE:, etc.
