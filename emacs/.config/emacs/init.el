@@ -81,7 +81,7 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (column-number-mode)
-(global-hl-line-mode 1)		;; highlight the cursor line
+(global-hl-line-mode -1)		;; highlight the cursor line
 (global-auto-revert-mode t)	;; update buffer when file is updated
 
 ;; Some performence tweeks:
@@ -101,18 +101,24 @@
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
 
 ;; NOTE: Try to keep this for over a week: 2023-10-30
-(use-package ef-themes
+;; Color theme: Solarized, with my settings.
+(use-package solarized-theme
   :config
-  (setq ef-themes-mixed-fonts nil
-	ef-themes-to-toggle '(ef-winter ef-cyprus))
-  (load-theme 'ef-winter t)
-  (define-key global-map (kbd "C-c o p") #'ef-themes-toggle))
+  (setq solarized-distinct-fringe-background t)
+  (setq solarized-use-variable-pitch nil)
+  (setq solarized-high-contrast-mode-line t)
+  (setq solarized-use-less-bold nil)
+  (setq solarized-use-more-italic nil)
+  (setq solarized-emphasize-indicators t)
+  (setq solarized-scale-org-headlines t)
+  (setq solarized-scale-markdown-headlines t)
+  (load-theme 'solarized-selenized-black t))
 
 ;; NOTE: Try to keep this for over a week: 2023-10-30
 ;; Set Emacs font: family, size and weight.
 (set-face-attribute 'default nil
-		    :font "NotoMono Nerd Font Mono"
-		    :height 180)
+		    :font "UbuntuMono Nerd Font Mono"
+		    :height 190)
 
 ;; Highlight the folowing:
 ;; TODO:, FIXME:, NOTE:, etc.
