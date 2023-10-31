@@ -118,7 +118,7 @@
 ;; Set Emacs font: family, size and weight.
 (set-face-attribute 'default nil
 		    :font "UbuntuMono Nerd Font Mono"
-		    :height 260)
+		    :height 220)
 
 ;; Highlight the folowing:
 ;; TODO:, FIXME:, NOTE:, etc.
