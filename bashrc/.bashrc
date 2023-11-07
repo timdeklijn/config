@@ -33,3 +33,5 @@ eval "$(starship init bash)"
 
 # local bin
 PATH=$PATH:~/bin
+
+source /home/tim/.config/broot/launcher/bash/br
