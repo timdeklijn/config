@@ -220,6 +220,20 @@ themes {
         white "#eee8d5"
     }
 
+    everforest {
+        bg  "#2b3339"        
+        fg  "#d3c6aa"    
+        red "#e67e80"
+        green "#a7c080"
+        blue "#7fbbb3"
+        yellow "#ddbc7f"
+		magenta "#d699b6"
+        orange "#e69875"
+        cyan "#83c092"
+        black "#2b3339"
+        white "#9da9a0"
+    }
+
     nord {
         fg 216 222 233 // #D8DEE9
         bg 46 52 64 // #2E3440
@@ -238,7 +252,7 @@ themes {
 // Choose the theme that is specified in the themes section.
 // Default: default
 
-theme "nord"
+theme "everforest"
 
 // The name of the default layout to load on startup
 // Default: "default"

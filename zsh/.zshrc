@@ -32,6 +32,8 @@ show_virtual_env() {
 }
 PS1='$(show_virtual_env)'$PS1
 
+set -o emacs
+
 # ALIASES =====================================================================
 
 # VIM
