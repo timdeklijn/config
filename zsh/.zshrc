@@ -48,6 +48,7 @@ alias lg="lazygit"
 alias gc="git commit"
 alias gs="git status"
 alias gd="git diff"
+alias gp="git push"
 alias glog="git log --all --decorate --oneline --graph"
 
 # nicer ls
