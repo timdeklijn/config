@@ -38,7 +38,6 @@ set -o emacs
 
 # VIM
 alias vim="nvim"
-alias h="hx"
 
 # Kubernetes
 alias k="kubectl"
@@ -83,6 +82,8 @@ eval "$(starship init zsh)"
 # locations based on the current OS.
 if [[ "$OSTYPE" == "darwin"* ]]; then
   source /Users/timdeklijn/.config/broot/launcher/bash/br
+  alias h="hx"
 else
   source /home/tim/.config/broot/launcher/bash/br
+  alias h="helix"
 fi
