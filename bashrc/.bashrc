@@ -35,3 +35,5 @@ eval "$(starship init bash)"
 PATH=$PATH:~/bin
 
 source /home/tim/.config/broot/launcher/bash/br
+
+source /Users/timdeklijn/.config/broot/launcher/bash/br

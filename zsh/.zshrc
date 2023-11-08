@@ -76,4 +76,10 @@ export LANG=en_GB.UTF-8
 # STARSHIP
 eval "$(starship init zsh)"
 
-source /home/tim/.config/broot/launcher/bash/br
+# For `broot` a shell script is required. This is installed in different
+# locations based on the current OS.
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  source /Users/timdeklijn/.config/broot/launcher/bash/br
+else
+  source /home/tim/.config/broot/launcher/bash/br
+fi

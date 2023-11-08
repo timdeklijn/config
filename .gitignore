@@ -11,3 +11,4 @@ emacs/.config/emacs/transient/
 emacs/.config/emacs/tree-sitter/
 emacs/.config/emacs/recentf
 fish_variables
+helix/.config/helix/runtime/
