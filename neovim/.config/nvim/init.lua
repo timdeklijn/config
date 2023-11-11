@@ -51,6 +51,29 @@ require('lazy').setup({
   },
 
   {
+    'mfussenegger/nvim-lint',
+    ft = { 'python' },
+    config = function()
+      require('lint').linters_by_ft = {
+        markdown = { 'vale' },
+        python = { 'pylint', 'mypy' },
+      }
+    end
+  },
+
+  {
+    "stevearc/conform.nvim",
+    ft = { 'python' },
+    config = function()
+      require("conform").setup({
+        formatters_by_ft = {
+          python = { 'isort', 'black' }
+        }
+      })
+    end,
+  },
+
+  {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
     dependencies = {
@@ -116,23 +139,22 @@ require('lazy').setup({
   },
 
   {
-    "bluz71/vim-moonfly-colors",
-    name = "moonfly",
+    -- Color theme for neovim
+    "sainnhe/everforest",
     lazy = false,
     priority = 1000,
     config = function()
-      vim.g.moonflyCursorColor = true
-      vim.g.moonflyItalics = true
-      vim.g.moonflyNormalFloat = true
-      vim.g.moonflyUndercurls = false
-      vim.g.moonflyUnderlineMatchParen = true
-      vim.g.moonflyVirtualTextColor = true
-      vim.g.moonflyWinSeparator = 2
-      vim.cmd [[colorscheme moonfly]]
+      vim.cmd [[
+        let g:everforest_disable_italic_comment=1
+        let g:everforest_dim_inactive_windows=1
+        let g:everforest_diagnostic_virtual_text='colored'
+        colorscheme everforest
+      ]]
     end
   },
 
   {
+    -- Mode line
     'nvim-lualine/lualine.nvim',
     opts = {
       options = {
@@ -294,6 +316,10 @@ vim.defer_fn(function()
       'vim'
     },
 
+    sync_install = true,
+    ignore_install = {},
+    modules = {},
+
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
 
@@ -401,12 +427,14 @@ local on_attach = function(_, bufnr)
   end, '[W]orkspace [L]ist Folders')
 
   -- Format document using `=` or the :Format keyword
-  nmap('=', vim.lsp.buf.format, 'Format document')
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
+  -- nmap('=', vim.lsp.buf.format, 'Format document')
+  -- vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+  --   vim.lsp.buf.format()
+  -- end, { desc = 'Format current buffer with LSP' })
 end
 
+
+vim.keymap.set('n', '<leader>=', require("conform").format, { desc = 'Format buffer' })
 
 
 -- Enable the following language servers
@@ -440,15 +468,15 @@ lspconfig.pylsp.setup(
     settings = {
       plugins = {
         mccabe = { enabled = false },
-        black = { enabled = true },
+        black = { enabled = false },
         autopep8 = { enabled = false },
         yapf = { enabled = false },
-        pylint = { enabled = true, executable = "pylint" },
+        pylint = { enabled = false, executable = "pylint" },
         pyflakes = { enabled = false },
         pycodestyle = { enabled = false },
         pylsp_mypy = { enabled = false },
         jedi_completion = { fuzzy = true },
-        pyls_isort = { enabled = true },
+        pyls_isort = { enabled = false },
       }
     },
     capabilities = require('cmp_nvim_lsp').default_capabilities(),
