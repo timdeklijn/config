@@ -141,65 +141,52 @@ require('lazy').setup({
   },
 
   {
-    'marko-cerovac/material.nvim' ,
-    lazy = false,
+    "catppuccin/nvim",
+    name = "catppuccin",
     priority = 1000,
+    opts =  {
+      flavour = "frappe", -- latte, frappe, macchiato, mocha
+      background = { -- :h background
+          light = "latte",
+          dark = "frappe",
+      },
+      transparent_background = false, -- disables setting the background color.
+      show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
+      term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
+      dim_inactive = {
+          enabled = true, -- dims the background color of inactive window
+          shade = "dark",
+          percentage = 0.15, -- percentage of the shade to apply to the inactive window
+      },
+      no_italic = false, -- Force no italic
+      no_bold = false, -- Force no bold
+      no_underline = false, -- Force no underline
+      styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
+          comments = { "italic" }, -- Change the style of comments
+          conditionals = { "bold" },
+          loops = {},
+          functions = { "bold" },
+          keywords = { "bold" },
+          strings = {},
+          variables = {},
+          numbers = {},
+          booleans = {},
+          properties = {},
+          types = { "bold" },
+          operators = {},
+      },
+      color_overrides = {},
+      custom_highlights = {},
+      integrations = {
+          cmp = true,
+          gitsigns = true,
+          nvimtree = true,
+          treesitter = true,
+          notify = false,
+      },
+    },
     config = function()
-      require('material').setup({
-        contrast = {
-            terminal = true, -- Enable contrast for the built-in terminal
-            sidebars = true, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
-            floating_windows = true, -- Enable contrast for floating windows
-            cursor_line = false, -- Enable darker background for the cursor line
-            non_current_windows = true, -- Enable contrasted background for non-current windows
-            filetypes = {}, -- Specify which filetypes get the contrasted (darker) background
-        },
-        styles = { -- Give comments style such as bold, italic, underline etc.
-            comments = { italic=true },
-            strings = {},
-            keywords = { bold = true },
-            functions = { bold = true },
-            variables = {},
-            operators = {},
-            types = { bold = true },
-        },
-        plugins = { -- Uncomment the plugins that you use to highlight them
-            -- Available plugins:
-            "dap",
-            -- "dashboard",
-            -- "eyeliner",
-            -- "fidget"
-            -- "flash"
-            "gitsigns",
-            -- "harpoon",
-            -- "hop",
-            -- "illuminate",
-            -- "indent-blankline",
-            -- "lspsaga",
-            -- "mini",
-            -- "neogit",
-            -- "neotest",
-            -- "neorg",
-            -- "noice"
-            "nvim-cmp",
-            -- "nvim-navic",
-            -- "nvim-tree",
-            -- "nvim-web-devicons",
-            "rainbow-delimiters",
-            -- "sneak",
-            -- "telescope",
-            -- "trouble",
-            -- "which-key",
-        },
-        high_visibility = {
-            lighter = false, -- Enable higher contrast text for lighter style
-            darker = false -- Enable higher contrast text for darker style
-        },
-        lualine_style = "stealth", -- Lualine style ( can be 'stealth' or 'default' )
-        async_loading = true, -- Load parts of the theme asyncronously for faster startup (turned on by default)
-      })
-      vim.g.material_style = "Oceanic"
-      vim.cmd[[ colorscheme material ]]
+      vim.cmd[[ colorscheme catppuccin-frappe ]]
     end
   },
 

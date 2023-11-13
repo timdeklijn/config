@@ -227,7 +227,7 @@ themes {
         green "#a7c080"
         blue "#7fbbb3"
         yellow "#ddbc7f"
-		magenta "#d699b6"
+        magenta "#d699b6"
         orange "#e69875"
         cyan "#83c092"
         black "#2b3339"
@@ -252,7 +252,7 @@ themes {
 // Choose the theme that is specified in the themes section.
 // Default: default
 
-theme "everforest"
+theme "default"
 
 // The name of the default layout to load on startup
 // Default: "default"
