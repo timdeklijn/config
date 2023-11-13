@@ -119,6 +119,8 @@ require('lazy').setup({
         topdelete = { text = '‾' },
         changedelete = { text = '~' },
       },
+      signcolumn = false,  -- Toggle with `:Gitsigns toggle_signs`
+      numhl      = true, -- Toggle with `:Gitsigns toggle_numhl`
       on_attach = function(bufnr)
         vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
 
@@ -139,17 +141,65 @@ require('lazy').setup({
   },
 
   {
-    -- Color theme for neovim
-    "sainnhe/everforest",
+    'marko-cerovac/material.nvim' ,
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd [[
-        let g:everforest_disable_italic_comment=1
-        let g:everforest_dim_inactive_windows=1
-        let g:everforest_diagnostic_virtual_text='colored'
-        colorscheme everforest
-      ]]
+      require('material').setup({
+        contrast = {
+            terminal = true, -- Enable contrast for the built-in terminal
+            sidebars = true, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
+            floating_windows = true, -- Enable contrast for floating windows
+            cursor_line = false, -- Enable darker background for the cursor line
+            non_current_windows = true, -- Enable contrasted background for non-current windows
+            filetypes = {}, -- Specify which filetypes get the contrasted (darker) background
+        },
+        styles = { -- Give comments style such as bold, italic, underline etc.
+            comments = { italic=true },
+            strings = {},
+            keywords = { bold = true },
+            functions = { bold = true },
+            variables = {},
+            operators = {},
+            types = { bold = true },
+        },
+        plugins = { -- Uncomment the plugins that you use to highlight them
+            -- Available plugins:
+            "dap",
+            -- "dashboard",
+            -- "eyeliner",
+            -- "fidget"
+            -- "flash"
+            "gitsigns",
+            -- "harpoon",
+            -- "hop",
+            -- "illuminate",
+            -- "indent-blankline",
+            -- "lspsaga",
+            -- "mini",
+            -- "neogit",
+            -- "neotest",
+            -- "neorg",
+            -- "noice"
+            "nvim-cmp",
+            -- "nvim-navic",
+            -- "nvim-tree",
+            -- "nvim-web-devicons",
+            "rainbow-delimiters",
+            -- "sneak",
+            -- "telescope",
+            -- "trouble",
+            -- "which-key",
+        },
+        high_visibility = {
+            lighter = false, -- Enable higher contrast text for lighter style
+            darker = false -- Enable higher contrast text for darker style
+        },
+        lualine_style = "stealth", -- Lualine style ( can be 'stealth' or 'default' )
+        async_loading = true, -- Load parts of the theme asyncronously for faster startup (turned on by default)
+      })
+      vim.g.material_style = "Oceanic"
+      vim.cmd[[ colorscheme material ]]
     end
   },
 
@@ -232,7 +282,7 @@ vim.o.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 -- Keep signcolumn on by default
-vim.wo.signcolumn = 'yes'
+vim.wo.signcolumn = 'no'
 -- Decrease update time
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
@@ -455,6 +505,13 @@ local lspconfig = require('lspconfig')
 -- [[ setup lsp servers ]]
 -- Golang:
 lspconfig.gopls.setup(
+  {
+    capabilities = require('cmp_nvim_lsp').default_capabilities(),
+    on_attach = on_attach,
+  }
+)
+
+lspconfig.zls.setup(
   {
     capabilities = require('cmp_nvim_lsp').default_capabilities(),
     on_attach = on_attach,
