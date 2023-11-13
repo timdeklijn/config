@@ -1,5 +1,4 @@
 au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
-au BufWritePost *.md lua require('lint').try_lint()
 
 setlocal tabstop=2
 setlocal shiftwidth=2
