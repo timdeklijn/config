@@ -141,52 +141,30 @@ require('lazy').setup({
   },
 
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
+    "folke/tokyonight.nvim",
+    lazy = false,
     priority = 1000,
-    opts =  {
-      flavour = "frappe", -- latte, frappe, macchiato, mocha
-      background = { -- :h background
-          light = "latte",
-          dark = "frappe",
+    opts = {
+      style = "storm",
+      light_style = "day",
+      transparent = false,
+      terminal_colors = true,
+      styles = {
+        comments = { italic = true },
+        keywords = { bold = true },
+        functions = { bold = true },
+        variables = {},
+        sidebars = "dark",
+        floats = "dark",
       },
-      transparent_background = false, -- disables setting the background color.
-      show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
-      term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
-      dim_inactive = {
-          enabled = true, -- dims the background color of inactive window
-          shade = "dark",
-          percentage = 0.15, -- percentage of the shade to apply to the inactive window
-      },
-      no_italic = false, -- Force no italic
-      no_bold = false, -- Force no bold
-      no_underline = false, -- Force no underline
-      styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
-          comments = { "italic" }, -- Change the style of comments
-          conditionals = { "bold" },
-          loops = {},
-          functions = { "bold" },
-          keywords = { "bold" },
-          strings = {},
-          variables = {},
-          numbers = {},
-          booleans = {},
-          properties = {},
-          types = { "bold" },
-          operators = {},
-      },
-      color_overrides = {},
-      custom_highlights = {},
-      integrations = {
-          cmp = true,
-          gitsigns = true,
-          nvimtree = true,
-          treesitter = true,
-          notify = false,
-      },
+      sidebars = { "qf", "help" },
+      day_brightness = 0.3,
+      hide_inactive_statusline = true,
+      dim_inactive = true,
+      lualine_bold = true,
     },
     config = function()
-      vim.cmd[[ colorscheme catppuccin-frappe ]]
+      vim.cmd[[ colorscheme tokyonight ]]
     end
   },
 
@@ -205,7 +183,8 @@ require('lazy').setup({
   {
     'lukas-reineke/indent-blankline.nvim',
     main = "ibl",
-    opts = {},
+    opts = {
+      scope = { enabled = false }, },
   },
 
   -- "gc" to comment visual regions/lines
