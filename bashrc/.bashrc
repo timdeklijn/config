@@ -4,6 +4,9 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+export LANG=en_US.UTF-8
+export LC_ALL="en_US.UTF-8"
+
 # Some listing aliases
 alias ls='ls --color=auto'
 alias ll='ls -l --color=auto'
@@ -34,6 +37,6 @@ eval "$(starship init bash)"
 # local bin
 PATH=$PATH:~/bin
 
-source /home/tim/.config/broot/launcher/bash/br
+# source /home/tim/.config/broot/launcher/bash/br
 
-source /Users/timdeklijn/.config/broot/launcher/bash/br
+# source /Users/timdeklijn/.config/broot/launcher/bash/br
