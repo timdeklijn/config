@@ -139,32 +139,35 @@ require('lazy').setup({
       end,
     },
   },
-
-  {
-    "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
+  { "ellisonleao/gruvbox.nvim",
+    priority = 1000 ,
+    config = true,
     opts = {
-      style = "storm",
-      light_style = "day",
-      transparent = false,
-      terminal_colors = true,
-      styles = {
-        comments = { italic = true },
-        keywords = { bold = true },
-        functions = { bold = true },
-        variables = {},
-        sidebars = "dark",
-        floats = "dark",
-      },
-      sidebars = { "qf", "help" },
-      day_brightness = 0.3,
-      hide_inactive_statusline = true,
-      dim_inactive = true,
-      lualine_bold = true,
+      terminal_colors = true, -- add neovim terminal colors
+        undercurl = true,
+        underline = true,
+        bold = true,
+        italic = {
+          strings = true,
+          emphasis = false,
+          comments = true,
+          operators = false,
+          folds = true,
+        },
+        strikethrough = true,
+        invert_selection = false,
+        invert_signs = false,
+        invert_tabline = false,
+        invert_intend_guides = false,
+        inverse = true, -- invert background for search, diffs, statuslines and errors
+        contrast = "hard", -- can be "hard", "soft" or empty string
+        palette_overrides = {},
+        overrides = {},
+        dim_inactive = false,
+        transparent_mode = false,
     },
     config = function()
-      vim.cmd[[ colorscheme tokyonight ]]
+      vim.cmd[[ colorscheme gruvbox ]]
     end
   },
 
