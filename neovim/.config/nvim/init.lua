@@ -67,7 +67,8 @@ require('lazy').setup({
     config = function()
       require("conform").setup({
         formatters_by_ft = {
-          python = { 'isort', 'black' }
+          python = { 'isort', 'black' },
+          html = { 'prettier' }
         }
       })
     end,
@@ -139,9 +140,9 @@ require('lazy').setup({
       end,
     },
   },
+
   { "ellisonleao/gruvbox.nvim",
     priority = 1000 ,
-    config = true,
     opts = {
       terminal_colors = true, -- add neovim terminal colors
         undercurl = true,
