@@ -180,14 +180,14 @@ plugins {
 //   - detach (Default)
 //   - quit
 //
-// on_force_close "quit"
+// on_force_close "detach"
 
 //  Send a request for a simplified ui (without arrow fonts) to plugins
 //  Options:
 //    - true
 //    - false (Default)
 //
-simplified_ui true
+simplified_ui false
 
 // Choose the path to the default shell that zellij will use for opening new panes
 // Default: $SHELL
@@ -326,7 +326,7 @@ default_layout "default"
 //   - system (default)
 //   - primary
 //
-copy_clipboard "primary"
+copy_clipboard "system"
 
 // Enable or disable automatic copy (and clear) of selection when releasing mouse
 // Default: true
