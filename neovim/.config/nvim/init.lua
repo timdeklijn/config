@@ -178,6 +178,13 @@ require('lazy').setup({
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim',  opts = {} },
 
+  {
+    'aserowy/tmux.nvim',
+    config = function()
+      return require('tmux').setup()
+    end
+  },
+
   -- surround text objects with keystrokes
   {
       "kylechui/nvim-surround",
@@ -223,7 +230,6 @@ require('lazy').setup({
     },
     build = ':TSUpdate',
   },
-
 
   -- Import all plugin configurations from the './lua/custom/plugins/' directory.
   { import = 'custom.plugins' },
