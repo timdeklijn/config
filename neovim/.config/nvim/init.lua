@@ -455,15 +455,6 @@ end
 
 vim.keymap.set('n', '<leader>=', require("conform").format, { desc = 'Format buffer' })
 
-
--- Enable the following language servers
---  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
---
---  Add any additional override configuration in the following tables. They will be passed to
---  the `settings` field of the server config. You must look up that documentation yourself.
---
---  If you want to override the default filetypes that your language server will attach to you can
---  define the property 'filetypes' to the map in question.
 -- Setup neovim lua configuration
 require('neodev').setup()
 
@@ -487,11 +478,10 @@ lspconfig.zls.setup(
   }
 )
 
--- Python. For python development I like python-language-server. This server has
--- linting + formatting build in, which is convenient after `null-ls` went unsupported.
 lspconfig.pylsp.setup(
   {
     settings = {
+      -- Turn off all plugins and use linting + formatting plugins
       plugins = {
         mccabe = { enabled = false },
         black = { enabled = false },
@@ -543,6 +533,11 @@ lspconfig.terraformls.setup(
     on_attach = on_attach,
   }
 )
+
+-- Hide all semantic highlights
+for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+  vim.api.nvim_set_hl(0, group, {})
+end
 
 -- [[ Configure nvim-cmp ]]
 local cmp = require 'cmp'
