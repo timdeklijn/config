@@ -7,9 +7,9 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nvim'
+  export EDITOR='vim'
 else
-  export EDITOR='nvim'
+  export EDITOR='vim'
 fi
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
@@ -33,9 +33,6 @@ PS1='$(show_virtual_env)'$PS1
 set -o emacs
 
 # ALIASES =====================================================================
-
-# VIM
-alias vim="nvim"
 
 # Kubernetes
 alias k="kubectl"
