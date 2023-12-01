@@ -131,12 +131,11 @@
       slack     # communicate
       spotify   # music
       vscode    # code editor
+      dropbox   # file sync
       
       # programming + engineering tools
       python3
-      go
       gcc
-      zig
       cargo
       rustc
       terraform
