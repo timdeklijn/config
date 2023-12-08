@@ -7,9 +7,9 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
+  export EDITOR='nvim'
 else
-  export EDITOR='vim'
+  export EDITOR='nvim'
 fi
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
@@ -37,6 +37,8 @@ set -o emacs
 # Kubernetes
 alias k="kubectl"
 
+alias vim="nvim"
+
 # Git
 alias lg="lazygit"
 alias gc="git commit"
@@ -59,10 +61,6 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 export GOPATH="$HOME/go"
 export PATH=$PATH:$(go env GOPATH)/bin
 export PATH="/usr/local/opt/libarchive/bin:$PATH"
-
-# TMUX in kitty
-# export LC_ALL=en_GB.UTF-8  
-# export LANG=en_GB.UTF-8
 
 # STARSHIP
 eval "$(starship init zsh)"
