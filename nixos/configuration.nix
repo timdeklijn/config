@@ -17,7 +17,6 @@
   boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  # All packages
   nixpkgs.config.allowUnfree = true; 
 
   networking.hostName = "kamelot"; # Define your hostname.
@@ -89,13 +88,10 @@
     enable = true;
     layout = "us";
     xkbVariant = "";
-
     desktopManager = {
       xterm.enable = false;
     };
-
     displayManager.lightdm.enable = true;
-
     windowManager.i3 = {
       enable = true;
       extraPackages = with pkgs; [
@@ -125,68 +121,19 @@
 
   # List packages installed in system profile. To search, run:
   environment.systemPackages = with pkgs; [
+    git
+    vim
+    wget
+    curl
   ];
 
-  users.defaultUserShell = pkgs.zsh;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.tim = {
     isNormalUser = true;
-    home = "/home/tim";
-    description = "tim";
+    # shell = pkgs.zsh;
+    # home = "/home/tim";
+    # description = "tim";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      pavucontrol # audio control application
-
-      neofetch # show what you are running
-      git # version control
-      curl # network calls
-      wget # fetch from the internet
-      bat # better less
-      ripgrep # recursively searches directories for a regex pattern
-      jq # A lightweight and flexible command-line JSON processor
-      eza # A modern replacement for ‘ls’
-      fzf # A command-line fuzzy finder
-      kitty # terminal emulator
-      tmux # terminal multiplexer
-      stow # move dotfiles to locations
-      gnumake  # makefiles
-      pkg-config  # required for som build things
-      openssl # build stuff
-      openssl.dev # build stuff
-      zsh # shell
-      starship # prompt
-      direnv # environment
-      neovim # terminal editor
-      glow # markdown previewer in terminal
-      btop  # replacement of htop/nmon
-      lsof # list open ports
-      zip # archives
-      kubectl # kubernetes
-
-      # Desktop apps -> this is really specific for nixOS, not nix os Mac or something
-      chromium  # browser, chrome based for teams
-      slack     # communicate
-      spotify   # music
-      vscode    # code editor
-      dropbox   # file sync
-      nitrogen  # desktop wallpaper
-      feh       # image viewer
-      obsidian  # notes
-      
-      # programming + engineering tools
-      python3
-      gcc
-      go
-      zig
-      zls
-      cargo
-      rustc
-      terraform
-      azure-cli 
-      azure-functions-core-tools
-      nodejs  # required for azurite
-      
-    ];
   };
 
   fonts.packages = with pkgs; [
@@ -195,7 +142,7 @@
   fonts.fontconfig.enable = true;
 
   # how to enable zsh?
-  programs.zsh.enable = true;
+  # programs.zsh.enable = true;
 
   # List services that you want to enable:
 
