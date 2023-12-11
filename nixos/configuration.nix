@@ -127,10 +127,11 @@
     curl
   ];
 
+  programs.zsh.enable = true;
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.tim = {
     isNormalUser = true;
-    # shell = pkgs.zsh;
+    shell = pkgs.zsh;
     # home = "/home/tim";
     # description = "tim";
     extraGroups = [ "networkmanager" "wheel" ];
@@ -142,7 +143,6 @@
   fonts.fontconfig.enable = true;
 
   # how to enable zsh?
-  # programs.zsh.enable = true;
 
   # List services that you want to enable:
 

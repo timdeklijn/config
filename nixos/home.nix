@@ -8,21 +8,10 @@
   # home.file.".config/i3/wallpaper.jpg".source = ./wallpaper.jpg;
 
   home.file = { 
-      ".zshrc".source = config.lib.file.mkOutOfStoreSymlink ../zsh/.zshrc;
+      # ".zshrc".source = config.lib.file.mkOutOfStoreSymlink ../zsh/.zshrc;
       ".config/i3/config".source = config.lib.file.mkOutOfStoreSymlink ../i3/.config/i3/config;
       ".config/i3status-rust/config.toml".source = config.lib.file.mkOutOfStoreSymlink ../i3status-rust/.config/i3status-rust/config.toml;
       ".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink ../tmux/.tmux.conf;
-  };
-  home.file.".config/nvim" = {
-    source = config.lib.file.mkOutOfStoreSymlink ../neovim/.config/nvim;
-    recursive = true;   # link recursively
-    executable = false;  # make all files executable
-  };
-
-  home.file.".config/kitty" = {
-    source = ../kitty/.config/kitty;
-    recursive = true;   # link recursively
-    executable = true;  # make all files executable
   };
 
   # set cursor size and dpi for 4k monitor
@@ -48,6 +37,7 @@
     jq # A lightweight and flexible command-line JSON processor
     eza # A modern replacement for ‘ls’
     fzf # A command-line fuzzy finder
+    zsh
     stow # move dotfiles to locations
     gnumake  # makefiles
     neovim # terminal editor
@@ -63,28 +53,48 @@
     spotify   # music
     vscode    # code editor
     dropbox   # file sync
+    kitty
     nitrogen  # desktop wallpaper
     feh       # image viewer
     vlc       # video
+    tmux 
+    delta
     
     # programming + engineering tools
-    python3
     gcc
-    go
-    cargo
-    rustc
-    terraform
     azure-cli 
     azure-functions-core-tools
     nodejs  # required for azurite
+
+    # language servers
+    gopls
+    zls
+    pyright
+    rust-analyzer
+    lua-language-server
+    terraform-ls
   ];
 
   # Config programs ============================================================
   programs.starship.enable = true;
-  programs.zsh.enable = true;
-  programs.kitty.enable = true;
   programs.direnv.enable = true;
-  programs.tmux.enable = true;
+
+  programs.zsh = {
+    enable = true;
+    shellAliases = {
+      ls = "eza --icons";
+      ll = "eza -l --icons";
+      update = "sudo nixos-rebuild switch --impure";
+      vim = "nvim";
+      k = "kubectl";
+    };
+    zplug = {
+      enable = true;
+      plugins = [
+        { name = "zsh-users/zsh-autosuggestions"; }
+      ];
+    };
+  };
 
   # This value determines the home Manager release that your
   # configuration is compatible with. This helps avoid breakage

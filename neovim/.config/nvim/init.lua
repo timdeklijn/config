@@ -139,39 +139,34 @@ require('lazy').setup({
       end,
     },
   },
-
   {
-    "projekt0n/github-nvim-theme",
+    "EdenEast/nightfox.nvim",
     priority = 1000,
     config = function()
-      require('github-theme').setup({
+      require('nightfox').setup({
         options = {
-          -- Compiled file's destination location
-          compile_path = vim.fn.stdpath('cache') .. '/github-theme',
-          compile_file_suffix = '_compiled', -- Compiled file suffix
-          hide_end_of_buffer = true, -- Hide the '~' character at the end of the buffer for a cleaner look
-          hide_nc_statusline = true, -- Override the underline style for non-active statuslines
-          transparent = false,       -- Disable setting background
-          terminal_colors = true,    -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
-          dim_inactive = false,      -- Non focused panes set to alternative background
-          module_default = true,     -- Default enable value for modules
-          styles = {                 -- Style to be applied to different syntax groups
-            comments = 'NONE',       -- Value is any valid attr-list value `:help attr-list`
-            functions = 'bold',
-            keywords = 'NONE',
-            variables = 'NONE',
-            conditionals = 'bold',
-            constants = 'bold',
-            numbers = 'NONE',
-            operators = 'NONE',
-            strings = 'NONE',
-            types = 'bold',
+           -- Compiled file's destination location
+          compile_path = vim.fn.stdpath("cache") .. "/nightfox",
+          compile_file_suffix = "_compiled", -- Compiled file suffix
+          transparent =true,     -- Disable setting background
+          terminal_colors = true,  -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
+          dim_inactive = false,    -- Non focused panes set to alternative background
+          module_default = true,   -- Default enable value for modules
+          styles = {               -- Style to be applied to different syntax groups
+            comments = "NONE",     -- Value is any valid attr-list value `:help attr-list`
+            conditionals = "NONE",
+            constants = "bold",
+            functions = "bold",
+            keywords = "NONE",
+            numbers = "NONE",
+            operators = "NONE",
+            strings = "NONE",
+            types = "bold",
+            variables = "NONE",
           },
         }
       })
-      -- setup must be called before loading
-      vim.cmd('colorscheme github_dark')
-
+      vim.cmd[[ colorscheme nightfox ]]
     end
   },
 
@@ -214,31 +209,25 @@ require('lazy').setup({
       end
   },
 
-  -- Fuzzy Finder (files, lsp, etc)
   {
-    'nvim-telescope/telescope.nvim',
-    branch = '0.1.x',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      -- Fuzzy Finder Algorithm which requires local dependencies to be built.
-      -- Only load if `make` is available. Make sure you have the system
-      -- requirements installed.
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make',
-        cond = function()
-          return vim.fn.executable 'make' == 1
-        end,
-      },
-    },
-    opts = {
-      pickers = {
-        find_files = {
-          hidden = true,
-          file_ignore_patterns = { ".git/", ".venv/", "node_modules" }
-        }
-      }
-    },
+    "ibhagwan/fzf-lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("fzf-lua").setup({})
+    end,
+    keys = {
+      {"<leader>f", ":lua require('fzf-lua').files()<cr>"},
+      {"<leader><leader>", ":lua require('fzf-lua').buffers()<cr>"},
+      {"<leader>gf", ":lua require('fzf-lua').git_files()<cr>"},
+      {"<leader>sw", ":lua require('fzf-lua').grep_cword()<cr>"},
+      {"<leader>sg", ":lua require('fzf-lua').grep()<cr>"},
+      {"<leader>sd", ":lua require('fzf-lua').diagnostics_document()<cr>"},
+      {"<leader>sr", ":lua require('fzf-lua').resume()<cr>"},
+      {"<leader>ls", ":lua require('fzf-lua').lsp_document_symbols()<cr>"},
+      {"<leader>lw", ":lua require('fzf-lua').lsp_workspace_symbols()<cr>"},
+      {"gr", ":lua require('fzf-lua').lsp_references()<cr>"},
+      {"gI", ":lua require('fzf-lua').lsp_implementations()<cr>"}
+    }
   },
 
   {
@@ -300,40 +289,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
-
--- [[ Configure Telescope ]]
-require('telescope').setup {
-  defaults = {
-    mappings = {
-      i = {
-        ['<C-u>'] = false,
-        ['<C-d>'] = false,
-      },
-    },
-  },
-}
-
--- Enable telescope fzf native, if installed
-pcall(require('telescope').load_extension, 'fzf')
-
--- See `:help telescope.builtin`
-vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
-vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
-vim.keymap.set('n', '<leader>/', function()
-  -- You can pass additional configuration to telescope to change theme, layout, etc.
-  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-    winblend = 10,
-    previewer = false,
-  })
-end, { desc = '[/] Fuzzily search in current buffer' })
-
-vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
-vim.keymap.set('n', '<leader>f', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
-vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -447,15 +402,11 @@ local on_attach = function(_, bufnr)
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  nmap('<M-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -498,26 +449,12 @@ lspconfig.zls.setup(
   }
 )
 
-lspconfig.pylsp.setup(
+lspconfig.pyright.setup(
   {
-    settings = {
-      -- Turn off all plugins and use linting + formatting plugins
-      plugins = {
-        mccabe = { enabled = false },
-        black = { enabled = false },
-        autopep8 = { enabled = false },
-        yapf = { enabled = false },
-        pylint = { enabled = false, executable = "pylint" },
-        pyflakes = { enabled = false },
-        pycodestyle = { enabled = false },
-        pylsp_mypy = { enabled = false },
-        jedi_completion = { fuzzy = true },
-        pyls_isort = { enabled = false },
-      }
-    },
     capabilities = require('cmp_nvim_lsp').default_capabilities(),
     on_attach = on_attach,
-  })
+  }
+)
 
 -- Rust:
 lspconfig.rust_analyzer.setup(
@@ -538,14 +475,6 @@ lspconfig.lua_ls.setup({
   capabilities = require('cmp_nvim_lsp').default_capabilities(),
   on_attach = on_attach,
 })
-
--- Svelte:
-lspconfig.svelte.setup(
-  {
-    capabilities = require('cmp_nvim_lsp').default_capabilities(),
-    on_attach = on_attach,
-  }
-)
 
 lspconfig.terraformls.setup(
   {
