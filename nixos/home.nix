@@ -73,6 +73,7 @@
     rust-analyzer
     lua-language-server
     terraform-ls
+    vscode-langservers-extracted
   ];
 
   # Config programs ============================================================
@@ -84,9 +85,12 @@
     shellAliases = {
       ls = "eza --icons";
       ll = "eza -l --icons";
-      update = "sudo nixos-rebuild switch --impure";
+      update = "sudo nixos-rebuild switch --impure";  # TODO: make this 'pure'
       vim = "nvim";
       k = "kubectl";
+      gd = "git diff";
+      gp = "git push";
+      gc = "git commit";
     };
     zplug = {
       enable = true;
