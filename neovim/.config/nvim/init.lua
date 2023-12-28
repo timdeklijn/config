@@ -139,34 +139,39 @@ require('lazy').setup({
       end,
     },
   },
+
   {
-    "EdenEast/nightfox.nvim",
+    "rebelot/kanagawa.nvim",
     priority = 1000,
     config = function()
-      require('nightfox').setup({
-        options = {
-           -- Compiled file's destination location
-          compile_path = vim.fn.stdpath("cache") .. "/nightfox",
-          compile_file_suffix = "_compiled", -- Compiled file suffix
-          transparent =true,     -- Disable setting background
-          terminal_colors = true,  -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
-          dim_inactive = false,    -- Non focused panes set to alternative background
-          module_default = true,   -- Default enable value for modules
-          styles = {               -- Style to be applied to different syntax groups
-            comments = "NONE",     -- Value is any valid attr-list value `:help attr-list`
-            conditionals = "NONE",
-            constants = "bold",
-            functions = "bold",
-            keywords = "NONE",
-            numbers = "NONE",
-            operators = "NONE",
-            strings = "NONE",
-            types = "bold",
-            variables = "NONE",
+      require('kanagawa').setup({
+          compile = true,
+          undercurl = false,
+          commentStyle = { italic = true },
+          functionStyle = {bold = true},
+          keywordStyle = { },
+          statementStyle = { bold = true },
+          typeStyle = { bold = true},
+          transparent = true,
+          dimInactive = false,
+          terminalColors = true,
+          theme = "wave",
+          colors = {
+            theme = {
+              all = {
+                ui = {
+                  bg_gutter = "none"
+                }
+              }
+            }
           },
-        }
+          background = {
+              dark = "wave",
+              light = "lotus"
+          },
       })
-      vim.cmd[[ colorscheme nightfox ]]
+      -- setup must be called before loading
+      vim.cmd("colorscheme kanagawa")
     end
   },
 
@@ -436,13 +441,6 @@ local lspconfig = require('lspconfig')
 -- [[ setup lsp servers ]]
 -- Golang:
 lspconfig.gopls.setup(
-  {
-    capabilities = require('cmp_nvim_lsp').default_capabilities(),
-    on_attach = on_attach,
-  }
-)
-
-lspconfig.zls.setup(
   {
     capabilities = require('cmp_nvim_lsp').default_capabilities(),
     on_attach = on_attach,
