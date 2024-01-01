@@ -67,7 +67,8 @@ require('lazy').setup({
       require("conform").setup({
         formatters_by_ft = {
           python = { 'isort', 'black' },
-          html = { 'prettier' }
+          html = { 'prettier' },
+          tera = { 'prettier' }
         }
       })
     end,
@@ -141,37 +142,26 @@ require('lazy').setup({
   },
 
   {
-    "rebelot/kanagawa.nvim",
+    "Tsuzat/NeoSolarized.nvim",
+    lazy = false,
     priority = 1000,
     config = function()
-      require('kanagawa').setup({
-          compile = true,
+      require("NeoSolarized").setup {
+        style = "dark",
+        transparent = true,
+        terminal_colors = true,
+        enable_italics = true,
+        styles = {
+          comments = { italic = true },
+          keywords = {},
+          functions = { bold = true },
+          variables = {},
+          string = {},
+          underline = false,
           undercurl = false,
-          commentStyle = { italic = true },
-          functionStyle = {bold = true},
-          keywordStyle = { },
-          statementStyle = { bold = true },
-          typeStyle = { bold = true},
-          transparent = true,
-          dimInactive = false,
-          terminalColors = true,
-          theme = "wave",
-          colors = {
-            theme = {
-              all = {
-                ui = {
-                  bg_gutter = "none"
-                }
-              }
-            }
-          },
-          background = {
-              dark = "wave",
-              light = "lotus"
-          },
-      })
-      -- setup must be called before loading
-      vim.cmd("colorscheme kanagawa")
+        },
+      }
+      vim.cmd [[ colorscheme NeoSolarized ]]
     end
   },
 
@@ -443,6 +433,16 @@ local lspconfig = require('lspconfig')
 lspconfig.gopls.setup(
   {
     capabilities = require('cmp_nvim_lsp').default_capabilities(),
+    on_attach = on_attach,
+  }
+)
+
+local html_capabilities = vim.lsp.protocol.make_client_capabilities()
+html_capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+lspconfig.html.setup(
+  {
+    capabilities = html_capabilities,
     on_attach = on_attach,
   }
 )
