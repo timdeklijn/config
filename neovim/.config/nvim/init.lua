@@ -69,6 +69,12 @@ require('lazy').setup({
           python = { 'isort', 'black' },
           html = { 'prettier' },
           tera = { 'prettier' }
+        },
+        formatters = {
+          -- NOTE: this will break when used on other filetypes then html and tera.
+          prettier = {
+            prepend_args = { '--parser', 'html' }
+          },
         }
       })
     end,
@@ -211,9 +217,9 @@ require('lazy').setup({
       require("fzf-lua").setup({})
     end,
     keys = {
-      {"<leader>f", ":lua require('fzf-lua').files()<cr>"},
+      {"<leader>F", ":lua require('fzf-lua').files()<cr>"},
       {"<leader><leader>", ":lua require('fzf-lua').buffers()<cr>"},
-      {"<leader>gf", ":lua require('fzf-lua').git_files()<cr>"},
+      {"<leader>f", ":lua require('fzf-lua').git_files()<cr>"},
       {"<leader>sw", ":lua require('fzf-lua').grep_cword()<cr>"},
       {"<leader>sg", ":lua require('fzf-lua').grep()<cr>"},
       {"<leader>sd", ":lua require('fzf-lua').diagnostics_document()<cr>"},
@@ -534,6 +540,16 @@ cmp.setup {
     { name = 'luasnip' },  -- snippet completion
   },
 }
+
+local tera_group = vim.api.nvim_create_augroup('TeraFileType', { clear = true })
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  callback = function()
+    local buf = vim.api.nvim_get_current_buf()
+    vim.api.nvim_buf_set_option(buf, "filetype", "html")
+  end,
+  pattern = { '*.html.tera' },
+  group = tera_group,
+})
 
 -- Make sure terraform files are interpreted as terraform files
 local terraform_group = vim.api.nvim_create_augroup('TerraFormFileType', { clear = true })

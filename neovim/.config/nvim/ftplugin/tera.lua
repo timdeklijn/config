@@ -1,5 +1,5 @@
 vim.cmd[[
-  au BufNewFile,BufFilePre,BufRead *.tera set filetype=html
+  au BufNewFile,BufFilePre,BufRead *.html.tera set filetype=html
 
   setlocal tabstop=2
   setlocal shiftwidth=2
