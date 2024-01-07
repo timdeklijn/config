@@ -48,9 +48,9 @@ alias gp="git push"
 alias glog="git log --all --decorate --oneline --graph"
 
 # nicer ls
-alias ls="exa --icons"
-alias "ls -l"="exa -l --icons"
-alias ll="exa -l --icons"
+alias ls="eza --icons"
+alias "ls -l"="eza -l --icons"
+alias ll="eza -l --icons"
 
 # Paths =======================================================================
 
