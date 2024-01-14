@@ -1,4 +1,4 @@
--- Set <space> as the leader key
+  -- Set <space> as the leader key
 -- See `:help mapleader`
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -162,7 +162,7 @@ require('lazy').setup({
           keywords = {},
           functions = { bold = true },
           variables = {},
-          string = {},
+          string = { italic = true },
           underline = false,
           undercurl = false,
         },
