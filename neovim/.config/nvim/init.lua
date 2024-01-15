@@ -44,9 +44,6 @@ require('lazy').setup({
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
-
-      -- Additional lua configuration, makes nvim stuff amazing!
-      'folke/neodev.nvim',
     },
   },
 
@@ -299,6 +296,7 @@ vim.defer_fn(function()
     -- Add languages to be installed here that you want installed for treesitter
     ensure_installed = {
       'c',
+      'elm',
       'go',
       'lua',
       'python',
@@ -427,9 +425,6 @@ end
 
 vim.keymap.set('n', '<leader>=', require("conform").format, { desc = 'Format buffer' })
 
--- Setup neovim lua configuration
-require('neodev').setup()
-
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 -- and add it as a capabilities.
 local lspconfig = require('lspconfig')
@@ -487,6 +482,13 @@ lspconfig.terraformls.setup(
   }
 )
 
+lspconfig.yamlls.setup(
+  {
+    capabilities = require('cmp_nvim_lsp').default_capabilities(),
+    on_attach = on_attach,
+  }
+)
+
 -- Hide all semantic highlights
 for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
   vim.api.nvim_set_hl(0, group, {})
@@ -500,8 +502,8 @@ luasnip.config.setup {}
 
 cmp.setup {
   snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
+      expand = function(args)
+        luasnip.lsp_expand(args.body)
     end,
   },
   mapping = cmp.mapping.preset.insert {
