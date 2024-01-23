@@ -1,63 +1,62 @@
-;; ==========================================
-;; ███████ ███    ███  █████   ██████ ███████ 
-;; ██      ████  ████ ██   ██ ██      ██      
-;; █████   ██ ████ ██ ███████ ██      ███████ 
-;; ██      ██  ██  ██ ██   ██ ██           ██ 
-;; ███████ ██      ██ ██   ██  ██████ ███████ 
-;; ==========================================
-;; Tim de Klijn
+;; My emacs configuration (v3).
+;; 
+;; For this one I want to really utilize all packages that I
+;; install. I want to start writing my own utilities when I want emacs
+;; to do something for me. Lastly, I want to not use a package
+;; manager, but a simply bash script to clone all the repos with
+;; packages I want. This because I want to use non-melpa packages like
+;; copilot and I do not feel like using straigh or anything.
 
-;; =============================================================================
-;; Setup
-;; =============================================================================
+;; location to save packages to
+(defvar my-packages-dir "~/.config/emacs/packages/")
+;; Load all packages into path so they can be 'required'.
+(let ((default-directory my-packages-dir))
+  (normal-top-level-add-subdirs-to-load-path))
+
+;; NOTE: not sure what this is used for:
 (setq user-full-name "Tim de Klijn")
 
 ;; Write generated elisp code to the 'custom-file'
 (setq custom-file (make-temp-file "emacs-custom.el"))
 
-;; =============================================================================
-;; Use-Package
-;; =============================================================================
-(require 'package) ;; Emacs builtin
+;; Byte compile everything for a nice speedup. Put this in a function
+;; because there always will be some warnings which I do not want when
+;; I reload my config.
+(defun my-byte-compile ()
+  (interactive)
+  (byte-recompile-directory (expand-file-name "~/.config/emacs/") 0))
 
-;; set package.el repositories
-(setq package-archives
-'(
-   ("org" . "https://orgmode.org/elpa/")
-   ("gnu" . "https://elpa.gnu.org/packages/")
-   ("melpa" . "https://melpa.org/packages/")
-))
-;; This is only needed once, near the top of the file
-(eval-when-compile
-  ;; Following line is not needed if use-package.el is in ~/.emacs.d
-  (require 'use-package))
+;; Do not type 'yes' or 'no' when prompted
+(defalias 'yes-or-no-p #'y-or-n-p)
 
-;; initialize built-in package management
-(package-initialize)
+;; Simple customizations
+(menu-bar-mode -1)
+(delete-selection-mode 1)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(column-number-mode)
+(global-hl-line-mode -1)	     ;; highlight the cursor line
+(global-auto-revert-mode t)  ;; update buffer when file is updated
+(global-display-line-numbers-mode -1) ;; show line numbers
 
-;; update packages list if we are on a new install
-(unless package-archive-contents
-  (package-refresh-contents))
+;; Stop making backup files in the working directory. simply move them to a
+;; specified folder
+(setq backup-directory-alist '((".*" . "~/.config/emacs/backup_files")))
 
-;; Make sure that ':ensure t' is set for all packages
-(eval-and-compile
-  (setq use-package-always-ensure t
-	use-package-expand-minimally t))
+;; Some performence tweaks:
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024))
 
-;; =============================================================================
-;; Environment
-;; =============================================================================
-;; Set MacOS path correctly, add GOPATH to path as well
-(use-package exec-path-from-shell
-  :if (memq window-system '(mac ns x))
-  :config
-  (setq exec-path-from-shell-variables '("PATH" "GOPATH"))
-  (exec-path-from-shell-initialize))
+;; No more startup screen
+(setq inhibit-startup-screen t
+      ring-bell-function 'ignore
+      make-backup-files nil)
 
-;; Make use of direnv from whithin Emacs. Make use of project (folders) scoped
-;; environment variables within Emacs.
-(use-package direnv
-  :config (direnv-mode))
+;; Specify font and theme
+(set-face-attribute 'default nil
+		    :font "BlexMono Nerd Font Mono"
+		    :height 180)
+(setq line-spacing 0.3)
 
 ;; Make sure the compilation mode can handle ANSI color codes to see colors: for
 ;; example passing/failing tests.
@@ -69,285 +68,181 @@
 
 (setq compilation-scroll-output t)
 
-;; =============================================================================
-;; Basic Configuration
-;; =============================================================================
-;; do not type 'yes' or 'no' when prompted
-(defalias 'yes-or-no-p #'y-or-n-p)
+;; Configure emacs Doom themes --------------------------------------------------
+(require 'doom-themes)
+(setq doom-themes-enable-bold t
+      doom-themes-enable-italic t
+      doom-themes-padded-modeline t)
+(load-theme 'doom-one t)
 
-;; some defaults
-(menu-bar-mode -1)
-(delete-selection-mode 1)
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(column-number-mode)
-(global-hl-line-mode -1)		;; highlight the cursor line
-(global-auto-revert-mode t)	;; update buffer when file is updated
+;; Environment ------------------------------------------------------------------
 
-;; Some performence tweeks:
-(setq gc-cons-threshold 100000000)
-(setq read-process-output-max (* 1024 1024))
+;; If we are on a mac, we need to set the PATH and GOPATH environment
+;; differently. This is because Emacs does not inherit the PATH from
+;; the shell on a mac. On linux this is not a problem.
+(if (memq window-system '(mac ns x))
+    (require 'exec-path-from-shell)
+  (setq exec-path-from-shell-variables '("PATH" "GOPATH"))
+  (exec-path-from-shell-initialize))
 
-;; No more startup screen
-(setq inhibit-startup-screen t
-      ring-bell-function 'ignore
-      make-backup-files nil)
+;; Use direnv to set environment variables for a specific directory in
+;; a .envrc file
+(require 'direnv)
+(direnv-mode)
 
-;; =============================================================================
-;; Looks
-;; =============================================================================
-;; Make the titlebar on mac the same color as the background.
-(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-(add-to-list 'default-frame-alist '(ns-appearance . dark))
+;; Search -----------------------------------------------------------------------
+;;
+;; NOTES:
+;;   - Dependencies: compat <- Required by vertico
+(require 'vertico)
+(require 'marginalia)
+(require 'orderless)
 
-;; NOTE: Try to keep this for over a week: 2023-10-30
-;; Color theme: Solarized, with my settings.
-(use-package solarized-theme
-  :config
-  (setq solarized-distinct-fringe-background t)
-  (setq solarized-use-variable-pitch nil)
-  (setq solarized-high-contrast-mode-line t)
-  (setq solarized-use-less-bold nil)
-  (setq solarized-use-more-italic nil)
-  (setq solarized-emphasize-indicators t)
-  (setq solarized-scale-org-headlines t)
-  (setq solarized-scale-markdown-headlines t)
-  (load-theme 'solarized-selenized-black t))
+;; Vertico is a (minibuffer) completion framework.
+(vertico-mode)
+;; Use orderless to have fuzzy like matching in vertico buggers.
+(setq completion-styles '(basic substring partial-completion flex))
 
-;; NOTE: Try to keep this for over a week: 2023-10-30
-;; Set Emacs font: family, size and weight.
-(set-face-attribute 'default nil
-		    :font "UbuntuMono Nerd Font Mono"
-		    :height 220)
+;; Save commands used to be on top when searching again.
+(savehist-mode)
 
-;; Highlight the folowing:
-;; TODO:, FIXME:, NOTE:, etc.
-(use-package hl-todo
-  :config (global-hl-todo-mode))
+;; Marginalia shows the docstrings of the functions or other
+;; information while searching in a vertico buffer.
+(marginalia-mode)
 
-;; =============================================================================
-;; Modeline
-;; =============================================================================
-;; Hide modes from modeline
-(use-package minions
- :config (minions-mode 1))
+;; Copilot ----------------------------------------------------------------------
+;;
+;; One of the reasons to not use a package manager. I need copilot in
+;; my life and now I can manually add it without any package manager
+;; complaining it is not in ELPA/MELPA.
 
-;; =============================================================================
-;; Search and Completion
-;; =============================================================================
-(use-package counsel)
-(use-package swiper)
-(use-package ivy
-  :bind (("C-s" . swiper)
-	 ("C-c C-r" . ivy-resume)
-	 ("<f6>" . ivy-resume)
-	 ("M-x" . counsel-M-x)
-	 ("C-x C-f" . counsel-find-file)
-	 ("<f1> f" . counsel-describe-function)
-	 ("<f1> v" . counsel-describe-variable)
-	 ("<f1> o" . counsel-describe-symbol)
-	 ("<f1> l" . counsel-find-library)
-	 ("<f2> i" . counsel-info-lookup-symbol)
-	 ("<f2> u" . counsel-unicode-char)
-	 ("C-c g" . counsel-git)
-	 ("C-c j" . counsel-git-grep)
-	 ("C-c k" . counsel-rg)
-	 ("C-x l" . counsel-locate))
-  :config
-  (setq ivy-use-virtual-buffers t
-	enable-recursive-minibuffers t
-	ivy-re-builders-alist
-	'((t . ivy--regex-plus)))
-  (ivy-mode 1))
+(require 'copilot)
+(add-hook 'prog-mode-hook 'copilot-mode)
 
-;; Completion, get completions from LSP (eglot)
-;; TODO: try out corfu or something smaller/faster
-(use-package company
-  :bind ("C-;" . company-complete)
-  :config (setq company-idle-delay nil))
-(add-hook 'after-init-hook 'global-company-mode)
+;; TODO: think about triggering copilot with a keybind and not always
+;; have suggestions appear
+(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
 
-;; =============================================================================
-;; Project
-;; =============================================================================
-;; project manager, builtin package
-(use-package project
-  :commands (project-root))
+;; Treesitter -------------------------------------------------------------------
+;;
+;; Use treesitter for better highlighting. At some point in the future I want to
+;; investigate how to use treesitter for smarter selections etc.
 
-;; =============================================================================
-;; Magit
-;; =============================================================================
-;; git client
-;; TODO: how do I checkout branches?
-(use-package magit
-  :bind ("C-c g" . magit-file-dispatch))
+;; The following modes are getting a treesitter revamp:
+(setq major-mode-remap-alist
+ '((yaml-mode . yaml-ts-mode)
+   (bash-mode . bash-ts-mode)
+   (js2-mode . js-ts-mode)
+   (typescript-mode . typescript-ts-mode)
+   (json-mode . json-ts-mode)
+   (css-mode . css-ts-mode)
+   (python-mode . python-ts-mode)
+   (rust-mode . rust-ts-mode)))
 
-;; =============================================================================
-;; vterm
-;; =============================================================================
-;; terminal emulator
-(use-package vterm)
+;; Terminal ---------------------------------------------------------------------
+;;
+;; Use EAT to have the best of both worlds with regards to a terminal
 
-;; =============================================================================
-;; Language Servers
-;; =============================================================================
-;; eglot is used as an lsp client for programming languages
-(use-package eglot)
+(require 'eat)
+(global-set-key (kbd "C-c t") 'eat)
 
-;; Add lsp servers to list, should be started when eglot runs for a specific
-;; language
-(with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs
-	       ;; '(python-mode . ("pyright" "--stdio"))
-	       '(python-mode . ("pylsp" "--stdio"))
-	       '(yaml-mode . ("yaml-language-server" "--stdio"))))
-;; TODO: rust, go, json, markdown
+;; Projectile -------------------------------------------------------------------
+;;
+;; Projectile is a project management tool. It is used to quickly
 
-;; =============================================================================
-;; Custom Keybinds
-;; =============================================================================
-;; Not all commands have keybinds. Also, some custom commands may also
-;; be assigned to a custom keybind
+(require 'projectile)
+(projectile-mode +1)
+(global-unset-key (kbd "C-x p")) ;; unmap project.el keybindings
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
-;; -----------------------------------------------------------------------------
-;; Open file shortcuts
-;; -----------------------------------------------------------------------------
+;; Which-key --------------------------------------------------------------------
+;;
+;; Which-key is used to show keybindings when a prefix key is pressed.
 
-;; Open config file
-(global-set-key (kbd "C-c o o")
-		(lambda () (interactive)(find-file "~/dotfiles/emacs/.config/emacs/init.el")))
+(require 'which-key)
+(which-key-mode)
 
-;; ns notes
-(global-set-key (kbd "C-c o n")
-		(lambda () (interactive)(find-file "~/TimDocs/notes/ns.org")))
+;; Magit ------------------------------------------------------------------------
+;;
+;; Magit is a git porcelain for emacs. It is used to interact with git
+;; repositories.
 
-;; htc notes
-(global-set-key (kbd "C-c o h")
-		(lambda () (interactive)(find-file "~/TimDocs/notes/htc.org")))
+;; NOTE: magit installation from source is weird. Frist, I need to run
+;; 'make' in the magit repo. Then I could not get 'transient', a
+;; dependency of magit, updated using a simple git clone. In the end I
+;; needed to run `install-package transient' to get it working. Not
+;; great, need to find a better solution for that.
+(require 'transient)
+(require 'magit)
 
-;; Open todo file, this is also used for agenda/calendar
-(global-set-key (kbd "C-c o t")
-		(lambda() (interactive)(find-file "~/TimDocs/notes/todo.org")))
+;; Elisp ------------------------------------------------------------------------
 
-;; -----------------------------------------------------------------------------
-;; Custom keybinds
-;; -----------------------------------------------------------------------------
+;; This might be required for copilot to not give warnings.
+(setq elisp-indent-level 2)
 
-;; Shortcut to Emacs org-agenda
-(global-set-key (kbd "C-c a") 'org-agenda)
-;; Rerun last compilation command
-(global-set-key (kbd "C-c r r") 'recompile)
-(global-set-key (kbd "C-c f") 'project-find-file)
-(global-set-key (kbd "C-c e f") 'eglot-format-buffer)
-(global-set-key (kbd "C-c e r n") 'eglot-rename)
+;; Org-mode ---------------------------------------------------------------------
+;;
+;; Org-mode is used for note taking, todo's, agenda's and much more.
 
-;; =============================================================================
-;; Treesitter
-;; =============================================================================
-;; activate tree-sitter for relevant languages
-(add-hook 'python-mode-hook #'tree-sitter-mode)
-(add-hook 'go-mode-hook #'tree-sitter-mode)
-(add-hook 'rust-mode-hook #'tree-sitter-mode)
-(add-hook 'org-mode-hook #'tree-sitter-mode)
-(add-hook 'yaml-mode-hook #'tree-sitter-mode)
-(add-hook 'json-mode-hook #'tree-sitter-mode)
-(add-hook 'markdown-mode-hook #'tree-sitter-mode)
-(add-hook 'zig-mode-hook #'tree-sitter-mode)
+(require 'org)
+(require 'org-superstar)  ;; Better org-mode bullets
+(defvar org-columns 100)  ;; Set the column width for org-mode
 
-;; Download tree-sitter grammars
-(use-package treesit-auto
-  :config
-  (global-treesit-auto-mode))
+(defun my-org-setup ()
+  "Setup org-mode with nice bullets and a line width."
+  (org-superstar-mode 1)
+  (set-fill-column org-columns))
+(add-hook 'org-mode-hook #'my-org-setup)
 
-;; =============================================================================
-;; Org Mode
-;; =============================================================================
-;; Create fancy headline symbols to org header lines.
-(use-package org-superstar
-  :config
-  (setq org-superstar-special-todo-items 1))
-
-;; Org mode that includes fancy headers symbols.
-(use-package org
-  :after org-superstar
-  :init
-  ;; add fancy looking header symbols
-  (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
-  ;; make sure each line is 100 chars long when filling paragraph
-  (add-hook 'org-mode-hook (lambda () (set-fill-column 100))))
-
+;; Use markdown export for org-mode
 (eval-after-load "org"
   '(require 'ox-md nil t))
 
 ;; Add my todo file as an agenda file to see an overview of my todo's in the
 ;; Emacs calendar.
-(setq org-agenda-files (list "~/TimDocs/notes/todo.org"))
+(setq org-agenda-files (list "~/Dropbox/notes/todo.org"))
 
-;; What languages should work within an org code block
+;; What languages should work within an org code block:
 (org-babel-do-load-languages 'org-babel-load-languages
 			     '((shell . t)))
 
-;; =============================================================================
-;; Go
-;; =============================================================================
-;; Simple go mode does not add LSP by default, this is done later.
-;; TODO: go-mode has quite some nice functionality that I need to look into.
-;; TODO: add auto import functionality
-(use-package go-mode)
+;; Markdown ---------------------------------------------------------------------
+;;
 
-;; =============================================================================
-;; Python
-;; =============================================================================
-;; Python mode is mostly loaded for simple syntax highlighting. The LSP takes
-;; care of most of the IDE like features. We add the debugger config in this
-;; mode as well.
+(require 'markdown-mode)
 
-;; TODO: experiment with python-lsp-server and its functions
-(use-package python-mode
-  :config (setq truncate-lines 0))
+;; Eglot ------------------------------------------------------------------------
+;;
+;; TODO: Get Eglot to work
 
-(setq-default python-indent-offset 4)
+;; Python -----------------------------------------------------------------------
+;;
+;; TODO: Add some basic python functionality
 
-;; TODO: function to run 'black' and 'isort' on current buffer
-;; TODO: function to run 'pylint' and 'mypy' on current buffer
-;; TODO: function to run 'pylint' and 'mypy' on whole project
+;; Yaml -------------------------------------------------------------------------
+;;
+;; TODO: Add some basic yaml functionality
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 
-;; =============================================================================
-;; Rust
-;; =============================================================================
-;; Rust highlighting and other stuff.
-(use-package rust-mode
-  :custom (setq rust-format-on-save 1))
+;; Rust -------------------------------------------------------------------------
+;;
+;; TODO: Add some basic rust functionality
 
-;; Make sure there is no weird indenting
-(add-hook 'rust-mode-hook '(lambda () (setq indent-tabs-mode nil)))
+;; Json -------------------------------------------------------------------------
+;;
+;; TODO: Add some basic json functionality
+(require 'json-mode)
 
-;; =============================================================================
-;; terraform
-;; =============================================================================
-(use-package terraform-mode
-  :custom
-  (terraform-indent-level 2)
-  (terraform-format-on-save 1)
-  :config
-  (defun my-terraform-mode-init ()
-    (outline-minor-mode 1))
-  (add-hook 'terraform-mode-hook 'my-terraform-mode-init))
+;; Keybindings ------------------------------------------------------------------
+;;
+;; Some custom keybinds.
 
-;; =============================================================================
-;; Markdown
-;; =============================================================================
-;; Package to support markdown mode. This is a huge package with a lot of
-;; functionality.
-;; TODO: Dive into this package and learn more about what can be done with
-;;       it.
-;; TODO: Maybe add either a Markdown Language server or a Markdown linter.
-(use-package markdown-mode)
+;; Open todo file, this is also used for agenda/calendar
+(global-set-key (kbd "C-c o t")
+		(lambda() (interactive)(find-file "~/Dropbox/notes/todo.org")))
 
-;; =============================================================================
-;; Configuration modes
-;; =============================================================================
-;; TODO: linters or formatters for both json and yaml
-(use-package json-mode)
-(add-hook 'json-mode-hook (lambda () (setq tab-width 2)))
-(use-package yaml-mode)
+;; Open emacs init file
+(global-set-key (kbd "C-c o o")
+		(lambda() (interactive)(find-file "~/.config/emacs/init.el")))
