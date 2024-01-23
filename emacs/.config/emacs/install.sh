@@ -23,6 +23,9 @@ repos=(
     "https://github.com/yoshiki/yaml-mode.git"
     "https://github.com/Sterlingg/json-snatcher.git"
     "https://github.com/purcell/exec-path-from-shell.git"
+    "https://github.com/tarsius/minions.git"
+    "https://github.com/minad/corfu.git"
+    "https://github.com/minad/cape.git"
 )
 
 # Move into the packages directory

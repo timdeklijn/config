@@ -5,7 +5,10 @@
 ;; to do something for me. Lastly, I want to not use a package
 ;; manager, but a simply bash script to clone all the repos with
 ;; packages I want. This because I want to use non-melpa packages like
-;; copilot and I do not feel like using straigh or anything.
+;; copilot and I do not feel like using straight or anything.
+
+;; TODO:
+;;   - Split over multiple files
 
 ;; location to save packages to
 (defvar my-packages-dir "~/.config/emacs/packages/")
@@ -25,6 +28,7 @@
 (defun my-byte-compile ()
   (interactive)
   (byte-recompile-directory (expand-file-name "~/.config/emacs/") 0))
+(my-byte-compile)
 
 ;; Do not type 'yes' or 'no' when prompted
 (defalias 'yes-or-no-p #'y-or-n-p)
@@ -35,9 +39,10 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (column-number-mode)
-(global-hl-line-mode -1)	     ;; highlight the cursor line
-(global-auto-revert-mode t)  ;; update buffer when file is updated
+(global-hl-line-mode -1)	      ;; highlight the cursor line
+(global-auto-revert-mode t)           ;; update buffer when file is updated
 (global-display-line-numbers-mode -1) ;; show line numbers
+(pixel-scroll-precision-mode 1)       ;; smooth scrolling
 
 ;; Stop making backup files in the working directory. simply move them to a
 ;; specified folder
@@ -56,7 +61,7 @@
 (set-face-attribute 'default nil
 		    :font "BlexMono Nerd Font Mono"
 		    :height 180)
-(setq line-spacing 0.3)
+(setq-default line-spacing 0.3)
 
 ;; Make sure the compilation mode can handle ANSI color codes to see colors: for
 ;; example passing/failing tests.
@@ -67,6 +72,10 @@
 (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
 
 (setq compilation-scroll-output t)
+
+;; Clean up the modeline by hiding minor modes
+(require 'minions)
+(minions-mode 1)
 
 ;; Configure emacs Doom themes --------------------------------------------------
 (require 'doom-themes)
@@ -179,7 +188,7 @@
 ;; Elisp ------------------------------------------------------------------------
 
 ;; This might be required for copilot to not give warnings.
-(setq elisp-indent-level 2)
+(setq lisp-indent-offset 2)
 
 ;; Org-mode ---------------------------------------------------------------------
 ;;
@@ -209,12 +218,36 @@
 
 ;; Markdown ---------------------------------------------------------------------
 ;;
+;; For now this mode is only used because of the syntax
+;; highlighting. At some point I may want to learn more about this
+;; mode since it looks very interesting
 
 (require 'markdown-mode)
 
 ;; Eglot ------------------------------------------------------------------------
 ;;
 ;; TODO: Get Eglot to work
+(require 'eglot)
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+    '(python-mode . ("pyright-langserver" "--stdio"))
+    '(yaml-mode . ("yaml-language-server" "--stdio"))))
+
+;; Corfu ------------------------------------------------------------------------
+;;
+
+(require 'corfu)
+(require 'cape)
+(global-corfu-mode)
+
+;; Add Completion functions to corfu
+(advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
+(add-to-list 'completion-at-point-functions #'cape-dabbrev)
+(add-to-list 'completion-at-point-functions #'cape-file)
+(add-to-list 'completion-at-point-functions #'cape-elisp-block)
+
+;; Trigger completion manually using C-c i::
+(global-set-key (kbd "C-c i") 'completion-at-point)
 
 ;; Python -----------------------------------------------------------------------
 ;;
@@ -222,7 +255,9 @@
 
 ;; Yaml -------------------------------------------------------------------------
 ;;
-;; TODO: Add some basic yaml functionality
+;; Yaml mode for syntax highlighting.
+;;
+;; TODO: how to work with indenting?
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 
@@ -232,7 +267,7 @@
 
 ;; Json -------------------------------------------------------------------------
 ;;
-;; TODO: Add some basic json functionality
+;; Json mode for syntax highlighting.
 (require 'json-mode)
 
 ;; Keybindings ------------------------------------------------------------------
