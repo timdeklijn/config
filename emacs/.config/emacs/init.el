@@ -25,6 +25,7 @@
 ;; Byte compile everything for a nice speedup. Put this in a function
 ;; because there always will be some warnings which I do not want when
 ;; I reload my config.
+(setq native-comp-async-report-warnings-errors 'silent)
 (defun my-byte-compile ()
   (interactive)
   (byte-recompile-directory (expand-file-name "~/.config/emacs/") 0))
@@ -48,10 +49,11 @@
 ;; specified folder
 (setq backup-directory-alist '((".*" . "~/.config/emacs/backup_files")))
 
+
 ;; Some performence tweaks:
 (setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024))
-
+(setq package-install-upgrade-built-in t)
 ;; No more startup screen
 (setq inhibit-startup-screen t
       ring-bell-function 'ignore
@@ -60,7 +62,7 @@
 ;; Specify font and theme
 (set-face-attribute 'default nil
 		    :font "BlexMono Nerd Font Mono"
-		    :height 180)
+		    :height 200)
 (setq-default line-spacing 0.3)
 
 ;; Make sure the compilation mode can handle ANSI color codes to see colors: for

@@ -64,3 +64,8 @@ export PATH="/usr/local/opt/libarchive/bin:$PATH"
 
 # STARSHIP
 eval "$(starship init zsh)"
+
+export PYENV_ROOT="$HOME/.pyenv"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+eval "$(direnv hook zsh)"
