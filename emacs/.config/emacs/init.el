@@ -290,7 +290,7 @@
   '((shell . t)))
 
 (setq org-src-fontify-natively t)
-(add-hook 'org-mode-hook 'variable-pitch-mode)
+
 ;; Markdown ---------------------------------------------------------------------
 ;;
 ;; For now this mode is only used because of the syntax
