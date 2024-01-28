@@ -12,3 +12,6 @@ emacs/.config/emacs/tree-sitter/
 emacs/.config/emacs/recentf
 fish_variables
 helix/.config/helix/runtime/
+emacs/.config/emacs/eln-cache/
+emacs/.config/emacs/projectile-bookmarks.eld
+emacs/.config/emacs/straight/

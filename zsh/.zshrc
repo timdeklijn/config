@@ -1,10 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-# export LC_ALL="en_US.UTF-8"
-
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='nvim'
@@ -20,7 +16,6 @@ fi
 # START USING DIRENV ===========================================================
 
 eval "$(direnv hook zsh)"
-
 setopt PROMPT_SUBST
 
 show_virtual_env() {
@@ -30,6 +25,7 @@ show_virtual_env() {
 }
 PS1='$(show_virtual_env)'$PS1
 
+# what keybind to use
 set -o emacs
 
 # ALIASES =====================================================================

@@ -1,35 +1,29 @@
 ;; My emacs configuration (v3).
-;; 
-;; For this one I want to really utilize all packages that I
-;; install. I want to start writing my own utilities when I want emacs
-;; to do something for me. Lastly, I want to not use a package
-;; manager, but a simply bash script to clone all the repos with
-;; packages I want. This because I want to use non-melpa packages like
-;; copilot and I do not feel like using straight or anything.
-
 ;; TODO:
 ;;   - Split over multiple files
 
-;; location to save packages to
-(defvar my-packages-dir "~/.config/emacs/packages/")
-;; Load all packages into path so they can be 'required'.
-(let ((default-directory my-packages-dir))
-  (normal-top-level-add-subdirs-to-load-path))
+;; Setup straight package manager:
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
 ;; NOTE: not sure what this is used for:
 (setq user-full-name "Tim de Klijn")
 
 ;; Write generated elisp code to the 'custom-file'
 (setq custom-file (make-temp-file "emacs-custom.el"))
-
-;; Byte compile everything for a nice speedup. Put this in a function
-;; because there always will be some warnings which I do not want when
-;; I reload my config.
-(setq native-comp-async-report-warnings-errors 'silent)
-(defun my-byte-compile ()
-  (interactive)
-  (byte-recompile-directory (expand-file-name "~/.config/emacs/") 0))
-(my-byte-compile)
 
 ;; Do not type 'yes' or 'no' when prompted
 (defalias 'yes-or-no-p #'y-or-n-p)
@@ -49,7 +43,6 @@
 ;; specified folder
 (setq backup-directory-alist '((".*" . "~/.config/emacs/backup_files")))
 
-
 ;; Some performence tweaks:
 (setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024))
@@ -59,11 +52,24 @@
       ring-bell-function 'ignore
       make-backup-files nil)
 
+;; TODO: make this work
+(defvar my-fixed-font-name "BlexMono Nerd Font Mono")
+(defvar my-variable-font-name "DejaVu Sans")
+(defvar my-font-size 200)
+(defvar my-fixed-font (format "%s-%d" my-fixed-font-name my-font-size))
+(defvar my-variable-font (format "%s-%d" my-variable-font-name my-font-size))
+
+;; Font: https://ifonts.xyz/comic-code-complete-font-family.html
 ;; Specify font and theme
 (set-face-attribute 'default nil
-		    :font "BlexMono Nerd Font Mono"
-		    :height 200)
-(setq-default line-spacing 0.3)
+  :family "Comic Code"
+  :height 220)
+
+(set-face-attribute 'variable-pitch nil
+  :font "DejaVu Sans"
+  :height 220)
+
+(setq-default line-spacing 0.2)
 
 ;; Make sure the compilation mode can handle ANSI color codes to see colors: for
 ;; example passing/failing tests.
@@ -72,25 +78,46 @@
   (let ((buffer-read-only nil))
     (ansi-color-apply-on-region (point-min) (point-max))))
 (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
-
 (setq compilation-scroll-output t)
 
 ;; Clean up the modeline by hiding minor modes
+(straight-use-package
+ '(minions
+   :type git
+   :host github
+   :repo "tarsius/minions"))
 (require 'minions)
 (minions-mode 1)
 
-;; Configure emacs Doom themes --------------------------------------------------
-(require 'doom-themes)
-(setq doom-themes-enable-bold t
-      doom-themes-enable-italic t
-      doom-themes-padded-modeline t)
-(load-theme 'doom-one t)
+;; Configure emacs Spacemacs themes ---------------------------------------------
+(straight-use-package 'modus-themes)
+;; In all of the following, WEIGHT is a symbol such as `semibold',
+;; `light', `bold', or anything mentioned in `modus-themes-weights'.
+(setq modus-themes-italic-constructs t
+      modus-themes-bold-constructs t
+      modus-themes-mixed-fonts t
+      modus-themes-variable-pitch-ui nil
+      modus-themes-custom-auto-reload t
+      modus-themes-disable-other-themes t
+      modus-themes-prompts '(italic bold)
+      modus-themes-completions
+      '((matches . (extrabold))
+        (selection . (semibold italic text-also)))
+      modus-themes-org-blocks nil
+      modus-themes-headings
+      '((1 . (variable-pitch 1.5))
+        (2 . (1.3))
+        (agenda-date . (1.3))
+        (agenda-structure . (variable-pitch light 1.8))
+        (t . (1.1))))
+(load-theme 'modus-vivendi t)
 
 ;; Environment ------------------------------------------------------------------
 
 ;; If we are on a mac, we need to set the PATH and GOPATH environment
 ;; differently. This is because Emacs does not inherit the PATH from
 ;; the shell on a mac. On linux this is not a problem.
+(straight-use-package 'exec-path-from-shell)
 (if (memq window-system '(mac ns x))
     (require 'exec-path-from-shell)
   (setq exec-path-from-shell-variables '("PATH" "GOPATH"))
@@ -98,71 +125,120 @@
 
 ;; Use direnv to set environment variables for a specific directory in
 ;; a .envrc file
-(require 'direnv)
+(straight-use-package 'direnv)
 (direnv-mode)
 
 ;; Search -----------------------------------------------------------------------
-;;
-;; NOTES:
-;;   - Dependencies: compat <- Required by vertico
-(require 'vertico)
-(require 'marginalia)
-(require 'orderless)
+(straight-use-package 'vertico)
+(straight-use-package 'orderless)
+(straight-use-package 'savehist)
+(straight-use-package 'marginalia)
+(straight-use-package 'consult)
 
-;; Vertico is a (minibuffer) completion framework.
+(setq vertico-cycle t)
 (vertico-mode)
-;; Use orderless to have fuzzy like matching in vertico buggers.
 (setq completion-styles '(basic substring partial-completion flex))
-
-;; Save commands used to be on top when searching again.
 (savehist-mode)
-
-;; Marginalia shows the docstrings of the functions or other
-;; information while searching in a vertico buffer.
 (marginalia-mode)
+;; https://github.com/minad/consult <- for keybinds
+(setq consult-project-root-function #'projectile-project-root)
 
 ;; Copilot ----------------------------------------------------------------------
 ;;
 ;; One of the reasons to not use a package manager. I need copilot in
 ;; my life and now I can manually add it without any package manager
 ;; complaining it is not in ELPA/MELPA.
+;; https://emacsredux.com/blog/2023/03/12/install-a-package-from-a-vcs-repository/
+;; run this function once
 
-(require 'copilot)
-(add-hook 'prog-mode-hook 'copilot-mode)
+(straight-use-package
+ '(dash :type: git
+	:host github
+	:repo "magnars/dash.el"))
+
+(straight-use-package
+ '(s :type git
+     :host github
+     :repo "magnars/s.el"))
+
+(straight-use-package
+ '(editorconfig-emacs :type git
+		      :host github
+		      :repo "editorconfig/editorconfig-emacs"))
+
+(straight-use-package
+ '(copilot :type git
+	   :host github
+	   :branch "develop"
+	   :repo "copilot-emacs/copilot.el"))
+
+;; TODO: copilot is broken or something.
+;; (require 'copilot)
+;; (add-hook 'prog-mode-hook 'copilot-mode)
 
 ;; TODO: think about triggering copilot with a keybind and not always
 ;; have suggestions appear
-(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+;; (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+;; (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
 
 ;; Treesitter -------------------------------------------------------------------
 ;;
 ;; Use treesitter for better highlighting. At some point in the future I want to
 ;; investigate how to use treesitter for smarter selections etc.
 
+;; TODO: Add rust
+(setq treesit-language-source-alist
+   '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+     (cmake "https://github.com/uyha/tree-sitter-cmake")
+     (css "https://github.com/tree-sitter/tree-sitter-css")
+     (docker "https://github.com/camdencheek/tree-sitter-dockerfile")
+     (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+     (go "https://github.com/tree-sitter/tree-sitter-go")
+     (html "https://github.com/tree-sitter/tree-sitter-html")
+     (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+     (json "https://github.com/tree-sitter/tree-sitter-json")
+     (make "https://github.com/alemuller/tree-sitter-make")
+     (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+     (python "https://github.com/tree-sitter/tree-sitter-python")
+     (toml "https://github.com/tree-sitter/tree-sitter-toml")
+     (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+     (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+     (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+     (zig "https://github.com/maxxnino/tree-sitter-zig")))
+
 ;; The following modes are getting a treesitter revamp:
 (setq major-mode-remap-alist
- '((yaml-mode . yaml-ts-mode)
-   (bash-mode . bash-ts-mode)
-   (js2-mode . js-ts-mode)
-   (typescript-mode . typescript-ts-mode)
-   (json-mode . json-ts-mode)
-   (css-mode . css-ts-mode)
-   (python-mode . python-ts-mode)
-   (rust-mode . rust-ts-mode)))
+  '((yaml-mode . yaml-ts-mode)
+    (bash-mode . bash-ts-mode)
+    (js2-mode . js-ts-mode)
+    (typescript-mode . typescript-ts-mode)
+    (json-mode . json-ts-mode)
+    (css-mode . css-ts-mode)
+    (python-mode . python-ts-mode)
+    (rust-mode . rust-ts-mode)))
 
 ;; Terminal ---------------------------------------------------------------------
 ;;
 ;; Use EAT to have the best of both worlds with regards to a terminal
-
-(require 'eat)
+;; After the first install run: 'M-x eat-compile-terminfo' to have
+;; normal keybinds
+(straight-use-package
+ '(eat :type git
+       :host codeberg
+       :repo "akib/emacs-eat"
+       :files ("*.el" ("term" "term/*.el") "*.texi"
+               "*.ti" ("terminfo/e" "terminfo/e/*")
+               ("terminfo/65" "terminfo/65/*")
+               ("integration" "integration/*")
+               (:exclude ".dir-locals.el" "*-tests.el"))))
+(straight-use-package 'all-the-icons)
 (global-set-key (kbd "C-c t") 'eat)
 
 ;; Projectile -------------------------------------------------------------------
 ;;
 ;; Projectile is a project management tool. It is used to quickly
 
-(require 'projectile)
+(straight-use-package 'projectile)
 (projectile-mode +1)
 (global-unset-key (kbd "C-x p")) ;; unmap project.el keybindings
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
@@ -171,7 +247,7 @@
 ;;
 ;; Which-key is used to show keybindings when a prefix key is pressed.
 
-(require 'which-key)
+(straight-use-package 'which-key)
 (which-key-mode)
 
 ;; Magit ------------------------------------------------------------------------
@@ -179,13 +255,7 @@
 ;; Magit is a git porcelain for emacs. It is used to interact with git
 ;; repositories.
 
-;; NOTE: magit installation from source is weird. Frist, I need to run
-;; 'make' in the magit repo. Then I could not get 'transient', a
-;; dependency of magit, updated using a simple git clone. In the end I
-;; needed to run `install-package transient' to get it working. Not
-;; great, need to find a better solution for that.
-(require 'transient)
-(require 'magit)
+(straight-use-package 'magit)
 
 ;; Elisp ------------------------------------------------------------------------
 
@@ -196,8 +266,9 @@
 ;;
 ;; Org-mode is used for note taking, todo's, agenda's and much more.
 
-(require 'org)
-(require 'org-superstar)  ;; Better org-mode bullets
+(straight-use-package 'org)
+(straight-use-package 'org-superstar)
+
 (defvar org-columns 100)  ;; Set the column width for org-mode
 
 (defun my-org-setup ()
@@ -216,30 +287,32 @@
 
 ;; What languages should work within an org code block:
 (org-babel-do-load-languages 'org-babel-load-languages
-			     '((shell . t)))
+  '((shell . t)))
 
+(setq org-src-fontify-natively t)
+(add-hook 'org-mode-hook 'variable-pitch-mode)
 ;; Markdown ---------------------------------------------------------------------
 ;;
 ;; For now this mode is only used because of the syntax
 ;; highlighting. At some point I may want to learn more about this
 ;; mode since it looks very interesting
 
-(require 'markdown-mode)
+(straight-use-package 'markdown-mode)
 
 ;; Eglot ------------------------------------------------------------------------
 ;;
 ;; TODO: Get Eglot to work
-(require 'eglot)
+(straight-use-package 'eglot)
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
     '(python-mode . ("pyright-langserver" "--stdio"))
     '(yaml-mode . ("yaml-language-server" "--stdio"))))
 
 ;; Corfu ------------------------------------------------------------------------
-;;
+;; Autocomplete
 
-(require 'corfu)
-(require 'cape)
+(straight-use-package 'corfu)
+(straight-use-package 'cape)
 (global-corfu-mode)
 
 ;; Add Completion functions to corfu
@@ -248,19 +321,20 @@
 (add-to-list 'completion-at-point-functions #'cape-file)
 (add-to-list 'completion-at-point-functions #'cape-elisp-block)
 
-;; Trigger completion manually using C-c i::
+;; Trigger completion manually using C-c i
 (global-set-key (kbd "C-c i") 'completion-at-point)
 
 ;; Python -----------------------------------------------------------------------
 ;;
 ;; TODO: Add some basic python functionality
+(straight-use-package 'python-mode)
 
 ;; Yaml -------------------------------------------------------------------------
 ;;
 ;; Yaml mode for syntax highlighting.
 ;;
 ;; TODO: how to work with indenting?
-(require 'yaml-mode)
+(straight-use-package 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 
 ;; Rust -------------------------------------------------------------------------
@@ -270,7 +344,10 @@
 ;; Json -------------------------------------------------------------------------
 ;;
 ;; Json mode for syntax highlighting.
-(require 'json-mode)
+(straight-use-package 'json-mode)
+
+;; Zig --------------------------------------------------------------------------
+(straight-use-package 'zig-mode)
 
 ;; Keybindings ------------------------------------------------------------------
 ;;

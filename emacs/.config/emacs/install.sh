@@ -13,9 +13,9 @@ repos=(
     "https://github.com/bbatsov/projectile.git"
     "https://github.com/justbur/emacs-which-key.git"
     "https://github.com/magit/magit.git"
-    "https://github.com/magit/transient.git"
     "https://github.com/magit/with-editor.git"
     "https://github.com/doomemacs/themes.git"
+    "https://github.com/nashamri/spacemacs-theme.git"
     "https://github.com/jrblevin/markdown-mode.git"
     "https://github.com/wbolster/emacs-direnv.git"
     "https://github.com/integral-dw/org-superstar-mode.git"
@@ -26,6 +26,8 @@ repos=(
     "https://github.com/tarsius/minions.git"
     "https://github.com/minad/corfu.git"
     "https://github.com/minad/cape.git"
+    "https://github.com/jorgenschaefer/emacs-buttercup.git"
+    "https://github.com/magit/libegit2.git"
 )
 
 # Move into the packages directory
