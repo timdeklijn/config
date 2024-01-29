@@ -47,29 +47,25 @@
 (setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024))
 (setq package-install-upgrade-built-in t)
+
 ;; No more startup screen
 (setq inhibit-startup-screen t
       ring-bell-function 'ignore
       make-backup-files nil)
 
-;; TODO: make this work
-(defvar my-fixed-font-name "BlexMono Nerd Font Mono")
-(defvar my-variable-font-name "DejaVu Sans")
-(defvar my-font-size 200)
-(defvar my-fixed-font (format "%s-%d" my-fixed-font-name my-font-size))
-(defvar my-variable-font (format "%s-%d" my-variable-font-name my-font-size))
-
 ;; Font: https://ifonts.xyz/comic-code-complete-font-family.html
 ;; Specify font and theme
 (set-face-attribute 'default nil
   :family "Comic Code"
-  :height 220)
-
-(set-face-attribute 'variable-pitch nil
-  :font "DejaVu Sans"
-  :height 220)
+  :height 180)
 
 (setq-default line-spacing 0.2)
+
+;; Change faces from:
+;; https://zzamboni.org/post/beautifying-org-mode-in-emacs/
+(custom-theme-set-faces
+  'user
+  '(markdown-inline-code-face ((t (:inherit default :foreground "light green")))))
 
 ;; Make sure the compilation mode can handle ANSI color codes to see colors: for
 ;; example passing/failing tests.
@@ -169,7 +165,6 @@
 (straight-use-package
  '(copilot :type git
 	   :host github
-	   :branch "develop"
 	   :repo "copilot-emacs/copilot.el"))
 
 ;; TODO: copilot is broken or something.
@@ -204,7 +199,7 @@
      (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
      (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
      (yaml "https://github.com/ikatyang/tree-sitter-yaml")
-     (zig "https://github.com/maxxnino/tree-sitter-zig")))
+     (zig "git@github.com:GrayJack/tree-sitter-zig.git")))
 
 ;; The following modes are getting a treesitter revamp:
 (setq major-mode-remap-alist
@@ -298,10 +293,15 @@
 ;; mode since it looks very interesting
 
 (straight-use-package 'markdown-mode)
+(defvar markdown-columns 100)  ;; Set the column width for org-mode
+
+(defun my-markdown-setup ()
+  "Setup org-mode with nice bullets and a line width."
+  (set-fill-column markdown-columns))
+(add-hook 'markdown-mode-hook #'my-markdown-setup)
 
 ;; Eglot ------------------------------------------------------------------------
 ;;
-;; TODO: Get Eglot to work
 (straight-use-package 'eglot)
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
