@@ -106,7 +106,7 @@
         (agenda-date . (1.3))
         (agenda-structure . (variable-pitch light 1.8))
         (t . (1.1))))
-(load-theme 'modus-vivendi t)
+(load-theme 'modus-vivendi-tinted t)
 
 ;; Environment ------------------------------------------------------------------
 
