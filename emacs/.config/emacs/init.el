@@ -53,19 +53,18 @@
       ring-bell-function 'ignore
       make-backup-files nil)
 
+(defun my-recompile-init-eln ()
+  (interactive)
+  (byte-recompile-directory "~/.config/emacs/"))
+
 ;; Font: https://ifonts.xyz/comic-code-complete-font-family.html
 ;; Specify font and theme
 (set-face-attribute 'default nil
   :family "Comic Code"
   :height 180)
 
-(setq-default line-spacing 0.2)
+(setq-default line-spacing 0.1)
 
-;; Change faces from:
-;; https://zzamboni.org/post/beautifying-org-mode-in-emacs/
-(custom-theme-set-faces
-  'user
-  '(markdown-inline-code-face ((t (:inherit default :foreground "light green")))))
 
 ;; Make sure the compilation mode can handle ANSI color codes to see colors: for
 ;; example passing/failing tests.
@@ -85,28 +84,12 @@
 (require 'minions)
 (minions-mode 1)
 
-;; Configure emacs Spacemacs themes ---------------------------------------------
-(straight-use-package 'modus-themes)
-;; In all of the following, WEIGHT is a symbol such as `semibold',
-;; `light', `bold', or anything mentioned in `modus-themes-weights'.
-(setq modus-themes-italic-constructs t
-      modus-themes-bold-constructs t
-      modus-themes-mixed-fonts t
-      modus-themes-variable-pitch-ui nil
-      modus-themes-custom-auto-reload t
-      modus-themes-disable-other-themes t
-      modus-themes-prompts '(italic bold)
-      modus-themes-completions
-      '((matches . (extrabold))
-        (selection . (semibold italic text-also)))
-      modus-themes-org-blocks nil
-      modus-themes-headings
-      '((1 . (variable-pitch 1.5))
-        (2 . (1.3))
-        (agenda-date . (1.3))
-        (agenda-structure . (variable-pitch light 1.8))
-        (t . (1.1))))
-(load-theme 'modus-vivendi-tinted t)
+;; Configure color theme --------------------------------------------------------
+(straight-use-package 'gruvbox-theme)
+(load-theme 'gruvbox-dark-hard t)
+;; Override the background color of the high contrast solarized theme
+;; to something darker:
+(set-background-color "#151515")
 
 ;; Environment ------------------------------------------------------------------
 
@@ -136,8 +119,17 @@
 (setq completion-styles '(basic substring partial-completion flex))
 (savehist-mode)
 (marginalia-mode)
-;; https://github.com/minad/consult <- for keybinds
+
 (setq consult-project-root-function #'projectile-project-root)
+;; https://github.com/minad/consult <- for keybinds
+;; Set consult keymaps
+(keymap-global-set "C-x b" 'consult-buffer)
+(keymap-global-set "M-g o" 'consult-outline)
+(keymap-global-set "M-s r" 'consult-ripgrep)
+(keymap-global-set "M-s l" 'consult-line)
+(keymap-global-set "M-g i" 'consult-imenu)
+(keymap-global-set "M-g g" 'consult-goto-line)
+(keymap-global-set "M-y" 'consult-yank-pop)
 
 ;; Copilot ----------------------------------------------------------------------
 ;;
@@ -235,7 +227,8 @@
 
 (straight-use-package 'projectile)
 (projectile-mode +1)
-(global-unset-key (kbd "C-x p")) ;; unmap project.el keybindings
+;; unmap project.el keybindings, THIS DOES NOT WORK
+(global-unset-key (kbd "C-x p"))
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 ;; Which-key --------------------------------------------------------------------
@@ -269,6 +262,7 @@
 (defun my-org-setup ()
   "Setup org-mode with nice bullets and a line width."
   (org-superstar-mode 1)
+  (org-indent-mode 1)
   (set-fill-column org-columns))
 (add-hook 'org-mode-hook #'my-org-setup)
 
@@ -303,6 +297,7 @@
 ;; Eglot ------------------------------------------------------------------------
 ;;
 (straight-use-package 'eglot)
+(setq eglot-ignored-server-capabilities '(:documentHighlightProvider))
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs
     '(python-mode . ("pyright-langserver" "--stdio"))
