@@ -320,8 +320,6 @@
 (global-set-key (kbd "C-c i") 'completion-at-point)
 
 ;; Python -----------------------------------------------------------------------
-;;
-;; TODO: Add some basic python functionality
 (straight-use-package 'python-mode)
 
 ;; Yaml -------------------------------------------------------------------------
@@ -343,6 +341,17 @@
 
 ;; Zig --------------------------------------------------------------------------
 (straight-use-package 'zig-mode)
+
+;; Terraform --------------------------------------------------------------------
+(straight-use-package 'terraform-mode)
+;; (setq terraform-indent-level 2)
+
+(defun my-terraform-mode-init ()
+  ;; if you want to use outline-minor-mode
+  (terraform-format-on-save-mode 1)
+  (outline-minor-mode 1))
+
+(add-hook 'terraform-mode-hook 'my-terraform-mode-init)
 
 ;; Keybindings ------------------------------------------------------------------
 ;;
