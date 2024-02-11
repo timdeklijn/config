@@ -22,8 +22,10 @@
 ;; NOTE: not sure what this is used for:
 (setq user-full-name "Tim de Klijn")
 
-;; Write generated elisp code to the 'custom-file'
-(setq custom-file (make-temp-file "emacs-custom.el"))
+;; Write generated elisp code to 'custom-file' in the emacs config directory
+(setq custom-file (concat user-emacs-directory "custom.el"))
+(when (file-exists-p custom-file)
+  (load custom-file))
 
 ;; Do not type 'yes' or 'no' when prompted
 (defalias 'yes-or-no-p #'y-or-n-p)
@@ -60,11 +62,11 @@
 ;; Font: https://ifonts.xyz/comic-code-complete-font-family.html
 ;; Specify font and theme
 (set-face-attribute 'default nil
-  :family "Comic Code"
-  :height 180)
+  ;; :family "Comic Code"
+  :family "Maple Mono NF"
+  :height 220)
 
 (setq-default line-spacing 0.1)
-
 
 ;; Make sure the compilation mode can handle ANSI color codes to see colors: for
 ;; example passing/failing tests.
@@ -85,11 +87,11 @@
 (minions-mode 1)
 
 ;; Configure color theme --------------------------------------------------------
-(straight-use-package 'gruvbox-theme)
-(load-theme 'gruvbox-dark-hard t)
-;; Override the background color of the high contrast solarized theme
-;; to something darker:
-(set-background-color "#151515")
+;;
+;; TODO: figure out how to scale org + markdown headlines without
+;;       changing the font + color face.
+(load-theme 'tango-dark t)
+(set-background-color "#011a01")
 
 ;; Environment ------------------------------------------------------------------
 
@@ -131,42 +133,14 @@
 (keymap-global-set "M-g g" 'consult-goto-line)
 (keymap-global-set "M-y" 'consult-yank-pop)
 
-;; Copilot ----------------------------------------------------------------------
-;;
-;; One of the reasons to not use a package manager. I need copilot in
-;; my life and now I can manually add it without any package manager
-;; complaining it is not in ELPA/MELPA.
-;; https://emacsredux.com/blog/2023/03/12/install-a-package-from-a-vcs-repository/
-;; run this function once
+;; Codium -----------------------------------------------------------------------
 
-(straight-use-package
- '(dash :type: git
-	:host github
-	:repo "magnars/dash.el"))
-
-(straight-use-package
- '(s :type git
-     :host github
-     :repo "magnars/s.el"))
-
-(straight-use-package
- '(editorconfig-emacs :type git
-		      :host github
-		      :repo "editorconfig/editorconfig-emacs"))
-
-(straight-use-package
- '(copilot :type git
-	   :host github
-	   :repo "copilot-emacs/copilot.el"))
-
-;; TODO: copilot is broken or something.
-;; (require 'copilot)
-;; (add-hook 'prog-mode-hook 'copilot-mode)
-
-;; TODO: think about triggering copilot with a keybind and not always
-;; have suggestions appear
-;; (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-;; (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+(straight-use-package '(codeium :type git :host github :repo "Exafunction/codeium.el"))
+(add-to-list 'completion-at-point-functions #'codeium-completion-at-point)
+(setq use-dialog-box nil)
+(setq codeium-mode-line-enable
+  (lambda (api) (not (memq api '(CancelRequest Heartbeat AcceptCompletion)))))
+(add-to-list 'mode-line-format '(:eval (car-safe codeium-mode-line)) t)
 
 ;; Treesitter -------------------------------------------------------------------
 ;;
@@ -178,7 +152,7 @@
    '((bash "https://github.com/tree-sitter/tree-sitter-bash")
      (cmake "https://github.com/uyha/tree-sitter-cmake")
      (css "https://github.com/tree-sitter/tree-sitter-css")
-     (docker "https://github.com/camdencheek/tree-sitter-dockerfile")
+     (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
      (elisp "https://github.com/Wilfred/tree-sitter-elisp")
      (go "https://github.com/tree-sitter/tree-sitter-go")
      (html "https://github.com/tree-sitter/tree-sitter-html")
@@ -202,7 +176,8 @@
     (json-mode . json-ts-mode)
     (css-mode . css-ts-mode)
     (python-mode . python-ts-mode)
-    (rust-mode . rust-ts-mode)))
+    (rust-mode . rust-ts-mode)
+    (dockerfile-mode . dockerfile-ts-mode)))
 
 ;; Terminal ---------------------------------------------------------------------
 ;;
