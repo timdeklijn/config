@@ -62,9 +62,8 @@
 ;; Font: https://ifonts.xyz/comic-code-complete-font-family.html
 ;; Specify font and theme
 (set-face-attribute 'default nil
-  ;; :family "Comic Code"
-  :family "Maple Mono NF"
-  :height 220)
+  :family "Comic Code"
+  :height 200)
 
 (setq-default line-spacing 0.1)
 
@@ -77,6 +76,16 @@
 (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
 (setq compilation-scroll-output t)
 
+;; Dired ------------------------------------------------------------------------
+(straight-use-package 'all-the-icons-dired)
+;;(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+(add-hook 'dired-mode-hook
+      (lambda ()
+        (dired-hide-details-mode)
+	(all-the-icons-dired-mode)))
+
+;; Mode Line --------------------------------------------------------------------
+
 ;; Clean up the modeline by hiding minor modes
 (straight-use-package
  '(minions
@@ -87,11 +96,22 @@
 (minions-mode 1)
 
 ;; Configure color theme --------------------------------------------------------
-;;
-;; TODO: figure out how to scale org + markdown headlines without
-;;       changing the font + color face.
-(load-theme 'tango-dark t)
-(set-background-color "#011a01")
+(straight-use-package 'spacemacs-theme)
+(setq spacemacs-theme-comment-italic nil
+  spacemacs-theme-org-bold t
+  spacemacs-theme-org-highlight nil
+  spacemacs-theme-org-priority-bold t
+  spacemacs-theme-org-agenda-height t)
+(load-theme 'spacemacs-dark t)
+
+;; Indent guides ----------------------------------------------------------------
+;; Show indent markers.
+
+(straight-use-package 'highlight-indent-guides)
+(setq highlight-indent-guides-method 'character)
+(setq highlight-indent-guides-character 062)
+(setq highlight-indent-guides-auto-character-face-perc 40)
+(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 
 ;; Environment ------------------------------------------------------------------
 
@@ -199,6 +219,7 @@
 ;; Projectile -------------------------------------------------------------------
 ;;
 ;; Projectile is a project management tool. It is used to quickly
+;; navigate projects.
 
 (straight-use-package 'projectile)
 (projectile-mode +1)
@@ -304,6 +325,7 @@
 ;; TODO: how to work with indenting?
 (straight-use-package 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+(add-hook 'yaml-mode-hook 'highlight-indent-guides-mode)
 
 ;; Rust -------------------------------------------------------------------------
 ;;
