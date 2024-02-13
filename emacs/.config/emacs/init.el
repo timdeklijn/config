@@ -59,13 +59,12 @@
   (interactive)
   (byte-recompile-directory "~/.config/emacs/"))
 
-;; Font: https://ifonts.xyz/comic-code-complete-font-family.html
 ;; Specify font and theme
 (set-face-attribute 'default nil
-  :family "Comic Code"
-  :height 170)
+  :family "SauceCodePro Nerd Font"
+  :height 200)
 
-(setq-default line-spacing 0.3)
+(setq-default line-spacing 0.2)
 
 ;; Make sure the compilation mode can handle ANSI color codes to see colors: for
 ;; example passing/failing tests.
@@ -119,10 +118,13 @@
 ;; differently. This is because Emacs does not inherit the PATH from
 ;; the shell on a mac. On linux this is not a problem.
 (straight-use-package 'exec-path-from-shell)
-(if (memq window-system '(mac ns x))
-    (require 'exec-path-from-shell)
-  (setq exec-path-from-shell-variables '("PATH" "GOPATH"))
-  (exec-path-from-shell-initialize))
+;; (if (memq window-system '(mac ns x))
+;;     (require 'exec-path-from-shell)
+;;   (setq exec-path-from-shell-variables '("PATH" "GOPATH"))
+;;   (exec-path-from-shell-initialize))
+
+(setq exec-path-from-shell-variables '("PATH" "GOPATH"))
+(exec-path-from-shell-initialize)
 
 ;; Use direnv to set environment variables for a specific directory in
 ;; a .envrc file
@@ -340,6 +342,14 @@
 
 ;; Rust -------------------------------------------------------------------------
 (straight-use-package 'rust-mode)
+
+;; Go ---------------------------------------------------------------------------
+(straight-use-package 'go-mode)
+(defun my-go-mode-hook ()
+  (setq tab-width 2 indent-tabs-mode 1)
+  (setq gofmt-command "goimports")
+  (add-hook 'before-save-hook 'gofmt-before-save))
+(add-hook 'go-mode-hook 'my-go-mode-hook)
 
 ;; Terraform --------------------------------------------------------------------
 (straight-use-package 'terraform-mode)
