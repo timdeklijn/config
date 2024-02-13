@@ -63,9 +63,9 @@
 ;; Specify font and theme
 (set-face-attribute 'default nil
   :family "Comic Code"
-  :height 200)
+  :height 170)
 
-(setq-default line-spacing 0.1)
+(setq-default line-spacing 0.3)
 
 ;; Make sure the compilation mode can handle ANSI color codes to see colors: for
 ;; example passing/failing tests.
@@ -110,7 +110,7 @@
 (straight-use-package 'highlight-indent-guides)
 (setq highlight-indent-guides-method 'character)
 (setq highlight-indent-guides-character 062)
-(setq highlight-indent-guides-auto-character-face-perc 40)
+(setq highlight-indent-guides-auto-character-face-perc 80)
 (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 
 ;; Environment ------------------------------------------------------------------
@@ -130,6 +130,8 @@
 (direnv-mode)
 
 ;; Search -----------------------------------------------------------------------
+;;
+;; Better minibuffer behaviour when searching for anything.
 (straight-use-package 'vertico)
 (straight-use-package 'orderless)
 (straight-use-package 'savehist)
@@ -153,8 +155,9 @@
 (keymap-global-set "M-g g" 'consult-goto-line)
 (keymap-global-set "M-y" 'consult-yank-pop)
 
-;; Codium -----------------------------------------------------------------------
-
+;; Codeium ----------------------------------------------------------------------
+;;
+;; Codeium is a free alternative for copilot.
 (straight-use-package '(codeium :type git :host github :repo "Exafunction/codeium.el"))
 (add-to-list 'completion-at-point-functions #'codeium-completion-at-point)
 (setq use-dialog-box nil)
@@ -286,7 +289,6 @@
 (defvar markdown-columns 100)  ;; Set the column width for org-mode
 
 (defun my-markdown-setup ()
-  "Setup org-mode with nice bullets and a line width."
   (set-fill-column markdown-columns))
 (add-hook 'markdown-mode-hook #'my-markdown-setup)
 
@@ -325,11 +327,8 @@
 ;; TODO: how to work with indenting?
 (straight-use-package 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
-(add-hook 'yaml-mode-hook 'highlight-indent-guides-mode)
-
-;; Rust -------------------------------------------------------------------------
-;;
-;; TODO: Add some basic rust functionality
+(add-hook 'yaml-mode-hook 'prog-mode)  ;; NOTE: this does not work...
+                                       ;; I really want to have indents for yaml
 
 ;; Json -------------------------------------------------------------------------
 ;;
@@ -339,12 +338,14 @@
 ;; Zig --------------------------------------------------------------------------
 (straight-use-package 'zig-mode)
 
+;; Rust -------------------------------------------------------------------------
+(straight-use-package 'rust-mode)
+
 ;; Terraform --------------------------------------------------------------------
 (straight-use-package 'terraform-mode)
-;; (setq terraform-indent-level 2)
+;; (setq terraform-indent-level 2) <- not for ns
 
 (defun my-terraform-mode-init ()
-  ;; if you want to use outline-minor-mode
   (terraform-format-on-save-mode 1)
   (outline-minor-mode 1))
 
@@ -361,3 +362,4 @@
 ;; Open emacs init file
 (global-set-key (kbd "C-c o o")
 		(lambda() (interactive)(find-file "~/.config/emacs/init.el")))
+(put 'dired-find-alternate-file 'disabled nil)
