@@ -61,8 +61,8 @@
 
 ;; Specify font and theme
 (set-face-attribute 'default nil
-  :family "SauceCodePro Nerd Font"
-  :height 200)
+  :family "BlexMono Nerd Font"
+  :height 180)
 
 (setq-default line-spacing 0.2)
 
@@ -95,13 +95,8 @@
 (minions-mode 1)
 
 ;; Configure color theme --------------------------------------------------------
-(straight-use-package 'spacemacs-theme)
-(setq spacemacs-theme-comment-italic nil
-  spacemacs-theme-org-bold t
-  spacemacs-theme-org-highlight nil
-  spacemacs-theme-org-priority-bold t
-  spacemacs-theme-org-agenda-height t)
-(load-theme 'spacemacs-dark t)
+(straight-use-package 'color-theme-sanityinc-tomorrow)
+(load-theme 'sanityinc-tomorrow-night t)
 
 ;; Indent guides ----------------------------------------------------------------
 ;; Show indent markers.
