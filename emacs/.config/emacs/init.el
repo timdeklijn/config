@@ -1,5 +1,7 @@
 ;; My emacs configuration (v3).
 ;; TODO:
+;;   - use 'use-package' macro together with straight to get the best of
+;;     both worlds.
 ;;   - Split over multiple files
 
 ;; Setup straight package manager:
@@ -55,17 +57,45 @@
       ring-bell-function 'ignore
       make-backup-files nil)
 
-(defun my-recompile-init-eln ()
+;; Configure color theme --------------------------------------------------------
+(straight-use-package 'color-theme-sanityinc-tomorrow)
+(load-theme 'sanityinc-tomorrow-night t)
+
+;; Fonts -----------------------------------------------------------------------
+(defun tim-process-font-choice (choice)
+  "if I figure out how to use a hashmap I do not need this
+function. for now return a size for a specific 'choice'."
+  (cond
+    ((string-equal choice "small") 15)
+    ((string-equal choice "medium") 20)
+    ((string-equal choice "large") 23)
+    (t (message "unknown size, choose: 'small', 'medium' or 'large'"))))
+
+(defun tim-set-font (size)
+  "set font for frame. Takes a number as input, this is the font
+size in pixels."
+  (set-frame-font (format "%s-%f" tim-font-name size)))
+
+(defun tim-change-font-size ()
+  "ask the user to input a choice out of 'small', 'medium' or
+'large'. Process the input to a number and change the font size.
+- Ask user for input
+- Extract the choice from the list
+- Convert choice to number in pixels
+- Set the font"
   (interactive)
-  (byte-recompile-directory "~/.config/emacs/"))
+  (let ((choice (completing-read-multiple "Select: " '("small" "medium" "large"))))
+    (tim-set-font (tim-process-font-choice (car choice)))))
 
-;; Specify font and theme
-(set-face-attribute 'default nil
-  :family "BlexMono Nerd Font"
-  :height 180)
+;; Start-up font settings
+(defvar tim-font-name "CodeNewRoman Nerd Font" "Font name")
+(defvar tim-initial-font (tim-process-font-choice "medium") "Font Size medium value")
+(setq-default line-spacing 0.3)
 
-(setq-default line-spacing 0.2)
+;; Set font on startup
+(tim-set-font tim-initial-font)
 
+;; Compilation Mode -------------------------------------------------------------
 ;; Make sure the compilation mode can handle ANSI color codes to see colors: for
 ;; example passing/failing tests.
 (require 'ansi-color)
@@ -73,19 +103,22 @@
   (let ((buffer-read-only nil))
     (ansi-color-apply-on-region (point-min) (point-max))))
 (add-hook 'compilation-filter-hook 'my/ansi-colorize-buffer)
+;; Scroll along with text appearing in the compilation buffer
 (setq compilation-scroll-output t)
 
 ;; Dired ------------------------------------------------------------------------
 (straight-use-package 'all-the-icons-dired)
-;;(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 (add-hook 'dired-mode-hook
-      (lambda ()
-        (dired-hide-details-mode)
-	(all-the-icons-dired-mode)))
+  (lambda ()
+    ;; Simplify Dired mode by hiding file details
+    (dired-hide-details-mode)
+    ;; Introduce pretty icons into Dired
+    (all-the-icons-dired-mode)))
 
 ;; Mode Line --------------------------------------------------------------------
 
 ;; Clean up the modeline by hiding minor modes
+;; At some point I would like to create my own modeline
 (straight-use-package
  '(minions
    :type git
@@ -94,16 +127,13 @@
 (require 'minions)
 (minions-mode 1)
 
-;; Configure color theme --------------------------------------------------------
-(straight-use-package 'color-theme-sanityinc-tomorrow)
-(load-theme 'sanityinc-tomorrow-night t)
 
 ;; Indent guides ----------------------------------------------------------------
 ;; Show indent markers.
 
 (straight-use-package 'highlight-indent-guides)
 (setq highlight-indent-guides-method 'character)
-(setq highlight-indent-guides-character 062)
+(setq highlight-indent-guides-character 062) ;; ascii code for character
 (setq highlight-indent-guides-auto-character-face-perc 80)
 (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 
@@ -129,6 +159,8 @@
 ;; Search -----------------------------------------------------------------------
 ;;
 ;; Better minibuffer behaviour when searching for anything.
+;;
+;; TODO: add Embark to the mix.
 (straight-use-package 'vertico)
 (straight-use-package 'orderless)
 (straight-use-package 'savehist)
@@ -197,6 +229,7 @@
     (css-mode . css-ts-mode)
     (python-mode . python-ts-mode)
     (rust-mode . rust-ts-mode)
+    (go-mode . go-ts-mode)
     (dockerfile-mode . dockerfile-ts-mode)))
 
 ;; Terminal ---------------------------------------------------------------------
@@ -339,6 +372,8 @@
 (straight-use-package 'rust-mode)
 
 ;; Go ---------------------------------------------------------------------------
+;;
+;; TODO: I think we can get away with simply using 'go-ts-mode' + 'eglot'
 (straight-use-package 'go-mode)
 (defun my-go-mode-hook ()
   (setq tab-width 2 indent-tabs-mode 1)
