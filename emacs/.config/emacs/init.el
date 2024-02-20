@@ -88,7 +88,7 @@ size in pixels."
     (tim-set-font (tim-process-font-choice (car choice)))))
 
 ;; Start-up font settings
-(defvar tim-font-name "CodeNewRoman Nerd Font" "Font name")
+(defvar tim-font-name "ComicShannsMono Nerd Font" "Font name")
 (defvar tim-initial-font (tim-process-font-choice "medium") "Font Size medium value")
 (setq-default line-spacing 0.3)
 
@@ -229,7 +229,7 @@ size in pixels."
     (css-mode . css-ts-mode)
     (python-mode . python-ts-mode)
     (rust-mode . rust-ts-mode)
-    (go-mode . go-ts-mode)
+;;    (go-mode . go-ts-mode)
     (dockerfile-mode . dockerfile-ts-mode)))
 
 ;; Terminal ---------------------------------------------------------------------
@@ -382,12 +382,20 @@ size in pixels."
 (add-hook 'go-mode-hook 'my-go-mode-hook)
 
 ;; Terraform --------------------------------------------------------------------
+;;
+;; Install 'terraform-ls': https://www.hashicorp.com/official-packaging-guide
+
 (straight-use-package 'terraform-mode)
 ;; (setq terraform-indent-level 2) <- not for ns
 
 (defun my-terraform-mode-init ()
+  ;; not sure I want to use this. It will change a lot of existing
+  ;; terraform files
   (terraform-format-on-save-mode 1)
-  (outline-minor-mode 1))
+  ;; TODO: figure out keybinding. It looks nice
+  (outline-minor-mode 1)
+  ;; Start language server when opening terraform mode.
+  (eglot-ensure))
 
 (add-hook 'terraform-mode-hook 'my-terraform-mode-init)
 
