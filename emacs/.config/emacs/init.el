@@ -21,6 +21,9 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+;; Install 'use-package' to use the 'use-package' macro together with straight.
+(straight-use-package 'use-package)
+
 ;; NOTE: not sure what this is used for:
 (setq user-full-name "Tim de Klijn")
 
@@ -38,10 +41,11 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (column-number-mode)
-(global-hl-line-mode -1)	      ;; highlight the cursor line
 (global-auto-revert-mode t)           ;; update buffer when file is updated
-(global-display-line-numbers-mode -1) ;; show line numbers
 (pixel-scroll-precision-mode 1)       ;; smooth scrolling
+
+;; scroll before the cursor is at the bottom or top of the page.
+(setq scroll-margin 4)
 
 ;; Stop making backup files in the working directory. simply move them to a
 ;; specified folder
@@ -66,9 +70,9 @@
   "if I figure out how to use a hashmap I do not need this
 function. for now return a size for a specific 'choice'."
   (cond
-    ((string-equal choice "small") 15)
-    ((string-equal choice "medium") 20)
-    ((string-equal choice "large") 23)
+    ((string-equal choice "small") 17)
+    ((string-equal choice "medium") 21)
+    ((string-equal choice "large") 24)
     (t (message "unknown size, choose: 'small', 'medium' or 'large'"))))
 
 (defun tim-set-font (size)
@@ -96,8 +100,9 @@ size in pixels."
 (tim-set-font tim-initial-font)
 
 ;; Compilation Mode -------------------------------------------------------------
-;; Make sure the compilation mode can handle ANSI color codes to see colors: for
-;; example passing/failing tests.
+;;
+;; Make sure the compilation mode can handle ANSI color codes to see
+;; colors: for example passing/failing tests.
 (require 'ansi-color)
 (defun my/ansi-colorize-buffer ()
   (let ((buffer-read-only nil))
@@ -116,17 +121,11 @@ size in pixels."
     (all-the-icons-dired-mode)))
 
 ;; Mode Line --------------------------------------------------------------------
-
-;; Clean up the modeline by hiding minor modes
-;; At some point I would like to create my own modeline
-(straight-use-package
- '(minions
-   :type git
-   :host github
-   :repo "tarsius/minions"))
-(require 'minions)
-(minions-mode 1)
-
+;;
+;; Just use the doom-modeline. It looks nice, and works.
+(use-package doom-modeline
+  :straight t
+  :init (doom-modeline-mode 1))
 
 ;; Indent guides ----------------------------------------------------------------
 ;; Show indent markers.
@@ -196,8 +195,9 @@ size in pixels."
 
 ;; Treesitter -------------------------------------------------------------------
 ;;
-;; Use treesitter for better highlighting. At some point in the future I want to
-;; investigate how to use treesitter for smarter selections etc.
+;; Use treesitter for better highlighting. At some point in the future
+;; I want to investigate how to use treesitter for smarter selections
+;; etc.
 
 ;; TODO: Add rust
 (setq treesit-language-source-alist
@@ -288,12 +288,12 @@ size in pixels."
 
 (defvar org-columns 100)  ;; Set the column width for org-mode
 
-(defun my-org-setup ()
+(defun tim-org-setup ()
   "Setup org-mode with nice bullets and a line width."
   (org-superstar-mode 1)
   (org-indent-mode 1)
   (set-fill-column org-columns))
-(add-hook 'org-mode-hook #'my-org-setup)
+(add-hook 'org-mode-hook #'tim-org-setup)
 
 ;; Use markdown export for org-mode
 (eval-after-load "org"
@@ -318,9 +318,9 @@ size in pixels."
 (straight-use-package 'markdown-mode)
 (defvar markdown-columns 100)  ;; Set the column width for org-mode
 
-(defun my-markdown-setup ()
+(defun tim-markdown-setup ()
   (set-fill-column markdown-columns))
-(add-hook 'markdown-mode-hook #'my-markdown-setup)
+(add-hook 'markdown-mode-hook #'tim-markdown-setup)
 
 ;; Eglot ------------------------------------------------------------------------
 ;;
@@ -349,6 +349,10 @@ size in pixels."
 
 ;; Python -----------------------------------------------------------------------
 (straight-use-package 'python-mode)
+(defun tim-python-mode-hook ()
+  ;; eglot should start when python mode starts.
+  (eglot-ensure))
+(add-hook 'python-mode-hook 'tim-python-mode-hook)
 
 ;; Yaml -------------------------------------------------------------------------
 ;;
@@ -357,8 +361,7 @@ size in pixels."
 ;; TODO: how to work with indenting?
 (straight-use-package 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
-(add-hook 'yaml-mode-hook 'prog-mode)  ;; NOTE: this does not work...
-                                       ;; I really want to have indents for yaml
+(add-hook 'yaml-mode-hook 'highlight-indent-guides-mode)
 
 ;; Json -------------------------------------------------------------------------
 ;;
@@ -375,11 +378,12 @@ size in pixels."
 ;;
 ;; TODO: I think we can get away with simply using 'go-ts-mode' + 'eglot'
 (straight-use-package 'go-mode)
-(defun my-go-mode-hook ()
+(defun tim-go-mode-hook ()
   (setq tab-width 2 indent-tabs-mode 1)
   (setq gofmt-command "goimports")
+  (eglot-ensure)
   (add-hook 'before-save-hook 'gofmt-before-save))
-(add-hook 'go-mode-hook 'my-go-mode-hook)
+(add-hook 'go-mode-hook 'tim-go-mode-hook)
 
 ;; Terraform --------------------------------------------------------------------
 ;;
@@ -388,7 +392,7 @@ size in pixels."
 (straight-use-package 'terraform-mode)
 ;; (setq terraform-indent-level 2) <- not for ns
 
-(defun my-terraform-mode-init ()
+(defun tim-terraform-mode-init ()
   ;; not sure I want to use this. It will change a lot of existing
   ;; terraform files
   (terraform-format-on-save-mode 1)
@@ -397,7 +401,7 @@ size in pixels."
   ;; Start language server when opening terraform mode.
   (eglot-ensure))
 
-(add-hook 'terraform-mode-hook 'my-terraform-mode-init)
+(add-hook 'terraform-mode-hook 'tim-terraform-mode-init)
 
 ;; Keybindings ------------------------------------------------------------------
 ;;
