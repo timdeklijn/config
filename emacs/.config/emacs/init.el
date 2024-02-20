@@ -1,8 +1,7 @@
 ;; My emacs configuration (v3).
 ;; TODO:
-;;   - use 'use-package' macro together with straight to get the best of
-;;     both worlds.
 ;;   - Split over multiple files
+;;   - switch all 'straight-use-package' declarations to 'use-package'
 
 ;; Setup straight package manager:
 (defvar bootstrap-version)
@@ -23,6 +22,8 @@
 
 ;; Install 'use-package' to use the 'use-package' macro together with straight.
 (straight-use-package 'use-package)
+;; Now I do not need to type ':straight t' everytime I use 'use-package'.
+(setq straight-use-package-by-default 1)
 
 ;; NOTE: not sure what this is used for:
 (setq user-full-name "Tim de Klijn")
@@ -62,8 +63,8 @@
       make-backup-files nil)
 
 ;; Configure color theme --------------------------------------------------------
-(straight-use-package 'color-theme-sanityinc-tomorrow)
-(load-theme 'sanityinc-tomorrow-night t)
+(use-package color-theme-sanityinc-tomorrow
+  :config (load-theme 'sanityinc-tomorrow-night t))
 
 ;; Fonts -----------------------------------------------------------------------
 (defun tim-process-font-choice (choice)
@@ -124,7 +125,6 @@ size in pixels."
 ;;
 ;; Just use the doom-modeline. It looks nice, and works.
 (use-package doom-modeline
-  :straight t
   :init (doom-modeline-mode 1))
 
 ;; Indent guides ----------------------------------------------------------------
@@ -152,8 +152,8 @@ size in pixels."
 
 ;; Use direnv to set environment variables for a specific directory in
 ;; a .envrc file
-(straight-use-package 'direnv)
-(direnv-mode)
+(use-package direnv
+  :config (direnv-mode))
 
 ;; Search -----------------------------------------------------------------------
 ;;
@@ -366,13 +366,13 @@ size in pixels."
 ;; Json -------------------------------------------------------------------------
 ;;
 ;; Json mode for syntax highlighting.
-(straight-use-package 'json-mode)
+(use-package json-mode)
 
 ;; Zig --------------------------------------------------------------------------
-(straight-use-package 'zig-mode)
+(use-package zig-mode)
 
 ;; Rust -------------------------------------------------------------------------
-(straight-use-package 'rust-mode)
+(use-package rust-mode)
 
 ;; Go ---------------------------------------------------------------------------
 ;;
