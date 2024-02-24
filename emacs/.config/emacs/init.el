@@ -63,8 +63,27 @@
       make-backup-files nil)
 
 ;; Configure color theme --------------------------------------------------------
-(use-package color-theme-sanityinc-tomorrow
-  :config (load-theme 'sanityinc-tomorrow-night t))
+
+;; Make customisations that affect Emacs faces BEFORE loading a theme
+;; (any change needs a theme re-load to take effect).
+(use-package ef-themes
+  :config
+  (setq ef-themes-to-toggle '(ef-spring ef-bio))
+  (setq ef-themes-headings ; read the manual's entry or the doc string
+    '((0  1.5)
+       (1  1.4)
+       (2  1.3)
+       (3  1.2)
+       (4  1.1)
+       (5  1.0)
+       (6  1.0)
+       (7  1.0)
+       (t  1.0)))
+  (setq ef-themes-mixed-fonts nil)
+  ;; Disable all other themes to avoid awkward blending:
+  (mapc #'disable-theme custom-enabled-themes)
+  ;; Load the theme of choice:
+  (load-theme 'ef-bio :no-confirm))
 
 ;; Fonts -----------------------------------------------------------------------
 (defun tim-process-font-choice (choice)
@@ -182,6 +201,27 @@ size in pixels."
 (keymap-global-set "M-g i" 'consult-imenu)
 (keymap-global-set "M-g g" 'consult-goto-line)
 (keymap-global-set "M-y" 'consult-yank-pop)
+
+(use-package embark
+  :bind
+  (("C-." . embark-act)         ;; pick some comfortable binding
+   ("C-;" . embark-dwim)        ;; good alternative: M-.
+   ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+  :init
+  ;; Optionally replace the key help with a completing-read interface
+  (setq prefix-help-command #'embark-prefix-help-command)
+  ;; (add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
+  ;; (setq eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
+  :config
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                 nil
+                 (window-parameters (mode-line-format . none)))))
+
+;; Consult users will also want the embark-consult package.
+(use-package embark-consult
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 
 ;; Codeium ----------------------------------------------------------------------
 ;;
@@ -415,3 +455,13 @@ size in pixels."
 (global-set-key (kbd "C-c o o")
 		(lambda() (interactive)(find-file "~/.config/emacs/init.el")))
 (put 'dired-find-alternate-file 'disabled nil)
+
+;; User Defined functions -------------------------------------------------------
+;;
+;; Functions that I use a lot.
+
+(defun tim-copy-path-to-buffer ()
+  "send the full path of the current buffer to the
+clipboard. Usefull for creating file links in org mode."
+  (interactive)
+  (kill-new (buffer-file-name)))
