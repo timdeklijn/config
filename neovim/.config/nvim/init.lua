@@ -65,7 +65,7 @@ require('lazy').setup({
         formatters_by_ft = {
           python = { 'isort', 'black' },
           html = { 'prettier' },
-          tera = { 'prettier' }
+          go = { "goimports", "gofmt" },
         },
         formatters = {
           -- NOTE: this will break when used on other filetypes then html and tera.
@@ -145,28 +145,47 @@ require('lazy').setup({
   },
 
   {
-    "Tsuzat/NeoSolarized.nvim",
-    lazy = false,
+    "catppuccin/nvim",
+    name = "catppuccin", 
     priority = 1000,
     config = function()
-      require("NeoSolarized").setup {
-        style = "dark",
-        transparent = true,
-        terminal_colors = true,
-        enable_italics = true,
-        styles = {
-          comments = { italic = true },
-          keywords = {},
-          functions = { bold = true },
-          variables = {},
-          string = { italic = true },
-          underline = false,
-          undercurl = false,
+      require("catppuccin").setup({
+        flavour = "mocha", -- latte, frappe, macchiato, mocha
+        background = { -- :h background
+            light = "mocha",
+            dark = "frappe",
         },
-      }
-      vim.cmd [[ colorscheme NeoSolarized ]]
+        transparent_background = false, -- disables setting the background color.
+        show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
+        term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
+        dim_inactive = {
+            enabled = true, -- dims the background color of inactive window
+            shade = "dark",
+            percentage = 0.15, -- percentage of the shade to apply to the inactive window
+        },
+        no_italic = false, -- Force no italic
+        no_bold = false, -- Force no bold
+        no_underline = false, -- Force no underline
+        styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
+            comments = { "italic" }, -- Change the style of comments
+            conditionals = { "bold" },
+            loops = {},
+            functions = { "bold" },
+            keywords = {},
+            strings = {},
+            variables = {},
+            numbers = {},
+            booleans = {},
+            properties = {},
+            types = {},
+            operators = {},
+          },
+        })
+        -- setup must be called before loading
+        vim.cmd.colorscheme "catppuccin"
     end
   },
+
 
   {
     -- Mode line
@@ -189,6 +208,12 @@ require('lazy').setup({
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim',  opts = {} },
+    
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {}
+  },
 
   {
     'aserowy/tmux.nvim',
@@ -543,16 +568,6 @@ cmp.setup {
   },
 }
 
-local tera_group = vim.api.nvim_create_augroup('TeraFileType', { clear = true })
-vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
-  callback = function()
-    local buf = vim.api.nvim_get_current_buf()
-    vim.api.nvim_buf_set_option(buf, "filetype", "html")
-  end,
-  pattern = { '*.html.tera' },
-  group = tera_group,
-})
-
 -- Make sure terraform files are interpreted as terraform files
 local terraform_group = vim.api.nvim_create_augroup('TerraFormFileType', { clear = true })
 
@@ -573,22 +588,6 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   pattern = { '*.tfstate, *.tfstate.backup' },
   group = terraform_group,
 })
-
--- Auto format imports on save (used for Golang)
-function OrganizeImports(wait_ms)
-  local params = vim.lsp.util.make_range_params()
-  params.context = { only = { "source.organizeImports" } }
-  local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
-  for _, res in pairs(result or {}) do
-    for _, r in pairs(res.result or {}) do
-      if r.edit then
-        vim.lsp.util.apply_workspace_edit(r.edit, "UTF-8")
-      else
-        vim.lsp.buf.execute_command(r.command)
-      end
-    end
-  end
-end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

@@ -112,7 +112,8 @@ size in pixels."
     (tim-set-font (tim-process-font-choice (car choice)))))
 
 ;; Start-up font settings
-(defvar tim-font-name "ComicShannsMono Nerd Font" "Font name")
+;; (defvar tim-font-name "ComicShannsMono Nerd Font" "Font name")
+(defvar tim-font-name "IosevkaTerm NFM" "Font name")
 (defvar tim-initial-font (tim-process-font-choice "medium") "Font Size medium value")
 (setq-default line-spacing 0.3)
 

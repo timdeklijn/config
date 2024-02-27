@@ -1,9 +1,20 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+source $HOME/.bash_profile
+
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:$PATH
 export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/go/bin:$PATH
 export GOPATH=$HOME/go
+export PATH=$PATH:$(go env GOPATH)/bin
 export PATH=$PATH:$GOPATH/bin
+export PATH="/usr/local/opt/libarchive/bin:$PATH"
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -11,11 +22,6 @@ if [[ -n $SSH_CONNECTION ]]; then
 else
   export EDITOR='nvim'
 fi
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
 
 # START USING DIRENV ===========================================================
 
@@ -30,7 +36,7 @@ show_virtual_env() {
 PS1='$(show_virtual_env)'$PS1
 
 # what keybind to use
-set -o emacs
+set -o vi
 
 # ALIASES =====================================================================
 
@@ -57,16 +63,20 @@ alias ll="eza -l --icons"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
-# Go bin
-export GOPATH="$HOME/go"
-export PATH=$PATH:$(go env GOPATH)/bin
-export PATH="/usr/local/opt/libarchive/bin:$PATH"
-
-# STARSHIP
-eval "$(starship init zsh)"
+# This is cloned into workspace
+source ~/workspace/powerlevel10k/powerlevel10k.zsh-theme
 
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 eval "$(direnv hook zsh)"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# NOTE:install nvm (on ubuntu): 
+#   https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-22-04
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
