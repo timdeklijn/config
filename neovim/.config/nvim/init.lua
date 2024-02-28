@@ -52,6 +52,8 @@ require('lazy').setup({
     ft = { 'python' },
     config = function()
       require('lint').linters_by_ft = {
+        -- TODO: I should add some functionality where this can be 
+        --       switched based on project/client
         python = { 'pylint', 'mypy' },
       }
     end
@@ -66,13 +68,8 @@ require('lazy').setup({
           python = { 'isort', 'black' },
           html = { 'prettier' },
           go = { "goimports", "gofmt" },
+          lua = { "stylelua" },
         },
-        formatters = {
-          -- NOTE: this will break when used on other filetypes then html and tera.
-          prettier = {
-            prepend_args = { '--parser', 'html' }
-          },
-        }
       })
     end,
   },
@@ -156,7 +153,7 @@ require('lazy').setup({
             dark = "frappe",
         },
         transparent_background = false, -- disables setting the background color.
-        show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
+        show_end_of_buffer = true, -- shows the '~' characters after the end of buffers
         term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
         dim_inactive = {
             enabled = true, -- dims the background color of inactive window
@@ -208,7 +205,7 @@ require('lazy').setup({
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim',  opts = {} },
-    
+
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -455,7 +452,7 @@ vim.keymap.set('n', '<leader>=', require("conform").format, { desc = 'Format buf
 local lspconfig = require('lspconfig')
 
 -- [[ setup lsp servers ]]
--- Golang:
+
 lspconfig.gopls.setup(
   {
     capabilities = require('cmp_nvim_lsp').default_capabilities(),
