@@ -5,7 +5,7 @@ setlocal shiftwidth=2
 setlocal expandtab
 setlocal autoindent
 
-setlocal textwidth=100
+setlocal textwidth=80
 
 " No line numbers
 setlocal nonumber

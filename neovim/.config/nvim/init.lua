@@ -142,47 +142,22 @@ require('lazy').setup({
   },
 
   {
-    "catppuccin/nvim",
-    name = "catppuccin", 
+    'shaunsingh/nord.nvim',
+    lazy = false,
     priority = 1000,
     config = function()
-      require("catppuccin").setup({
-        flavour = "frappe", -- latte, frappe, macchiato, mocha
-        background = { -- :h background
-            light = "mocha",
-            dark = "frappe",
-        },
-        transparent_background = false, -- disables setting the background color.
-        show_end_of_buffer = true, -- shows the '~' characters after the end of buffers
-        term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
-        dim_inactive = {
-            enabled = true, -- dims the background color of inactive window
-            shade = "dark",
-            percentage = 0.15, -- percentage of the shade to apply to the inactive window
-        },
-        no_italic = false, -- Force no italic
-        no_bold = false, -- Force no bold
-        no_underline = false, -- Force no underline
-        styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
-            comments = { "italic" }, -- Change the style of comments
-            conditionals = { "bold" },
-            loops = {},
-            functions = { "bold" },
-            keywords = {},
-            strings = {},
-            variables = {},
-            numbers = {},
-            booleans = {},
-            properties = {},
-            types = {},
-            operators = {},
-          },
-        })
-        -- setup must be called before loading
-        vim.cmd.colorscheme "catppuccin"
+      -- Example config in lua
+      vim.g.nord_contrast = false
+      vim.g.nord_borders = false
+      vim.g.nord_disable_background = false
+      vim.g.nord_italic = true
+      vim.g.nord_uniform_diff_background = true
+      vim.g.nord_bold = true
+
+      -- Load the colorscheme
+      require('nord').set()
     end
   },
-
 
   {
     -- Mode line

@@ -12,6 +12,6 @@ config.window_padding = {
 }
 
 -- Colors
-config.color_scheme = "Catppuccin Frappe"
+config.color_scheme = "nord"
 
 return config
