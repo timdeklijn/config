@@ -2,10 +2,9 @@ local wezterm = require("wezterm")
 local config = {}
 
 -- font config
-config.font = wezterm.font "CaskaydiaCove Nerd Font Mono"
-config.font_size = 22.0
-config.line_height = 1.5
-
+config.font = wezterm.font "JetBrainsMono NFP"
+config.font_size = 16.0
+config.line_height = 1.1
 
 -- Wezterm settings
 config.audible_bel = "Disabled"

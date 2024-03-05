@@ -4,6 +4,7 @@ setlocal expandtab
 setlocal autoindent
 
 setlocal textwidth=100
+setlocal nowrap
 
 " No line numbers
 setlocal nonumber
