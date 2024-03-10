@@ -2,7 +2,7 @@ local wezterm = require("wezterm")
 local config = {}
 
 -- font config
-config.font = wezterm.font "CommitMono Nerd Font"
+config.font = wezterm.font "CaskaydiaCove Nerd Font Mono"
 config.font_size = 21.0
 config.line_height = 1.2
 
@@ -15,6 +15,10 @@ config.window_padding = {
 }
 
 -- Color settings
-config.color_scheme = "nord"
+config.color_scheme = "Tokyo Night Storm"
+config.colors = {
+  -- Overwrite background color
+  background = "black"
+}
 
 return config

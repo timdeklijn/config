@@ -142,22 +142,20 @@ require('lazy').setup({
   },
 
   {
-    'shaunsingh/nord.nvim',
+    "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
-    config = function()
-      -- Example config in lua
-      vim.g.nord_contrast = false
-      vim.g.nord_borders = false
-      vim.g.nord_disable_background = false
-      vim.g.nord_italic = true
-      vim.g.nord_uniform_diff_background = true
-      vim.g.nord_bold = true
-
-      -- Load the colorscheme
-      require('nord').set()
+    opts = {},
+    config = function ()
+      require("tokyonight").setup({
+        style = "storm",
+        transparent = true,
+        hide_inactive_statusline = true,
+      })
+      vim.cmd[[ colorscheme tokyonight ]]
     end
   },
+
 
   {
     -- Mode line
