@@ -151,6 +151,14 @@ require('lazy').setup({
         style = "storm",
         transparent = true,
         hide_inactive_statusline = true,
+       styles = {
+          comments = { italic = true },
+          keywords = { italic = true },
+          functions = { bold = true },
+          variables = {},
+          sidebars = "transparent",
+          floats = "transparent",
+        },
       })
       vim.cmd[[ colorscheme tokyonight ]]
     end
