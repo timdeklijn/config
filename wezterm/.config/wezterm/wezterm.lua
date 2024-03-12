@@ -3,7 +3,7 @@ local config = {}
 
 -- font config
 config.font = wezterm.font "MartianMono Nerd Font Mono"
-config.font_size = 15.0
+config.font_size = 17.0
 config.line_height = 1.2
 
 -- Wezterm settings
