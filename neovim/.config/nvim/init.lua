@@ -1,4 +1,4 @@
-  -- Set <space> as the leader key
+-- Set <space> as the leader key
 -- See `:help mapleader`
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -48,33 +48,6 @@ require('lazy').setup({
   },
 
   {
-    'mfussenegger/nvim-lint',
-    ft = { 'python' },
-    config = function()
-      require('lint').linters_by_ft = {
-        -- TODO: I should add some functionality where this can be 
-        --       switched based on project/client
-        python = { 'pylint', 'mypy' },
-      }
-    end
-  },
-
-  {
-    "stevearc/conform.nvim",
-    ft = { 'python' },
-    config = function()
-      require("conform").setup({
-        formatters_by_ft = {
-          python = { 'isort', 'black' },
-          html = { 'prettier' },
-          go = { "goimports", "gofmt" },
-          lua = { "stylelua" },
-        },
-      })
-    end,
-  },
-
-  {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
     dependencies = {
@@ -108,82 +81,6 @@ require('lazy').setup({
     end
   },
 
-  {
-    -- Adds git related signs to the gutter, as well as utilities for managing changes
-    'lewis6991/gitsigns.nvim',
-    opts = {
-      -- See `:help gitsigns.txt`
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-      signcolumn = false,  -- Toggle with `:Gitsigns toggle_signs`
-      numhl      = true, -- Toggle with `:Gitsigns toggle_numhl`
-      on_attach = function(bufnr)
-        vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
-
-        -- don't override the built-in and fugitive keymaps
-        local gs = package.loaded.gitsigns
-        vim.keymap.set({ 'n', 'v' }, ']c', function()
-          if vim.wo.diff then return ']c' end
-          vim.schedule(function() gs.next_hunk() end)
-          return '<Ignore>'
-        end, { expr = true, buffer = bufnr, desc = "Jump to next hunk" })
-        vim.keymap.set({ 'n', 'v' }, '[c', function()
-          if vim.wo.diff then return '[c' end
-          vim.schedule(function() gs.prev_hunk() end)
-          return '<Ignore>'
-        end, { expr = true, buffer = bufnr, desc = "Jump to previous hunk" })
-      end,
-    },
-  },
-
-  {
-    "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {},
-    config = function ()
-      require("tokyonight").setup({
-        style = "storm",
-        transparent = true,
-        hide_inactive_statusline = true,
-       styles = {
-          comments = { italic = true },
-          keywords = { italic = true },
-          functions = { bold = true },
-          variables = {},
-          sidebars = "transparent",
-          floats = "transparent",
-        },
-      })
-      vim.cmd[[ colorscheme tokyonight ]]
-    end
-  },
-
-
-  {
-    -- Mode line
-    'nvim-lualine/lualine.nvim',
-    opts = {
-      options = {
-        icons_enabled = true,
-        component_separators = '|',
-        section_separators = '',
-      },
-    },
-  },
-
-  {
-    'lukas-reineke/indent-blankline.nvim',
-    main = "ibl",
-    opts = {
-      scope = { enabled = false }, },
-  },
-
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim',  opts = {} },
 
@@ -193,43 +90,6 @@ require('lazy').setup({
     opts = {}
   },
 
-  {
-    'aserowy/tmux.nvim',
-    config = function()
-      return require('tmux').setup()
-    end
-  },
-
-  -- surround text objects with keystrokes
-  {
-      "kylechui/nvim-surround",
-      version = "*", -- Use for stability; omit to use `main` branch for the latest features
-      event = "VeryLazy",
-      config = function()
-          require("nvim-surround").setup({})
-      end
-  },
-
-  {
-    "ibhagwan/fzf-lua",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = function()
-      require("fzf-lua").setup({})
-    end,
-    keys = {
-      {"<leader>F", ":lua require('fzf-lua').files()<cr>"},
-      {"<leader><leader>", ":lua require('fzf-lua').buffers()<cr>"},
-      {"<leader>f", ":lua require('fzf-lua').git_files()<cr>"},
-      {"<leader>sw", ":lua require('fzf-lua').grep_cword()<cr>"},
-      {"<leader>sg", ":lua require('fzf-lua').grep()<cr>"},
-      {"<leader>sd", ":lua require('fzf-lua').diagnostics_document()<cr>"},
-      {"<leader>sr", ":lua require('fzf-lua').resume()<cr>"},
-      {"<leader>ls", ":lua require('fzf-lua').lsp_document_symbols()<cr>"},
-      {"<leader>lw", ":lua require('fzf-lua').lsp_workspace_symbols()<cr>"},
-      {"gr", ":lua require('fzf-lua').lsp_references()<cr>"},
-      {"gI", ":lua require('fzf-lua').lsp_implementations()<cr>"}
-    }
-  },
 
   {
     -- Highlight, edit, and navigate code
