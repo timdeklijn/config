@@ -3,8 +3,8 @@ local config = {}
 
 -- font config
 config.font = wezterm.font "MartianMono Nerd Font"
-config.font_size = 22.0
-config.line_height = 1.2
+config.font_size = 25.0
+config.line_height = 1.3
 
 -- Wezterm settings
 config.bell_volume = "0.0"
