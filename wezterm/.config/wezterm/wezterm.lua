@@ -2,9 +2,9 @@ local wezterm = require("wezterm")
 local config = {}
 
 -- font config
-config.font = wezterm.font "MartianMono Nerd Font"
-config.font_size = 25.0
-config.line_height = 1.3
+config.font = wezterm.font "0xProto Nerd Font Mono"
+config.font_size = 30.0
+config.line_height = 1.1
 
 -- Wezterm settings
 config.bell_volume = "0.0"
