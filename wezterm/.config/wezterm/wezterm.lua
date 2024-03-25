@@ -14,13 +14,15 @@ config.window_padding = {
   top= 0,
 }
 
-config.window_background_opacity = 0.8
+config.window_background_opacity = 1.0
 
 -- Color settings
-config.color_scheme = 'Gruvbox Dark (Gogh)'
+-- config.color_scheme = 'Gruvbox Dark (Gogh)'
+-- config.color_scheme = 'Jellybeans'
+config.color_scheme = 'Kanagawa (Gogh)'
 config.colors = {
   -- Overwrite background color
-  background = "black"
+  -- background = "black"
 }
 
 return config

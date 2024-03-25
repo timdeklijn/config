@@ -44,6 +44,7 @@ set -o vi
 alias k="kubectl"
 
 alias vim="nvim"
+alias h="helix"
 
 # Git
 alias lg="lazygit"
