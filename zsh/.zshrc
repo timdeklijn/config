@@ -47,6 +47,7 @@ alias vim="nvim"
 alias h="helix"
 
 # Git
+alias gu="gitu"
 alias lg="lazygit"
 alias gc="git commit"
 alias gs="git status"
