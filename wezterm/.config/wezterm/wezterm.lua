@@ -2,9 +2,9 @@ local wezterm = require("wezterm")
 local config = {}
 
 -- font config
-config.font = wezterm.font "M+CodeLatX Nerd Font Propo"
+config.font = wezterm.font "0xProto Nerd Font Mono"
 config.font_size = 20.0
-config.line_height = 1.3
+config.line_height = 1.1
 
 -- Wezterm settings
 config.bell_volume = "0.0"
@@ -17,12 +17,6 @@ config.window_padding = {
 config.window_background_opacity = 1.0
 
 -- Color settings
--- config.color_scheme = 'Gruvbox Dark (Gogh)'
--- config.color_scheme = 'Jellybeans'
 config.color_scheme = 'Kanagawa (Gogh)'
-config.colors = {
-  -- Overwrite background color
-  -- background = "black"
-}
 
 return config
