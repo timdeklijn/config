@@ -1,3 +1,6 @@
+[language-server.efm]
+command = "efm-langserver"
+
 [[language]]
 name = "html"
 formatter = { command = 'prettier', args = ["--parser", "html"] }
@@ -10,27 +13,9 @@ formatter = { command = 'prettier', args = ["--parser", "markdown"] }
 auto-format = true
 
 [[language]]
-name = "svelte"
-formatter = { command = 'prettier', args = ["--parser", "svelte"] }
-auto-format = true
-
-[[language]]
 name = "python"
-language-servers = [ "pylsp" ]
-formatter = { command = "black", args = ["--quiet", "-"] }
-auto-format = false
-# TODO: settings for the language server
-# config = { venv = ".venv/",  venvPath = "." }
-# TODO: use efm server or something to get linting to work in python.
-
-[language.debugger]
-name = "debugpy"
-transport = "stdio"
-command = "python"
-args = ["-m",  "debugpy.adapter"]
-
-[[language.debugger.templates]]
-name = "source"
-request = "launch"
-completion = [ { name = "entrypoint", completion = "filename", default = "." } ]
-args = { mode = "debug", program = "{0}" }
+language-servers = [ 
+  { name = "efm", only-features = [ "diagnostics", "format" ] },
+  { name = "pyright", except-features = [ "format", "diagnostics" ] }
+]
+auto-format = true
