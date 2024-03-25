@@ -20,7 +20,7 @@ export PATH="/usr/local/opt/libarchive/bin:$PATH"
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='nvim'
 else
-  export EDITOR='nvim'
+  export EDITOR='helix'
 fi
 
 # START USING DIRENV ===========================================================
