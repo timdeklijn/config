@@ -45,6 +45,7 @@ alias k="kubectl"
 
 alias vim="nvim"
 alias h="helix"
+alias y="yazi"
 
 # Git
 alias gu="gitu"
