@@ -19,3 +19,7 @@ language-servers = [
   { name = "pyright", except-features = [ "format", "diagnostics" ] }
 ]
 auto-format = true
+
+[[language]]
+name = "go"
+auto-format = true
