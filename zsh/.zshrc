@@ -20,7 +20,12 @@ export PATH="/usr/local/opt/libarchive/bin:$PATH"
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='nvim'
 else
-  export EDITOR='helix'
+  # TODO: fix difference in naming for helix
+  if [[ $OSTYPE == darwin* ]]; then
+    export EDITOR="hx"
+  else
+    export EDITOR="helix"
+  fi
 fi
 
 # START USING DIRENV ===========================================================
@@ -45,6 +50,7 @@ alias k="kubectl"
 
 alias vim="nvim"
 alias h="helix"
+alias h="hx"
 alias y="yazi"
 
 # Git
