@@ -25,7 +25,7 @@ tools:
       - '%f:%l:%c: %tote: %m'
 
   python-pylint: &python-pylint
-    lint-command: 'pylint --output-format text --score no --msg-template {path}:{line}:{column}:{C}:{msg} ${INPUT}'
+    lint-command: 'pylint --max-line-length==120 --output-format text --score no --msg-template {path}:{line}:{column}:{C}:{msg} ${INPUT}'
     lint-stdin: false
     lint-formats:
       - '%f:%l:%c:%t:%m'

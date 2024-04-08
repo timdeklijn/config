@@ -17,10 +17,10 @@ config.window_padding = {
 config.window_background_opacity = 1.0
 
 -- Color settings
-config.color_scheme = 'Jellybeans'
+config.color_scheme = 'Sonokai (Gogh)'
 
-config.colors = {
-  background = "#151515"
-}
+-- config.colors = {
+--   background = "#151515"
+-- }
 
 return config

@@ -1,4 +1,4 @@
-theme = "jellybeans"
+theme = "sonokai"
 
 [editor]
 line-number = "relative"
