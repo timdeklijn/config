@@ -87,6 +87,7 @@ require('lazy').setup({
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
+    event = 'VimEnter',
     opts = {}
   },
 
@@ -121,7 +122,7 @@ vim.o.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 -- Keep signcolumn on by default
-vim.wo.signcolumn = 'no'
+vim.wo.signcolumn = 'yes'
 -- Decrease update time
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
@@ -160,6 +161,7 @@ vim.defer_fn(function()
     ensure_installed = {
       'c',
       'elm',
+      'gitcommit',
       'go',
       'lua',
       'python',
@@ -332,6 +334,7 @@ lspconfig.lua_ls.setup({
     Lua = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
+      diagnostics = { globals = { 'vim' } },
     },
   },
   capabilities = require('cmp_nvim_lsp').default_capabilities(),

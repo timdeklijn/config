@@ -22,9 +22,9 @@ if [[ -n $SSH_CONNECTION ]]; then
 else
   # TODO: fix difference in naming for helix
   if [[ $OSTYPE == darwin* ]]; then
-    export EDITOR="hx"
+    export EDITOR="nvim"
   else
-    export EDITOR="helix"
+    export EDITOR="nvim"
   fi
 fi
 

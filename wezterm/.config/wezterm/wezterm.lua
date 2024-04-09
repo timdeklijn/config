@@ -17,10 +17,10 @@ config.window_padding = {
 config.window_background_opacity = 1.0
 
 -- Color settings
-config.color_scheme = 'Monokai Pro (Gogh)'
+config.color_scheme = 'catppuccin-mocha'
 
-config.colors = {
-  background = "#2d2a2e"
-}
+-- config.colors = {
+--   background = "#2d2a2e"
+-- }
 
 return config
