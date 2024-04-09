@@ -3,24 +3,19 @@ local config = {}
 
 -- font config
 config.font = wezterm.font "Berkeley Mono"
-config.font_size = 28.0
+config.font_size = 16.0
 config.line_height = 1.0
 
 -- Wezterm settings
-config.bell_volume = "0.0"
 config.hide_tab_bar_if_only_one_tab = true
 config.window_padding = {
-  bottom = 0,
-  top= 0,
+  bottom = 10,
+  top= 10,
 }
 
 config.window_background_opacity = 1.0
 
 -- Color settings
 config.color_scheme = 'catppuccin-mocha'
-
--- config.colors = {
---   background = "#2d2a2e"
--- }
 
 return config
