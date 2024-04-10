@@ -155,4 +155,4 @@ local catppuccin = {
   end
 }
 
-return catppuccin
+return tokyo
