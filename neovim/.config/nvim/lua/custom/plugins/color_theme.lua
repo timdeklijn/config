@@ -87,7 +87,7 @@ local tokyo = {
   opts = {},
   config = function ()
     require("tokyonight").setup({
-      style = "storm",
+      style = "night",  -- storm, night, moon, day
       transparent = true,
       hide_inactive_statusline = true,
      styles = {

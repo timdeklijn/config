@@ -16,6 +16,6 @@ config.window_padding = {
 config.window_background_opacity = 1.0
 
 -- Color settings
-config.color_scheme = 'Tokyo Night Storm'
+config.color_scheme = 'Tokyo Night'
 
 return config
