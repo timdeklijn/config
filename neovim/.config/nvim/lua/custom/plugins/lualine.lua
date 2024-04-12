@@ -6,7 +6,7 @@ return {
     options = {
       globalstatus = true,
       icons_enabled = true,
-      -- component_separators = { left = '', right = ''},
+      theme = 'tokyonight',
       component_separators = { left = '', right = ''},
       section_separators = { left = '', right = ''},
     },

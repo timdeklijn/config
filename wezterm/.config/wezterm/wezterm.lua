@@ -3,7 +3,7 @@ local config = {}
 
 -- font config
 config.font = wezterm.font "Berkeley Mono"
-config.font_size = 16.0
+config.font_size = 20.0
 config.line_height = 1.0
 
 -- Wezterm settings
