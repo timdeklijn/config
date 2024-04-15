@@ -1,0 +1,25 @@
+[
+	// LSP commands
+	{"keys": ["ctrl+k", "ctrl+l", "h"], "command": "lsp_hover"},
+	{"keys": ["ctrl+k", "ctrl+l", "r"], "command": "lsp_rename"},
+	{"keys": ["ctrl+k", "ctrl+l", "g"], "command": "lsp_symbol_definition"},
+	// Misc commands
+	{ "keys": ["ctrl+k", "ctrl+t"], "command": "toggle_tabs" },
+	{ "keys": ["ctrl+a"], "command": "move_to", "args": {"to": "bol", "extend": false} },
+	{ "keys": ["ctrl+e"], "command": "move_to", "args": {"to": "eol", "extend": false} },
+	{
+    	"keys": ["ctrl+shift+c"],
+    	"command": "copilot_accept_completion",
+    	"context": [
+        	{
+	            "key": "copilot.is_on_completion"
+	        }
+	    ]
+	},
+	{ "keys": ["ctrl+u"], "command": "move", "args": {"by": "pages", "forward": false} },
+	{ "keys": ["ctrl+d"], "command": "move", "args": {"by": "pages", "forward": true} },
+
+	// Terminal
+	{ "keys": ["ctrl+shift+t"], "command": "toggle_terminus_panel" }
+
+]

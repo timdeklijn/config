@@ -1,0 +1,16 @@
+{
+	"bootstrapped": true,
+	"installed_packages":
+	[
+		"LSP",
+		"LSP-copilot",
+		"LSP-pyright",
+		"Package Control",
+		"SublimeLinter-mypy",
+		"SublimeLinter-pylint",
+		"Terminus",
+	],
+	"in_process_packages":
+	[
+	],
+}
