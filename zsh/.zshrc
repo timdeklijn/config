@@ -16,6 +16,8 @@ export PATH=$PATH:$(go env GOPATH)/bin
 export PATH=$PATH:$GOPATH/bin
 export PATH="/usr/local/opt/libarchive/bin:$PATH"
 
+# sublime
+export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='nvim'
@@ -63,9 +65,9 @@ alias gp="git push"
 alias glog="git log --all --decorate --oneline --graph"
 
 # nicer ls
-alias ls="eza --icons"
-alias "ls -l"="eza -l --icons"
-alias ll="eza -l --icons"
+alias ls="eza"
+alias "ls -l"="eza -l"
+alias ll="eza -l"
 
 # Paths =======================================================================
 
